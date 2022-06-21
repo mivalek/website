@@ -58,7 +58,7 @@ function fillGallery() {
         container.appendChild(tile);
         gallery.appendChild(container);
         if (i === 1) {
-            tile.innerHTML = '<a class="button">See more</a>';
+            tile.innerHTML = '<a class="button" href="./gallery">See more</a>';
             container.classList.add("last-tile");
             if (nTilesToFill % 2) {
                 container.classList.add("odd");
