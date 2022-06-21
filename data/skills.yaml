@@ -1,0 +1,76 @@
+01 Data science:
+    01 Statistics:
+        icon: fa-solid fa-square-root-variable
+        details:
+            - generalised linear model
+            - factor analysis
+            - structural equation modelling
+    02 Visualisation:
+        icon: fa-solid fa-chart-line
+        details:
+            - ggplot2
+            - seaborn
+            - interactive visualisations with plotly and d3.js
+    03 Machine learning:
+        icon: fa-solid fa-graduation-cap
+        details:
+            - linear/logistic regression
+            - KNN
+            - random forests
+            - PCA...
+    04 Web scraping:
+        icon: fa-solid fa-globe
+02 Programming:
+    01 R:
+        icon: fab fa-r-project
+        details:
+            - base R
+            - tidyverse
+            - shiny
+            - blogdown
+    02 JavaScript:
+        icon: fab fa-js
+        details:
+            - jQuery
+            - NodeJS
+            - electron
+            - psychJS
+            - as an exercise I wrote all functionality of this website in vanilla JS only
+    03 Python:
+        icon: fab fa-python
+        details:
+            - pandas
+            - numPy
+            - sklearn
+03 Teaching:
+    01 R_Markdown:
+        icon: rmarkdown.png
+        details:
+            - see _e.g._,  my [lecture handouts](https://and.netlify.app/lectures/01/handout/)
+    02 xaringan:
+        icon: xaringan.svg
+        details:
+            - see _e.g._,  my [lecture slides](https://and.netlify.app/lectures/01/slides/)
+04 Web design:
+    01 HTML:
+        icon: fa-solid fa-code
+        details:
+            - I made this from scratch you know... &#x1F913;
+    02 CSS:
+        icon: fab fa-css3-alt
+        details:
+            - I also styled it all myself!
+    03 Hugo:
+        icon: hugo.svg
+        details:
+            - Hugo is amazing!
+05 Audiovisual:
+    note: By far not a power user but I have dabbled in these Adobe products
+    01 Lightroom:
+        icon: lightroom.svg
+    02 Illustrator:
+        icon: illustrator.svg
+    03 Premiere_Pro:
+        icon: premiere_pro.svg
+    04 Audition:
+        icon: audition.svg

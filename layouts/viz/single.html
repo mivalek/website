@@ -1,0 +1,52 @@
+{{ define "head" }}
+<meta name="description" content="Visualisations of statistical concepts to help build stats intuition" />
+<meta name="twitter:title" content="Interactive applet" />
+<meta name="twitter:description" content="Visualisations of statistical concepts to help build stats intuition" />
+<meta name="twitter:image:src" content="/images/viz/viz.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@mivalek" />
+<meta name="twitter:site" content="@mivalek" />
+<meta property="og:title" content="Interactive applet" />
+<meta property="og:description" content="Visualisations of statistical concepts to help build stats intuition" />
+<meta property="og:image" content="/images/viz/viz.png" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Milan Valasek" />
+{{ end }}
+
+{{ define "main" }}
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v11.0"
+  nonce="T1fRhrc3"></script>
+
+
+{{ with .Params.Description }}
+<p>{{ . }}</p>
+{{ end }}
+
+<section>
+  {{ .Content }}
+</section>
+
+{{ end }}
+
+
+{{ define "head_css" }}
+
+<!-- <link rel="stylesheet" href="assets/css/viz_viewer.css"> -->
+
+
+{{ end }}
+
+
+{{ define "head_js" }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/css-element-queries/1.2.3/ResizeSensor.min.js"
+  integrity="sha512-Li66vFTPdL3BpG7YUS8/TdT+mpL4QWYe9N3f39LLZzxnPJL/w1Ih3C/CgEJmsQjSEy8Xx8+vTFDAS3A2s5NBUg=="
+  crossorigin="anonymous"></script>
+{{ end }}
+
+
+{{ define "footer_js" }}
+<script type="text/javascript" src="/js/viz-viewer.js"></script>
+{{ end }}

@@ -1,0 +1,147 @@
+{{ define "head_js"}}
+<script src="assets/js/main_page.js"></script>
+{{ end }}
+
+{{ define "head_css"}}
+<link rel="stylesheet" href="assets/css/main_page.css">
+{{ end }}
+
+{{ define "main" }}
+<div id="load-mask"></div>
+<div id="intro-container">
+    <div id="background"></div>
+    <div id="intro">
+        <h1 id="title">
+            <div><span class="lig nudge">ae</span><span class="invert">sthetic</span></div>
+            <div>end<span id="flip" class="lig invert">ae</span>vour</div>
+        </h1>
+    </div>
+</div>
+
+<div id="main-container">
+    {{ partial "nav-menu" .}}
+    <main>
+        <section id="author-section">
+            <div class="text">
+                <a class="anchor" id="author"></a>
+                {{ .Content }}
+                <div class="button-container">
+                    <a href="./about" class="button">More about me</a>
+                </div>
+            </div>
+            <div id="hero-container">
+                <img class="hero" src="assets/img/me.jpg" alt="Photo of my wind-swept self on the Brighton seafront">
+            </div>
+
+        </section>
+
+        <section id="tools-section">
+            <a class="anchor" id="tools"></a>
+            <h2>Tools I use</h2>
+            <p>Hover over/tap on icon for details</p>
+            {{ range $key, $value := .Site.Data.skills }}
+            {{ $area := $key | replaceRE "^\\d{2}\\s" "" }}
+            <div class="skill-area" id="{{ $area | lower | replaceRE "\\s" "-"}}">
+                <h3>{{ $area }}</h3>
+                {{ if $value.note }}
+                <p>{{ $value.note }}</p>
+                {{ end }}
+                <div class="cards">
+                    {{ range $k, $v := $value }}
+                    {{ if ne $k "note"}}
+                    {{ $hover := "" }}
+                    {{ $isHov := false }}
+                    {{ if $v.details }}
+                    {{ $hover = " hoverable" }}
+                    {{ $isHov = true }}
+                    {{ end }}
+                    <div class="card">
+                        {{ $icon := $v.icon }}
+                        {{ if len (findRE "\\..{3}$" $icon) }}
+                        <img class="inline-icon{{ $hover }}" src="assets/img/{{ $icon }}">
+                        {{ else }}
+                        <i class="{{ $icon }}{{ $hover }}"></i>
+                        {{ end }}
+                        {{ if $isHov }}
+                        <div class="tooltip">
+                            <ul>
+                                {{ range $v.details }}
+                                <li>{{ . | safeHTML | markdownify }}</li>
+                                {{ end }}
+                            </ul>
+                        </div>
+                        {{ end }}
+                        <div class="card-desc">
+                            {{ $k | replaceRE "^\\d{2}\\s" "" | replaceRE "\\s" "<br>" | replaceRE "_" " " | safeHTML}}
+                        </div>
+                    </div>
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+        </section>
+        <section id="portfolio-section">
+            <a class="anchor" id="portfolio"></a>
+            <h2>Things I've made</h2>
+            <div class="button-container">
+                <a href="./portfolio" class="button">More things</a>
+            </div>
+        </section>
+        <section id="blog-section">
+            <a class="anchor" id="blog"></a>
+            <h2>My musings</h2>
+            <p>Although I'm not the kind of person who needs to broadcast their thoughts, there are a few things
+                I have <span id="opinions" class="hoverable"> Opinions&trade;</span><span class="tooltip">I stole
+                    this stylisation without shame from the wonderful
+                    <a target="_blank" href='https://twitter.com/jenaesthesia'>Dr Jennifer Mankin</a>. Go show
+                    her some love!
+                </span> on. You have been warned...</p>
+
+            <div id="featured">
+                {{ range where .Site.Pages "Section" "blog"}}
+                {{ $pages := (.Pages.ByParam "Date").Reverse.ByParam "featured"}}
+                {{ range $index, $page := first 3 $pages }}
+                <div class="post-container{{ with $page.Params.featured}} featured" alt="featured post{{ end }}">
+                    <div class="post-image-container">
+                        <img src="{{with $page.Resources.Get "img/bkg.jpg" }}{{ .RelPermalink }}{{ end }}" alt="">
+                    </div>
+                    <div class="post">
+                        <h3>{{$page.Title}}</h3>
+                        <p class="published">Published on {{$page.Date.Format "2 Jan 2006"}}</p>
+                        <p>{{ $page.Summary }}</p>
+                    </div>
+                    <a href="{{.Permalink}}"></a>
+                </div>
+                {{ end }}
+                {{ end }}
+            </div>
+            <div class="button-container">
+                <a href="./blog" class="button">All posts</a>
+            </div>
+        </section>
+        <section id="gallery-section">
+            <a class="anchor" id="gallery"></a>
+            <h2><span class="hoverable"> An art</span><span class="tooltip">Hommage to the
+                    hilarious <a href="https://mcmansionhell.com/post/154250104246/cook-county-il">McMansion
+                        Hell</a></span></h2>
+            <p>Because I'm not cool enough for Instagram...</p>
+            {{ $featured_photos := slice }}
+            {{ range $index, $albums := .Site.Data.photos}}
+            {{ $featured_photos = append $featured_photos .photos }}
+            {{ end }}
+            <div id="featured-gallery">
+                {{ range shuffle (where $featured_photos "featured" true) }}
+                <div class="image-container{{ with .portrait }} portrait{{ end}}{{ with .large }} large{{ end}}">
+                    <img class="thumbnail" src="https://am3pap002files.storage.live.com/{{ .url }}?width=800&height=600"
+                        alt="{{ with .caption}}{{.}} | {{end}}{{ .location }}" />
+                </div>
+                {{ end }}
+            </div>
+            <div class="button-container">
+                <a href="./gallery" class="button">See more</a>
+            </div>
+        </section>
+    </main>
+</div>
+{{ end }}

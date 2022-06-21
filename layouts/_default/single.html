@@ -1,0 +1,29 @@
+{{ define "head_css"}}
+{{ with .Resources.Get "img/bkg.jpg" }}
+<style>
+    :root {
+        --background-img: url({{ .RelPermalink }});
+    }
+</style>
+{{ end }}
+{{ end }}
+
+{{ define "main" }}
+<div id="background"></div>
+<div id="byline">
+    <h1 id="title">{{ .Title }}</h1>
+    <div id="subtitle">{{ .Date.Format "2 Jan 2006" }}</div>
+</div>
+<div id="main-container">
+    <div id="nav-container">
+        <div id="back"><a href="{{.CurrentSection.Permalink }}">Back to {{.CurrentSection.Params.category}}</a>
+        </div>
+
+        {{ .TableOfContents }}
+    </div>
+    <main>
+        {{ .Content }}
+        {{ template "_internal/disqus.html" . }}
+    </main>
+</div>
+{{ end }}

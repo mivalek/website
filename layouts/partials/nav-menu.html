@@ -1,0 +1,9 @@
+<div id="nav-container">
+    <nav>
+        <ul>
+            {{ range .Site.Menus.main }}
+            <li><a href="{{ .URL | replaceRE "^/" "" }}">{{ .Identifier }}</a></li>
+            {{ end }}
+        </ul>
+    </nav>
+</div>

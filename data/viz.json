@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Bean machine",
+    "ref": "bean",
+    "desc": "Virtual bean machine illustrates how the binomial distribution arises. Change the number of bins to see how the binomial distribution approaches the normal distribution as this number goes to infinity"
+  },
+  {
+    "name": "Transformations",
+    "ref": "transform",
+    "desc": "Flip switches to reveal graphs of the addition, multiplication, and exponentiation functions and drag values in coloured circles to change the output these functions produce"
+  },
+  {
+    "name": "Descriptive statistics",
+    "ref": "desc",
+    "desc": "Explore the various measures of central tendency and spread by adding and deleting points or dragging them around. You can select multiple points by dragging a rectangle across the plot"
+  },
+  {
+    "name": "Squared vs absolute deviation",
+    "ref": "dev",
+    "desc": "Compare the sum of squared deviations to the sum of absolute deviations of data from any point along the x-axis to find out why we use the former with the mean and the latter with the median"
+  },
+  {
+    "name": "Normal distribution",
+    "ref": "norm_dist",
+    "desc": "Explore the two parameters that define the normal distribution – <i>&mu;<\/i> and <i>&sigma;<\/i> – to see how they determine the shape of the location and spread of the bell curve"
+  },
+  {
+    "name": "<i>z<\/i>-transformation",
+    "ref": "standard",
+    "desc": "Change the centre and the scale of a randomly generated normal distribution to turn it into a <strong><i>standard<\/i><\/strong> normal distribution with <i>&mu;<\/i> = 0 and <i>&sigma;<\/i> = 1. Watch out for order of operations though!"
+  },
+  {
+    "name": "Area under the curve",
+    "ref": "area",
+    "desc": "Pick cut-off points along the x-axis and get the area below the standard normal curve within and outside of the range.<br><code>R<\/code> code to calculate area and cut-offs included!"
+  },
+  {
+    "name": "Student's <i>t<\/i> distribution",
+    "ref": "tdist",
+    "desc": "Change the number of degrees of freedom to see how the shape of the Student’s <i>t<\/i> distribution changes and how this change affects cut-off points for the outer 5% of the area under the curve"
+  },
+  {
+    "name": "<i>&chi;<\/i><sup>2<\/sup> distribution",
+    "ref": "chisq",
+    "desc": "The shape of the <i>&chi;<\/i><sup>2<\/sup> distribution changes even more dramatically than the <i>t<\/i> distribution as the number of degrees of freedom increases"
+  },
+  {
+    "name": "Snedecor's <i>F<\/i> distribution",
+    "ref": "fdist",
+    "desc": "The <i>F<\/i> distribution describes a ratio of two <i>&chi;<\/i><sup>2<\/sup> distributed variables (scaled by their respective <i>dfs<\/i>). See how the two degrees of freedom parameters determine its shape"
+  },
+  {
+    "name": "Correlation coefficient <i>r<\/i>",
+    "ref": "cor",
+    "desc": "Discover the geometric representation of the correlation coefficient <i>r<\/i> to see that it is just the cosine of the angle between two lines of best fit drawn through the data"
+  },
+  {
+    "name": "Linear equation",
+    "ref": "reg_line",
+    "desc": "Play around with the intercept and the slope of a line to see how different values of the parameters of the linear equation determine the vertical position and the steepness of the line"
+  },
+  {
+    "name": "Line of best fit",
+    "ref": "ols_reg",
+    "desc": "Ordinary Least Squares regression is one way to find the line of best fit through a scatter of data. Change the intercept and the slope to find this line"
+  },
+  {
+    "name": "<i>R<\/i><sup>2<\/sup>",
+    "ref": "r_sq",
+    "desc": "<i>R<\/i><sup>2<\/sup> expresses how well the model describes the relationships in the data. Add and delete points or move them around to see how they influence both the line and <i>R<\/i><sup>2<\/sup>"
+  }
+] 

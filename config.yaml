@@ -1,0 +1,39 @@
+baseurl: /
+languageCode: en-us
+author:
+    name: Milan Valášek
+title: Milan's pages
+googleAnalytics: ""
+disqusShortname: "mival"
+ignoreFiles:
+    - \.Rmd$
+    - \.Rmarkdown$
+    - _cache$
+    - \.knit\.md$
+    - \.utf8\.md$
+relativeURLS: false
+permalinks:
+    blog: /blog/:year/:month/:slug/
+menu:
+    main:
+        - identifier: Welcome
+          weight: 1
+          url: /#author
+        - identifier: Tools
+          weight: 2
+          url: /#tools
+        - identifier: Portfolio
+          weight: 3
+          url: /#portfolio
+        - identifier: Blog
+          weight: 4
+          url: /#blog
+        - identifier: Gallery
+          weight: 5
+          url: /#gallery
+markup:
+    defaultMarkdownHandler: goldmark
+    goldmark:
+        renderer:
+            unsafe: true
+summaryLength: 20
