@@ -7,18 +7,22 @@
     {{ end }}
     {{ block "head_js" . }}
     {{ end }}
-
-    {{ $img :=  resources.Get "img/intro.jpg" }}
-    {{ $sizes := dict "huge" "2560x" "large" "1920x" "medium" "1280x" "small" "640x" }}
+    {{ with $img :=  resources.Get "img/intro.jpg" }}
+    {{ $sizes := dict "huge" "2560x" "large" "1920x" "medium" "1280x" "small" "400x1000" }}
     {{ print "<style>" | safeHTML }}
     :root {
     {{ range $key, $value := $sizes }}
-    {{ with $img.Resize $value }}
+    {{ $resized := $img.Resize $value}}
+    {{ if eq $key "small"}}
+    {{ $resized = $img.Fill $value}}
+    {{ end }}
+    {{ with $resized }}
     --background-img-{{ $key}}: url({{ .RelPermalink }});
     {{ end }}
     {{ end }}
     }
     </style>
+    {{ end }}
     {{ block "head_css" . }}
     {{ end }}
 </head>
