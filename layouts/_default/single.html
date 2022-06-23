@@ -1,10 +1,6 @@
 {{ define "head_css"}}
-{{ with .Resources.Get "img/bkg.jpg" }}
+{{ partial "background" . }}
 <style>
-    :root {
-        --background-img: url({{ .RelPermalink }});
-    }
-
     .button-container {
         display: flex;
         justify-content: space-between;
@@ -12,7 +8,6 @@
         margin: 2em 0
     }
 </style>
-{{ end }}
 {{ end }}
 
 {{ define "main" }}

@@ -30,7 +30,11 @@
                 </div>
             </div>
             <div id="hero-container">
-                <img class="hero" src="assets/img/me.jpg" alt="Photo of my wind-swept self on the Brighton seafront">
+                {{ with resources.Get "img/me.jpg" }}
+                {{ with .Resize "200x"}}
+                <img class="hero" src="{{ .RelPermalink }}" alt="Photo of my wind-swept self on the Brighton seafront">
+                {{ end }}
+                {{ end }}
             </div>
 
         </section>
@@ -58,7 +62,8 @@
                     <div class="card">
                         {{ $icon := $v.icon }}
                         {{ if len (findRE "\\..{3}$" $icon) }}
-                        <img class="inline-icon{{ $hover }}" src="assets/img/{{ $icon }}">
+                        <img class="inline-icon{{ $hover }}"
+                            src="{{ with resources.Get ( print "img/" $icon )}}{{ .RelPermalink }}{{ end }}">
                         {{ else }}
                         <i class="{{ $icon }}{{ $hover }}"></i>
                         {{ end }}
@@ -122,8 +127,12 @@
                         room.<br>Co-authored with Jennifer Mankin during my time at Uni Sussex.
                     </p>
                 </div>
-                <div class="portfolio-image-container" width="280px" style="max-height:220px">
-                    <img src="/assets/img/escape.png" alt="" width="200px">
+                <div class="portfolio-image-container" width="280px">
+                    {{ with resources.Get "img/escape.png" }}
+                    {{ with .Resize "x250" }}
+                    <img src="{{ .RelPermalink }}" alt="">
+                    {{ end }}
+                    {{ end }}
                 </div>
             </a>
             More to come...
@@ -147,7 +156,11 @@
                 {{ range $index, $page := first 3 $pages }}
                 <div class="post-container{{ with $page.Params.featured}} featured" alt="featured post{{ end }}">
                     <div class="post-image-container">
-                        <img src="{{with $page.Resources.Get "img/bkg.jpg" }}{{ .RelPermalink }}{{ end }}" alt="">
+                        {{ with $page.Resources.Get "img/bkg.jpg" }}
+                        {{ with .Resize "x250" }}
+                        <img src="{{ .RelPermalink }}" alt="">
+                        {{ end }}
+                        {{ end }}
                     </div>
                     <div class="post">
                         <h3>{{$page.Title}}</h3>
@@ -166,7 +179,8 @@
         <section id="gallery-section">
             <a class="anchor" id="gallery"></a>
             <h2><span class="hoverable"> An art</span><span class="tooltip">Hommage to the
-                    hilarious <a href="https://mcmansionhell.com/post/154250104246/cook-county-il">McMansion
+                    hilarious and edifying <a
+                        href="https://mcmansionhell.com/post/154250104246/cook-county-il">McMansion
                         Hell</a></span></h2>
             <p>Because I'm not cool enough for Instagram...</p>
             {{ $featured_photos := slice }}

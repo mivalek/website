@@ -3,7 +3,6 @@
 :root {
 	--theme-col: 235, 120, 0;
 	--alt-col: 35, 137, 196;
-	--background-img: url(/assets/img/intro.jpg)
 }
 
 html {
@@ -16,7 +15,7 @@ html.fixed {
 }
 
 #background {
-	background-image: var(--background-img);
+	background-image: var(--background-img-small);
 }
 
 body {	
@@ -335,6 +334,10 @@ iframe.viz {
 }
 
 @media (min-width: 580px) {
+	#background {
+		background-image: var(--background-img-medium);
+	}
+
 	.wide-only {
 		display: block
 	}
@@ -385,12 +388,18 @@ iframe.viz {
 }
 
 @media (min-width: 1024px) {
+	#background {
+	background-image: var(--background-img-large);
+	}
 	#author-section {
 		flex-direction: row;
 	}
 }
 
 @media (min-width: 1340px) {
+	#background {
+	background-image: var(--background-img-huge);
+	}
 	#main-container {
 		gap: 80px;
 	}

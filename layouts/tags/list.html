@@ -1,11 +1,5 @@
 {{ define "head_css"}}
-{{ with .Resources.Get "img/bkg.jpg" }}
-<style>
-    :root {
-        --background-img: url({{ .RelPermalink }});
-    }
-</style>
-{{ end }}
+{{ partial "background" . }}
 <link rel="stylesheet" href="/assets/css/blog_list.css">
 {{ end }}
 
@@ -46,7 +40,11 @@
                         <div class="month">{{.Date.Format "Jan"}}</div>
                     </div>
                     <div class="img-container">
-                        <img src="{{ with .Resources.Get "img/bkg.jpg"}} {{ .RelPermalink }} {{ end }}" alt="" />
+                        {{ with .Resources.Get "img/bkg.jpg" }}
+                        {{ with .Resize "x250" }}
+                        <img src="{{ .RelPermalink }}" alt="">
+                        {{ end }}
+                        {{ end }}
                         <div class="img-overlay"></div>
                     </div>
                     <h2>{{.Title}}</h2>

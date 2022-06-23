@@ -1,11 +1,5 @@
 {{ define "head_css"}}
-{{ with .Resources.Get "img/bkg.jpg" }}
-<style>
-    :root {
-        --background-img: url({{ .RelPermalink }});
-    }
-</style>
-{{ end }}
+{{ partial "background" . }}
 <link rel="stylesheet" href="/assets/css/gallery.css">
 {{ end }}
 {{ define "main" }}

@@ -300,6 +300,10 @@ a.portfolio-item:nth-of-type(2n-1) .portfolio-desc {
 	transition: transform .2s ease-in;
 }
 
+.portfolio-image-container img {
+	height: 200px
+}
+
 .portfolio-desc .button-container {
 	position: absolute;
 	bottom: -1em;

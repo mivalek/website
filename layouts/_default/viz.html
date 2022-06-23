@@ -15,13 +15,7 @@
 {{ end }}
 
 {{ define "head_css"}}
-{{ with .Resources.Get "img/bkg.jpg" }}
-<style>
-  :root {
-    --background-img: url({{ .RelPermalink }});
-  }
-</style>
-{{ end }}
+{{ partial "background" . }}
 <link rel="stylesheet" href="/assets/css/blog_list.css">
 <link rel="stylesheet" href="/assets/css/viz.css">
 <link rel="stylesheet" href="/assets/css/viz_viewer.css">
@@ -45,13 +39,18 @@
   <main>
     <div class="description narrow-only">{{ .Content }}</div>
     <div class="post-cards">
+      {{ $page := .Page }}
       {{ $data := .Site.Data.viz }}
       {{ range $index, $value := $data}}
       <div class="post-card-container" href="./{{ $value.ref }}" title="{{ $value.name }}" index="{{ $index }}"
         {{ if eq (add $index 1) (len $data) }}last="true" {{ end }}>
         <div class="card">
           <div class="img-container">
-            <img src="/assets/img/viz/{{ $value.ref }}.png" />
+            {{ with $page.Resources.Get ( print $value.ref ".png" ) }}
+            {{ with .Resize "x250" }}
+            <img src="{{ .RelPermalink }}" alt="">
+            {{ end }}
+            {{ end }}
           </div>
           <div class="text-container">
             <div class="viz-title">
