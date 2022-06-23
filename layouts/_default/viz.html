@@ -1,206 +1,37 @@
+{{ define "custom_head" }}
+<meta name="description" content="Visualisations of statistical concepts to help build stats intuition" />
+<meta name="twitter:title" content="Interactive applet" />
+<meta name="twitter:description" content="Visualisations of statistical concepts to help build stats intuition" />
+<meta name="twitter:image:src" content="/assets/img/viz/viz.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:creator" content="@mivalek" />
+<meta name="twitter:site" content="@mivalek" />
+<meta property="og:title" content="Interactive applet" />
+<meta property="og:description" content="Visualisations of statistical concepts to help build stats intuition" />
+<meta property="og:image" content="/assets/img/viz/viz.png" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Milan Valášek" />
+{{ end }}
+
 {{ define "head_css"}}
+{{ with .Resources.Get "img/bkg.jpg" }}
 <style>
-  #background {
-    background-image: url({{ if .Params.background }}/assets/img/{{ .Params.background }}{{ else }}/assets/img/intro.jpg{{ end}});
-  }
-
-  section.listing {
-    margin-top: 0;
-    padding: 10px 30px;
-
-  }
-
-  section.listing:nth-child(2n) {
-    margin-top: 0;
-    padding-bottom: 40px;
-  }
-
-  .listing h2 {
-    margin: .5em 0;
-  }
-
-  .pub-date {
-    color: #666;
-    font-size: .8em;
-    margin-top: -.5em;
-    margin-bottom: 1.5em;
-  }
-
-  #nav-container nav.taxonomy {
-    top: 120px;
-    color: #666;
-
-  }
-
-  .nav-title {
-    margin-bottom: .5em;
-  }
-
-  #nav-container #back {
-    top: 70px;
-    margin-top: 30px;
-  }
-
-
-  #byline #subtitle {
-    display: none;
-  }
-
-  .post-cards {
-    font-size: .65em;
-    display: flex;
-    gap: 25px;
-    flex-wrap: wrap;
-    margin: 3em 0;
-  }
-
-  .post-card-container {
-    width: 230px;
-  }
-
-  .card {
-    box-shadow: 0 0 10px 0 #ccc;
-    padding: 5px 10px;
-    display: block;
-    transition: transform .1s ease-in;
-    position: relative;
-  }
-
-  .card:hover {
-    transform: scale(1.01);
-  }
-
-  .post-card-container:nth-child(2n) .card {
-    background-color: rgba(var(--alt-col), .15);
-  }
-
-  .card .img-container {
-    transform: translate(-8px, -10px) scale(1.1);
-    width: 100%;
-    height: 230px;
-  }
-
-  .card img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: bottom;
-    filter: grayscale();
-  }
-
-  .img-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
-
-  .post-card-container:nth-child(2n-1) .img-overlay {
-    background-color: rgba(var(--alt-col), .2);
-  }
-
-  .card h2 {
-    margin: 10px 0 7px 0;
-  }
-
-  .card .pub-date {
-    margin: 0 0 10px 0
-  }
-
-  .card>a {
-    z-index: 100;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border: none;
-  }
-
-  .card .tags {
-    position: absolute;
-    background-color: rgb(var(--theme-col));
-    padding: 1px 3px;
-    right: -10px
-  }
-
-  .card .tags a {
-    color: white;
-    border: none;
-    margin: 5px
-  }
-
-  .description {
-    margin: 1.5em 0 3em 0;
-  }
-
-  @media (min-width: 590px) {
-    #byline #subtitle {
-      display: block;
-      margin-left: 0;
-      transform: translateX(10vw);
-    }
-
-    .description {
-      display: none
-    }
-  }
-
-  #byline #subtitle {
-    font-size: 20px;
-    padding: 0 10px;
-    width: fit-content;
-    margin-left: 0;
-    margin-top: -5px;
-    transform: translateX(12vw);
-    max-width: 87%;
-  }
-
-  .pub-date {
-    background-color: rgb(var(--theme-col));
-    width: max-content;
-    border: solid 1px rgb(var(--theme-col));
-    border-radius: 3px;
-    text-align: center;
-    transition: transform .1s ease-in;
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    z-index: 100;
-    right: 3px;
-    top: -22px;
-  }
-
-  .pub-date div {
-    display: block;
-    padding: 0 2px;
-  }
-
-  .year {
-    color: white;
-    width: 39px;
-  }
-
-  .day {
-    font-size: 1.3em;
-    font-weight: bold;
-    background-color: white;
-    margin-bottom: -1px;
-  }
-
-  .month {
-    background-color: white;
-    margin-top: -1px;
-  }
-
-  .blog-summary {
-    height: 145px;
+  :root {
+    --background-img: url({{ .RelPermalink }});
   }
 </style>
 {{ end }}
+<link rel="stylesheet" href="/assets/css/blog_list.css">
+<link rel="stylesheet" href="/assets/css/viz.css">
+<link rel="stylesheet" href="/assets/css/viz_viewer.css">
+{{ end }}
 
 {{ define "main" }}
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v11.0"
+  nonce="T1fRhrc3"></script>
+
 <div id="background"></div>
 <div id="byline">
   <h1 id="title">{{ .Title }}</h1>
@@ -212,24 +43,68 @@
     </div>
   </div>
   <main>
-    <div class="description">{{ .Content }}</div>
-    <!-- Ranges through content/blog/*.md -->
-    <!-- <p class="pub-date">Published on {{.Date.Format "2 Jan 2006"}}</p> -->
+    <div class="description narrow-only">{{ .Content }}</div>
     <div class="post-cards">
-      {{ range .Site.Data.viz }}
-      <div class="post-card-container">
+      {{ $data := .Site.Data.viz }}
+      {{ range $index, $value := $data}}
+      <div class="post-card-container" href="./{{ $value.ref }}" title="{{ $value.name }}" index="{{ $index }}"
+        {{ if eq (add $index 1) (len $data) }}last="true" {{ end }}>
         <div class="card">
-          <a href="./app?v={{ .ref }}&t={{ .name }}"></a>
           <div class="img-container">
-            <img src="/assets/img/viz/{{ .ref }}.png" />
-            <div class="img-overlay"></div>
+            <img src="/assets/img/viz/{{ $value.ref }}.png" />
           </div>
-          <h2>{{ .name | safeHTML}}</h2>
-          <div class="blog-summary">{{ .desc | safeHTML }}</div>
+          <div class="text-container">
+            <div class="viz-title">
+              <h2>{{ $value.name | safeHTML}}</h2>
+            </div>
+            <div class="text">{{ $value.desc | safeHTML }}</div>
+
+          </div>
         </div>
       </div>
       {{ end }}
     </div>
+
+    <div id="viewer-container">
+      <div id="app-viewer">
+        <button class="ctrl previous wide-only">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <div id="middle">
+          <div id="app-container">
+            <iframe id="app" class="viz" src="" data-external="1" style="height:0px"></iframe>
+          </div>
+          <div id="embed-container"></div>
+        </div>
+        <button class="ctrl next wide-only">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+        <div id="mobile-ctrls" class="narrow-only">
+          <button class="ctrl previous">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button id="close-gallery" class="narrow-only">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <button class="ctrl next">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
   </main>
 </div>
+<div id="shadow-embed-container" aria-hidden="true" visibility="none"><button id="embed"
+    onclick="embed()">&lt;embed/&gt;</button>
+  <div id="tooltip"><span>Code copied to clipboard!</span></div>
+  <div class="fb-share-button" data-href="" data-layout="button" data-size="large"></div>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large"
+    data-related="mivalek" data-show-count="false" data-external="1">Tweet</a>
+  <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+{{ end }}
+
+
+{{ define "footer_js" }}
+<script src="/assets/js/viz-viewer.js" type="text/javascript"></script>
 {{ end }}

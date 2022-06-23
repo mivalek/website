@@ -1,0 +1,22 @@
+// https =//freesound.org/people/InspectorJ/sounds/416179/
+const menuSound = new Audio("./assets/sounds/menu.mp3");
+// https =//freesound.org/people/Lucish_/sounds/554841/
+const cash = new Audio("./assets/sounds/cash.mp3");
+// bell https =//freesound.org/people/775noise/sounds/494565/
+// door https =//freesound.org/people/InspectorJ/sounds/431117/
+const enterSound = new Audio("./assets/sounds/enter.mp3");
+// https =//freesound.org/people/Higgs01/sounds/428156/
+const yay = new Audio("./assets/sounds/yay.mp3");
+// https =//freesound.org/people/tim.kahn/sounds/336997/
+const boo = new Audio("./assets/sounds/boo.mp3");
+// https =//freesound.org/people/Larakaa/sounds/503412/
+const grunt = new Audio("./assets/sounds/grunt.mp3");
+// https =//freesound.org/people/juror2/sounds/196402/
+const tut = new Audio("./assets/sounds/tut.mp3");
+// https =//freesound.org/people/qubodup/sounds/60013/
+const woosh = new Audio("./assets/sounds/woosh.mp3");
+// https =//freesound.org/people/MLaudio/sounds/511484/
+const ding = new Audio("./assets/sounds/ding.mp3");
+// win XP critical error
+const error = new Audio("./assets/sounds/error.mp3");
+// beep = new Audio("./assets/sounds/beep.mp3");

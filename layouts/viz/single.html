@@ -20,21 +20,36 @@
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v11.0"
   nonce="T1fRhrc3"></script>
 
+<div id="background"></div>
+<div id="byline">
+  <h1 id="title">{{ .Title }}</h1>
+  <div id="subtitle">{{ .Date.Format "2 Jan 2006" }}</div>
+</div>
+<div id="main-container">
+  <div id="nav-container">
+    <div class="inline-icons">
+      <div id="back"><a href="{{.CurrentSection.Permalink }}"><i class="fa-solid fa-arrow-left"></i></a></div>
+      <div id="home"><a href="/#portfolio"><i class="fa-solid fa-house"></i></a></div>
+    </div>
 
-{{ with .Params.Description }}
-<p>{{ . }}</p>
-{{ end }}
+    {{ .TableOfContents }}
+  </div>
+  <main>
+    {{ with .Params.Description }}
+    <p>{{ . }}</p>
+    {{ end }}
 
-<section>
-  {{ .Content }}
-</section>
-
+    <section>
+      {{ .Content }}
+    </section>
+  </main>
+</div>
 {{ end }}
 
 
 {{ define "head_css" }}
 
-<!-- <link rel="stylesheet" href="assets/css/viz_viewer.css"> -->
+<link rel="stylesheet" href="/assets/css/viz_viewer.css">
 
 
 {{ end }}
@@ -48,5 +63,5 @@
 
 
 {{ define "footer_js" }}
-<script type="text/javascript" src="/js/viz-viewer.js"></script>
+<script type="text/javascript" src="/assets/js/viz-viewer.js"></script>
 {{ end }}

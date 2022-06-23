@@ -1,0 +1,65 @@
+{{ define "head_css"}}
+{{ with .Resources.Get "img/bkg.jpg" }}
+<style>
+    :root {
+        --background-img: url({{ .RelPermalink }});
+    }
+</style>
+{{ end }}
+<link rel="stylesheet" href="/assets/css/blog_list.css">
+{{ end }}
+
+{{ define "main" }}
+<div id="background"></div>
+<div id="byline">
+    <h1 id="title">{{ .Title }}</h1>
+    <div id="subtitle">{{ .Params.subtitle }}</div>
+</div>
+<div id="main-container">
+    <div id="nav-container">
+
+        <div class="inline-icons">
+            {{ if not .IsSection }}<div id="back"><a href="/blog"><i class="fa-solid fa-arrow-left"></i></a></div>
+            {{ end }}
+            <div id="home"><a href="/#blog"><i class="fa-solid fa-house"></i></a></div>
+        </div>
+        <nav class="taxonomy">
+            <div class="nav-title">Tags</div>
+            <ul>
+                {{ range $key, $taxonomy := .Site.Taxonomies.tags }}
+                <li><a href="/tags/{{ $key | urlize }}/">{{ $key | humanize }} ({{ len $taxonomy.Pages }})</a>
+                </li>
+                {{ end }}
+            </ul>
+        </nav>
+    </div>
+    <main>
+        <!-- Ranges through content/blog/*.md -->
+        <div class="post-cards">
+            {{ range sort .Pages.ByDate.Reverse }}
+            <div class="post-card-container">
+                <div class="card">
+                    <a href="{{.Permalink}}"></a>
+                    <div class="pub-date">
+                        <div class="year">{{.Date.Format "2006"}}</div>
+                        <div class="day">{{.Date.Format "02"}}</div>
+                        <div class="month">{{.Date.Format "Jan"}}</div>
+                    </div>
+                    <div class="img-container">
+                        <img src="{{ with .Resources.Get "img/bkg.jpg"}} {{ .RelPermalink }} {{ end }}" alt="" />
+                        <div class="img-overlay"></div>
+                    </div>
+                    <h2>{{.Title}}</h2>
+                    <div class="blog-summary">{{ .Summary | truncate 200 }}</div>
+                    <div class="tags">
+                        {{range .Params.tags }}
+                        <a href="/tags/{{.}}/">{{.}}</a>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </div>
+    </main>
+</div>
+{{ end }}

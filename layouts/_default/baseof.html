@@ -3,6 +3,8 @@
 
 <head>
     {{ partial "head" . }}
+    {{ block "custom_head" . }}
+    {{ end }}
     {{ block "head_js" . }}
     {{ end }}
     {{ block "head_css" . }}

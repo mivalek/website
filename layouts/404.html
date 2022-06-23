@@ -1,120 +1,7 @@
 {{ define "head_css" }}
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Gothic+A1:wght@400&display=swap');
-
-    footer {
-        display: none;
-    }
-
-    header {
-        display: none;
-    }
-
-    main {
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        overflow: hidden;
-        background-color: black;
-    }
-
-    #background {
-        background-image: url(/assets/img/stars.png);
-        background-size: cover;
-        animation: scale 180s ease;
-        animation-direction: alternate;
-        position: absolute;
-    }
-
-    #body {
-        background: rgba(var(--alt-col), .3);
-        position: relative;
-        height: 100%;
-        width: 100%;
-        color: #6f92a6;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 10px
-    }
-
-    div#nope {
-        width: 100%;
-        max-width: 636px;
-        font-size: 1.5em;
-    }
-
-    #not-found {
-        font-family: 'Alfa Slab One', cursive;
-        font-weight: bolder;
-        font-size: min(300px, 45vw);
-        line-height: 1em;
-        margin: 0;
-        color: #fff4;
-    }
-
-    #def {
-        max-width: 636px;
-        text-align: justify;
-    }
-
-    #source {
-        display: block;
-        text-align: right;
-        width: 100%;
-    }
-
-    #def a {
-        border: none;
-        color: white;
-    }
-
-    #source a {
-        color: #fff3;
-    }
-
-    #lol-container {
-        position: absolute;
-        display: flex;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-    }
-
-    #lol {
-        font-family: 'Gothic A1', sans-serif;
-        font-size: 60px;
-        font-weight: bolder;
-        width: fit-content;
-        height: fit-content;
-        margin: auto;
-        z-index: 1;
-        position: absolute;
-        color: rgba(var(--theme-col), .7);
-        transform-style: preserve-3d;
-        perspective: 10px;
-    }
-
-    a.button {
-        padding: .5em
-    }
-
-    @keyframes scale {
-        0% {
-            transform: scale(1);
-        }
-
-        100% {
-            transform: scale(2.5);
-        }
-    }
-</style>
+<link rel="stylesheet" href="/assets/css/404.css">
 {{ end }}
+
 {{ define "main"}}
 <main id="main">
     <div id="lol-container" aria-hidden="true">
@@ -126,10 +13,11 @@
         <h1 id="not-found">404</h1>
         <div id="def">Standard HTTP response codes were defined by the OG web developer <a
                 href="https://en.wikipedia.org/wiki/Tim_Berners-Lee">Tim Berners-Lee</a> in 1992, based on the ones
-            used for File Transfer Protocol in which codes beginning with 4 are essentially errors. The first "4"
-            indicates a client error, such as a misspelled URL or a moved page. The "0" points to a general syntax
-            error like a spelling mistake, and the last "4" indicates the specific error in the family of "40-" errors.
-            <div id="source"><a href="https://realart.com/thought-lab/history-404/">source</a></div>
+            used for File Transfer Protocol. All 4xx responses code for client errors, such as unauthorised request
+            (401) or request timeout (408). The 404 error occurs when the server cannot find the page requested by the
+            client. This can be due to the page being moved or a typo in the URL.
+            <div id="source"><a
+                    href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#4xx_client_errors">source</a></div>
         </div>
 
         <div>
@@ -140,46 +28,5 @@
 {{ end }}
 
 {{ define "footer_js"}}
-<script>
-    document.getElementById("background").classList.add("scaled")
-    const lol = document.getElementById("lol")
-    lol.style.top = Math.round(Math.random() * 100) + 100 + "px"
-    lol.style.left = Math.round(Math.random() * 100) + 10 + "px"
-    let rotX = Math.round(Math.random() * 100)
-    let rotY = Math.round(Math.random() * 100)
-    let rotZ = Math.round(Math.random() * 100)
-    let transZ = 0
-
-    let deltaX = 1,
-        deltaY = 1,
-        rotate = (Math.random() > .5) * 2 - 1
-    setInterval(() => {
-        const screen = document.getElementById("body").getBoundingClientRect()
-        const lolRect = lol.getBoundingClientRect()
-        if ((lolRect.x + lolRect.width) >= screen.width) {
-            deltaX = -1
-            rotate *= -1
-        }
-        if ((lolRect.y + lolRect.height) >= screen.height) {
-            deltaY = -1
-            rotate *= -1
-        }
-        if (lolRect.x <= 0) {
-            deltaX = 1
-            rotate *= -1
-        }
-        if (lolRect.y <= 0) {
-            deltaY = 1
-            rotate *= -1
-        }
-        lol.style.top = +lol.style.top.replace("px", "") + deltaY + "px"
-        lol.style.left = +lol.style.left.replace("px", "") + deltaX + "px"
-        rotX += rotate / 3
-        rotY += rotate / 2
-        rotZ += rotate
-        transZ += (deltaY) / 2
-        lol.style.transform =
-            `rotateY(${rotY}deg) rotateZ(${rotZ}deg) translateZ(${transZ}px)`
-    }, 20);
-</script>
+<script src="/assets/js/404.js" type="text/javascript"></script>
 {{ end }}

@@ -84,9 +84,52 @@
         <section id="portfolio-section">
             <a class="anchor" id="portfolio"></a>
             <h2>Things I've made</h2>
-            <div class="button-container">
-                <a href="./portfolio" class="button">More things</a>
+            <div class="portfolio-item">
+                <div class="portfolio-desc">
+                    <h3>Interactive visualisations</h3>
+                    <p>Cute little visual explainers of statistical concepts I would use when I taught stats. This one
+                        shows how the correlation coefficient <em>r</em> can be understoon as the cosine of the angle
+                        formed by two OLS lines of best fit, one preddicting x from y and the other predicting y form x.
+                    </p>
+                    <div class="button-container">
+                        <a href="./viz" class="button">More viz</a>
+                    </div>
+                </div>
+                <div class="portfolio-image-container">
+                    <iframe id="cor-viz" class="viz app" src="/viz/cor" data-external="1"
+                        style="height:562px;"></iframe>
+                </div>
             </div>
+            <a href="/caffe_nerd" class="portfolio-item" alt="link to caffe nerd game">
+                <div class="portfolio-desc">
+                    <h3>Caff&egrave; neRd</h3>
+                    <p>As an intern in a quirky caf&eacute; you can only serve drink by querying th correct item from
+                        the menu using code. This gamified tutorial will walk you through the basics of data wrangling
+                        using R's
+                        <code>tidyverse</code> dialect.<br>Not optimised for mobile devices.
+                    </p>
+                </div>
+                <div class="portfolio-image-container">
+                    <img src="/caffe_nerd/assets/img/nerd.svg" alt="" width="200px">
+                </div>
+            </a>
+            <a href="https://and2021.netlify.app/docs/escape/" target="_blank" class="portfolio-item"
+                alt="external link to a data science escape room">
+                <div class="portfolio-desc">
+                    <h3>Escape room<i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
+                    <p>Do you dare enter the room of data horrors few have managed to escape in time? Use your
+                        data-analysis skills to make it out of this ever-so-slightly thrilling escape
+                        room.<br>Co-authored with Jennifer Mankin during my time at Uni Sussex.
+                    </p>
+                </div>
+                <div class="portfolio-image-container" width="280px" style="max-height:220px">
+                    <img src="/assets/img/escape.png" alt="" width="200px">
+                </div>
+            </a>
+            More to come...
+            <!-- <div class="button-container">
+                <a href="./portfolio" class="button">More things</a>
+            </div> -->
         </section>
         <section id="blog-section">
             <a class="anchor" id="blog"></a>

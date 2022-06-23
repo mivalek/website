@@ -1,0 +1,167 @@
+
+#embed-container > * {
+	    margin-left: 10px;
+}
+
+#embed-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-flow: row-reverse;
+  align-items: end;
+  margin-top: .5em;
+}
+
+#embed-container iframe {
+	border: none;
+	margin-bottom: 0;
+}
+
+
+button#embed {
+	background: rgba(var(--theme-col), .8);
+	border-radius: 5px;
+	color: #fff;
+	font-weight: 600;
+	height: 28px;
+	font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 0 3px;
+}
+
+button {
+	cursor: pointer;
+}
+
+button#embed:hover {
+	background: rgb(var(--theme-col));
+}
+
+button#embed:active {
+	background: #52006f8c;
+	color: rgb(var(--theme-col));
+}
+
+#tooltip {
+  font-size: .8em;
+	display: none;
+	width: max-content;
+	background-color: black;
+	opacity: .7;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 0 5px;
+	position: absolute;
+	right: -50px;
+	top: -26px;
+	pointer-events: none;
+	margin: 0;
+}
+
+#tooltip::before {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+#tooltip.show {
+  display: initial;
+  -webkit-animation: fadeInOut 1.5s;
+  -moz-animation: fadeInOut 1.5s;
+  -ms-animation: fadeInOut 1.5s;
+  -o-animation: fadeInOut 1.5s;
+  animation: fadeInOut 1.5s;
+}
+
+/* Add animation (fade in the popup) */
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+	visibility: visible;
+  }
+  35% {
+    opacity: .7;
+  }
+  65% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+	visibility: hidden;
+  }
+}
+
+@-webkit-keyframes fadeInOut {
+  0% {
+    opacity: 0;
+	visibility: visible;
+  }
+  235% {
+    opacity: .7;
+  }
+  65% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+	visibility: hidden;
+  }
+}
+
+@-moz-keyframes fadeInOut {
+  0% {
+    opacity: 0;
+	visibility: visible;
+  }
+  235% {
+    opacity: .7;
+  }
+  65% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+	visibility: hidden;
+  }
+}
+
+@-ms-keyframes fadeInOut {
+  0% {
+    opacity: 0;
+	visibility: visible;
+  }
+  235% {
+    opacity: .7;
+  }
+  65% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+	visibility: hidden;
+  }
+}
+
+@-o-keyframes fadeInOut {
+  0% {
+    opacity: 0;
+	visibility: visible;
+  }
+  235% {
+    opacity: .7;
+  }
+  65% {
+    opacity: .7;
+  }
+  100% {
+    opacity: 0;
+	visibility: hidden;
+  }
+}

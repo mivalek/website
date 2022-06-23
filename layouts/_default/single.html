@@ -4,6 +4,13 @@
     :root {
         --background-img: url({{ .RelPermalink }});
     }
+
+    .button-container {
+        display: flex;
+        justify-content: space-between;
+        flex-flow: row;
+        margin: 2em 0
+    }
 </style>
 {{ end }}
 {{ end }}
@@ -16,13 +23,23 @@
 </div>
 <div id="main-container">
     <div id="nav-container">
-        <div id="back"><a href="{{.CurrentSection.Permalink }}">Back to {{.CurrentSection.Params.category}}</a>
+        <div class="inline-icons">
+            <div id="back"><a href="{{.CurrentSection.Permalink }}"><i class="fa-solid fa-arrow-left"></i></a></div>
+            <div id="home"><a href="/#{{ .Section }}"><i class="fa-solid fa-house"></i></a></div>
         </div>
 
         {{ .TableOfContents }}
     </div>
     <main>
         {{ .Content }}
+        <div class="button-container">
+            {{ if .PrevInSection }}
+            <a href="{{ .PrevInSection.RelPermalink }}" class="button">Previous post</a>{{else}}<div class="placeholder"
+                aria-hidden="true"></div>
+            {{ end }}
+            {{ if .NextInSection }}<a href="{{ .NextInSection.RelPermalink }}" class="button">Next
+                post</a>{{else}}<div class="placeholder" aria-hidden="true"></div>{{ end }}
+        </div>
         {{ template "_internal/disqus.html" . }}
     </main>
 </div>

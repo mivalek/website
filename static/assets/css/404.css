@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Gothic+A1:wght@400&display=swap');
+
+footer {
+    display: none;
+}
+
+header {
+    display: none;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    background-color: black;
+}
+
+#background {
+    background-image: url(/assets/img/stars.png);
+    background-size: cover;
+    animation: scale 180s ease;
+    animation-direction: alternate;
+    position: absolute;
+}
+
+#body {
+    background: rgba(var(--alt-col), .3);
+    position: relative;
+    height: 100%;
+    width: 100%;
+    color: #6f92a6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px
+}
+
+div#nope {
+    width: 100%;
+    max-width: 636px;
+    font-size: 1.5em;
+}
+
+#not-found {
+    font-family: 'Alfa Slab One', cursive;
+    font-weight: bolder;
+    font-size: min(300px, 45vw);
+    line-height: 1em;
+    margin: 0;
+    color: #fff4;
+}
+
+#def {
+    max-width: 636px;
+    text-align: justify;
+}
+
+#source {
+    display: block;
+    text-align: right;
+    width: 100%;
+}
+
+#def a {
+    border: none;
+    color: white;
+}
+
+#source a {
+    color: #fff3;
+}
+
+#lol-container {
+    position: absolute;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#lol {
+    font-family: 'Gothic A1', sans-serif;
+    font-size: 60px;
+    font-weight: bolder;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    z-index: 1;
+    position: absolute;
+    color: rgba(var(--theme-col), .7);
+    transform-style: preserve-3d;
+    perspective: 10px;
+}
+
+a.button {
+    padding: .5em
+}
+
+@keyframes scale {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(2.5);
+    }
+}
