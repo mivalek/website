@@ -3,6 +3,23 @@
     --orange: 235, 120, 0;
 }
 
+#loading-mask {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: white;
+	z-index: 100;
+    opacity: 1;
+    transition: opacity .2s ease-in, z-index .2s ease-in .2s
+}
+
+#loading-mask.hidden {
+    opacity: 0;
+    z-index: -1
+}
+
 main {
     position: relative;
     font-size: 13px;

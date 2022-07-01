@@ -1,48 +1,57 @@
-countries = {
-    JPN: "Japan",
-    CZE: "Czechia",
-    RUS: "Russia",
-    GBR: "United Kingdom",
-    USA: "USA",
-    KOR: "South Korea",
-    GER: "Germany",
-    SLO: "Slovenia",
-    AUT: "Austria",
-};
-data.forEach((d) => {
-    const med_per_event = (+d.gold + +d.silver + +d.bronze) / d.participations;
-    d["medals_per_event"] = med_per_event.toFixed(2);
-});
-const viz_div = document.getElementById("viz");
-data.forEach((d, i) => {
-    const head_container = document.createElement("div");
-    head_container.classList.add("head-container");
-    head_container.style.height = `${+d.tops / 2 + 40}px`;
-    const head = document.createElement("div");
-    head.classList.add("athlete-head");
-    head.setAttribute("index", i);
-    const flag = document.createElement("img");
-    flag.classList.add("flag");
-    const img = document.createElement("img");
-    flag.src = `assets/img/countries/${d.country}.png`;
-    img.src = `assets/img/athletes/${d.athlete
-        .toLowerCase()
-        .replaceAll(" ", "_")}.png`;
-    const shadow = document.createElement("div");
-    shadow.classList.add("head-shadow");
-    head.appendChild(flag);
-    head.appendChild(img);
-    head.style.animationName = "fall-" + i;
-    head.style.animationDuration = d.fall_freq2 + "s";
-    shadow.style.animationName = "shadow-shrink-" + i;
-    shadow.style.animationDuration = d.fall_freq2 + "s";
-    head_container.appendChild(head);
-    head_container.appendChild(shadow);
-    viz_div.appendChild(head_container);
-    const anim = document.getElementById("animations");
-    anim.innerHTML =
-        anim.innerHTML +
-        `
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function removeMask(afterMs) {
+    await sleep(afterMs);
+    document.getElementById("loading-mask").classList.add("hidden");
+}
+
+window.onload = function () {
+    countries = {
+        JPN: "Japan",
+        CZE: "Czechia",
+        RUS: "Russia",
+        GBR: "United Kingdom",
+        USA: "USA",
+        KOR: "South Korea",
+        GER: "Germany",
+        SLO: "Slovenia",
+        AUT: "Austria",
+    };
+    data.forEach((d) => {
+        const med_per_event =
+            (+d.gold + +d.silver + +d.bronze) / d.participations;
+        d["medals_per_event"] = med_per_event.toFixed(2);
+    });
+    const viz_div = document.getElementById("viz");
+    data.forEach((d, i) => {
+        const head_container = document.createElement("div");
+        head_container.classList.add("head-container");
+        head_container.style.height = `${+d.tops / 2 + 40}px`;
+        const head = document.createElement("div");
+        head.classList.add("athlete-head");
+        head.setAttribute("index", i);
+        const flag = document.createElement("img");
+        flag.classList.add("flag");
+        const img = document.createElement("img");
+        flag.src = `assets/img/countries/${d.country}.png`;
+        img.src = `assets/img/athletes/${d.athlete
+            .toLowerCase()
+            .replaceAll(" ", "_")}.png`;
+        const shadow = document.createElement("div");
+        shadow.classList.add("head-shadow");
+        head.appendChild(flag);
+        head.appendChild(img);
+        head.style.animationName = "fall-" + i;
+        head.style.animationDuration = d.fall_freq2 + "s";
+        shadow.style.animationName = "shadow-shrink-" + i;
+        shadow.style.animationDuration = d.fall_freq2 + "s";
+        head_container.appendChild(head);
+        head_container.appendChild(shadow);
+        viz_div.appendChild(head_container);
+        const anim = document.getElementById("animations");
+        anim.innerHTML =
+            anim.innerHTML +
+            `
             @keyframes fall-${i} {
                 from {
                     margin-top: 0;
@@ -68,22 +77,25 @@ data.forEach((d, i) => {
 
         }
             `;
-    head.addEventListener(
-        "mouseenter",
-        (e) => {
-            fillDetails(e.target.getAttribute("index"));
-            document.getElementById("details").classList.add("active");
-        },
-        (useCapture = true)
-    );
+        head.addEventListener(
+            "mouseenter",
+            (e) => {
+                fillDetails(e.target.getAttribute("index"));
+                document.getElementById("details").classList.add("active");
+            },
+            (useCapture = true)
+        );
 
-    head.addEventListener(
-        "mouseout",
-        (e) => document.getElementById("details").classList.remove("active"),
-        (useCapture = true)
-    );
-});
+        head.addEventListener(
+            "mouseout",
+            (e) =>
+                document.getElementById("details").classList.remove("active"),
+            (useCapture = true)
+        );
+    });
 
+    removeMask(1000);
+};
 function fillDetails(index) {
     const d = data[index];
     let name = d.athlete;
@@ -110,6 +122,7 @@ function fillDetails(index) {
         div.innerText = text;
     }
 }
+
 document
     .getElementById("info")
     .addEventListener(

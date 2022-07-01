@@ -98,4 +98,6 @@ head_css: assets/style.css
         </div>
     </div>
 </div>
+<div id="loading-mask"></div>
+
 <style id="animations"></style>
