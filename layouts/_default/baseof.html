@@ -7,6 +7,7 @@
     {{ end }}
     {{ block "head_js" . }}
     {{ end }}
+    {{ with .Resources.Get .Params.head_js }}<script src="{{ . }}" type="text/javascript"></script>{{ end }}
     {{ with $img :=  resources.Get "img/intro.jpg" }}
     {{ $sizes := dict "huge" "2560x" "large" "1920x" "medium" "1280x" "small" "400x1000" }}
     {{ print "<style>" | safeHTML }}
@@ -25,6 +26,8 @@
     {{ end }}
     {{ block "head_css" . }}
     {{ end }}
+    {{ with .Resources.Get .Params.head_css }}
+    <link rel="stylesheet" href="{{ . }}">{{ end }}
 </head>
 
 <body>
@@ -36,12 +39,14 @@
     <!-- Add Body Here -->
     {{ end }}
 
-
     {{ partial "footer" . }}
     {{ block "footer_js" . }}
     {{ end }}
+    {{ with .Resources.Get .Params.footer_js }}<script src="{{ . }}" type="text/javascript"></script>{{ end }}
     {{ block "footer_css" . }}
     {{ end }}
+    {{ with .Resources.Get .Params.footer_css }}
+    <link rel="stylesheet" href="{{ resources.Get . }}">{{ end }}
 </body>
 
 </html>

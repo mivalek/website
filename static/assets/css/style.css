@@ -150,16 +150,10 @@ div#hamburger-bkg {
 }
 
 #byline #subtitle {
-    font-size: 20px;
-    background: #999999e6;
-    padding: 0 10px;
-	width: fit-content;
-	margin-left: 5%;
-	margin-top: -5px;
+    display: none;
 }
 
 #main-container {
-	/* margin-top: 100vh; */
 	z-index: 1;
 	position: relative;
 	background: white;
@@ -173,6 +167,8 @@ div#hamburger-bkg {
 
 main {	
 	grid-column: text-start / text-end;
+	font-size: 16px;
+	
 }
 
 section {
@@ -316,6 +312,7 @@ iframe.viz {
 	width: 100%;
 }
 
+
 @media (max-width: 750px) {
 	body {
 		overflow-x: hidden;
@@ -330,6 +327,20 @@ iframe.viz {
 @media (min-width: 480px) {
 	footer {		
 		flex-direction: row;
+	}
+}
+@media (min-width: 590px) {
+    #byline #subtitle {		
+		background: #999999e6;
+        display: block;
+        transform: translateX(10vw);
+		font-size: 20px;
+		padding: 0 10px;
+		width: fit-content;
+		margin-left: 0;
+		margin-top: -5px;
+		transform: translateX(12vw);
+		max-width: 87%;
 	}
 }
 
@@ -351,7 +362,11 @@ iframe.viz {
 		grid-template-columns: [screen-strat] minmax(50px, 1fr) [nav-start] 160px [nav-end text-start] minmax(500px, 1000px) [text-end margin-start] 1fr [margin-end screen-end];
 		gap: 20px;
 	}
-
+	
+	main {
+		font-size: 18px;
+	}
+	
 	#nav-container {
 		display: block;
 		grid-column: nav-start;

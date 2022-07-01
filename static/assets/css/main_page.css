@@ -57,7 +57,7 @@
     font-size: 30px;
     font-weight: bold;
     background: #999999e6;
-    padding: 0 10px;
+    padding: 5px 10px;
 	justify-content: end;
 }
 
@@ -76,6 +76,7 @@
 #title > div {
 	margin: 0 5px;
 	white-space: nowrap;
+	line-height: 35px;
 }
 
 .active #intro {
@@ -85,7 +86,7 @@
 
 #title .lig {
     display: inline-block;
-    letter-spacing: -5px;
+    letter-spacing: -2px;
 }
 
 #title .nudge {
@@ -115,6 +116,7 @@
 
 #hero-container {
 	margin: auto;
+	margin-top: 16px;
 	min-width: 170px;
 }
 
@@ -205,7 +207,7 @@ section:nth-child(2n) .skill-area h3 {
     flex-shrink: 0;
 }
 
-.post-container:nth-child(2n) h3, .post-container:nth-child(2n) .published, .post-container:nth-child(2n) a {
+.post-container:nth-child(2n) {
 	text-align: right;
 }
 
@@ -291,6 +293,9 @@ a.portfolio-item:nth-of-type(2n-1) .portfolio-desc {
 	margin-left: .5em;
 }
 
+.portfolio-desc > p {
+	margin-bottom: .2em;
+}
 
 
 .portfolio-image-container {
@@ -298,10 +303,7 @@ a.portfolio-item:nth-of-type(2n-1) .portfolio-desc {
 	max-width: 300px;
 	margin: auto;
 	transition: transform .2s ease-in;
-}
-
-.portfolio-image-container img {
-	height: 200px
+	margin-bottom: 10px;
 }
 
 .portfolio-desc .button-container {
@@ -403,8 +405,6 @@ a[target="_blank"] h3 i {
 	.button-container.auto-filled:not(.keep) {
 		display: none;
 	}
-
-
 }
 
 @media (min-width: 750px) {
@@ -415,6 +415,14 @@ a[target="_blank"] h3 i {
 
 	#title {
     	font-size: 50px;
+	}
+
+	#title .lig {
+		letter-spacing: -5px;
+	}
+
+	#title > div {
+		line-height: initial;
 	}
 
 	.skill-area h3::before {
@@ -437,6 +445,9 @@ a[target="_blank"] h3 i {
 @media (min-width: 1024px) {
 	#author-section {
 		flex-direction: row;
+	}
+	#hero-container {
+		margin-top: auto;
 	}
 	#featured-gallery {
 		grid-template-columns: repeat(3, 1fr);
@@ -464,13 +475,14 @@ a[target="_blank"] h3 i {
 		grid-column: span 2;
 	}
 	
-.portfolio-image-container {
-	max-width: unset;
-	margin: auto;
-}
-.portfolio-desc .button-container {
-	position: relative;
-}
+	.portfolio-image-container {
+		max-width: unset;
+		margin: auto;
+	}
+
+	.portfolio-desc .button-container {
+		position: relative;
+	}
 }
 
 @media (min-width: 1340px) {

@@ -1,4 +1,4 @@
-#byline #subtitle {
+/* #byline #subtitle {
     font-size: 20px;
     padding: 0 10px;
     width: fit-content;
@@ -6,7 +6,7 @@
     margin-top: -5px;
     transform: translateX(12vw);
     max-width: 87%;
-}
+} */
 
 main {
     max-width: calc(100vw - 2em);

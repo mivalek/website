@@ -35,10 +35,10 @@ section.listing:nth-child(2n) {
     margin-top: 30px;
 } */
 
-
+/* 
 #byline #subtitle {
     display: none;
-}
+} */
 
 .post-cards {
     font-size: .65em;
@@ -126,13 +126,13 @@ section.listing:nth-child(2n) {
     margin: 5px
 }
 
-@media (min-width: 590px) {
+/* @media (min-width: 590px) {
     #byline #subtitle {
         display: block;
         margin-left: 0;
         transform: translateX(10vw);
     }
-}
+} */
 
 @media (max-width: 590px) {
     .post-cards {
@@ -140,7 +140,7 @@ section.listing:nth-child(2n) {
     }
 }
 
-#byline #subtitle {
+/* #byline #subtitle {
     font-size: 20px;
     padding: 0 10px;
     width: fit-content;
@@ -148,7 +148,7 @@ section.listing:nth-child(2n) {
     margin-top: -5px;
     transform: translateX(12vw);
     max-width: 87%;
-}
+} */
 
 .pub-date {
     background-color: rgb(var(--theme-col));

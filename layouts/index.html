@@ -89,6 +89,53 @@
         <section id="portfolio-section">
             <a class="anchor" id="portfolio"></a>
             <h2>Things I've made</h2>
+            <a href="/portfolio/boulder-viz" class="portfolio-item"
+                alt="link to visualisation of world bouldering competition data">
+                <div class="portfolio-desc">
+                    <h3>Data Analytics</h3>
+                    <p>Getting, processing, and analysing data is only part of the process for a data scientist.
+                        You also need to present the results to your audience in an engaging way. Eye-catching
+                        interactive analytics encourage viewers to spend time exploring data and gain
+                        insights.</p>
+                </div>
+                <div class="portfolio-image-container" width="280px" style="height:200px;filter:grayscale(.4)">
+                    {{ with resources.Get "img/boulder_img.png" }}
+                    {{ with .Resize "x250" }}
+                    <img src="{{ .RelPermalink }}" alt="" style="height:200px">
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </a>
+            <a href="/caffe_nerd" class="portfolio-item" alt="link to caffe nerd game">
+                <div class="portfolio-desc">
+                    <h3>Caff&egrave; neRd</h3>
+                    <p>As an intern in a quirky caf&eacute; you can only serve drink by querying th correct item from
+                        the menu using code. This gamified tutorial will walk you through the basics of data wrangling
+                        using R's
+                        <code>tidyverse</code> dialect.<br>Not optimised for mobile devices.
+                    </p>
+                </div>
+                <div class="portfolio-image-container">
+                    <img src="/caffe_nerd/assets/img/nerd.svg" alt="" width="200px" style="height:80px">
+                </div>
+            </a>
+            <a href="https://and2021.netlify.app/docs/escape/" target="_blank" class="portfolio-item"
+                alt="external link to a data science escape room">
+                <div class="portfolio-desc">
+                    <h3>Escape room<i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
+                    <p>Do you dare enter the room of data horrors few have managed to escape in time? Use your
+                        data-analysis skills to make it out of this ever-so-slightly thrilling escape
+                        room.<br>Co-authored with Jennifer Mankin during my time at Uni Sussex.
+                    </p>
+                </div>
+                <div class="portfolio-image-container" width="280px" style="height:200px">
+                    {{ with resources.Get "img/escape.png" }}
+                    {{ with .Resize "x250" }}
+                    <img src="{{ .RelPermalink }}" alt="" style="height:200px">
+                    {{ end }}
+                    {{ end }}
+                </div>
+            </a>
             <div class="portfolio-item">
                 <div class="portfolio-desc">
                     <h3>Interactive visualisations</h3>
@@ -105,36 +152,6 @@
                         style="height:562px;"></iframe>
                 </div>
             </div>
-            <a href="/caffe_nerd" class="portfolio-item" alt="link to caffe nerd game">
-                <div class="portfolio-desc">
-                    <h3>Caff&egrave; neRd</h3>
-                    <p>As an intern in a quirky caf&eacute; you can only serve drink by querying th correct item from
-                        the menu using code. This gamified tutorial will walk you through the basics of data wrangling
-                        using R's
-                        <code>tidyverse</code> dialect.<br>Not optimised for mobile devices.
-                    </p>
-                </div>
-                <div class="portfolio-image-container">
-                    <img src="/caffe_nerd/assets/img/nerd.svg" alt="" width="200px">
-                </div>
-            </a>
-            <a href="https://and2021.netlify.app/docs/escape/" target="_blank" class="portfolio-item"
-                alt="external link to a data science escape room">
-                <div class="portfolio-desc">
-                    <h3>Escape room<i class="fa-solid fa-arrow-up-right-from-square"></i></h3>
-                    <p>Do you dare enter the room of data horrors few have managed to escape in time? Use your
-                        data-analysis skills to make it out of this ever-so-slightly thrilling escape
-                        room.<br>Co-authored with Jennifer Mankin during my time at Uni Sussex.
-                    </p>
-                </div>
-                <div class="portfolio-image-container" width="280px">
-                    {{ with resources.Get "img/escape.png" }}
-                    {{ with .Resize "x250" }}
-                    <img src="{{ .RelPermalink }}" alt="">
-                    {{ end }}
-                    {{ end }}
-                </div>
-            </a>
             More to come...
             <!-- <div class="button-container">
                 <a href="./portfolio" class="button">More things</a>

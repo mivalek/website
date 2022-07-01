@@ -1,0 +1,22 @@
+{{ define "head_css"}}
+{{ partial "background" . }}
+{{ end }}
+
+{{ define "main" }}
+<div id="background"></div>
+<div id="byline">
+    <h1 id="title">{{ .Title }}</h1>
+    <div id="subtitle">{{ .Params.subtitle }}</div>
+</div>
+<div id="main-container">
+    <div id="nav-container">
+        <div class="inline-icons">
+            <!-- <div id="back"><a href="{{.CurrentSection.Permalink }}"><i class="fa-solid fa-arrow-left"></i></a></div> -->
+            <div id="home"><a href="/#{{ .Section }}"><i class="fa-solid fa-house"></i></a></div>
+        </div>
+    </div>
+    <main>
+        {{ .Content | safeHTML }}
+    </main>
+</div>
+{{ end }}

@@ -1,0 +1,39 @@
+{{ define "head_css"}}
+{{ with $img :=  resources.Get "img/me.jpg" }}
+{{ $sizes := dict "huge" "2560x" "large" "1920x" "medium" "1280x" "small" "400x1000 center" }}
+{{ print "<style>" | safeHTML }}
+:root {
+{{ range $key, $value := $sizes }}
+{{ $resized := $img.Resize $value}}
+{{ if eq $key "small"}}
+{{ $resized = $img.Fill $value}}
+{{ end }}
+{{ with $resized }}
+--background-img-{{ $key}}: url({{ .RelPermalink }});
+{{ end }}
+{{ end }}
+}
+</style>
+{{ end }}
+{{ end }}
+
+{{ define "main" }}
+<div id="background"></div>
+<div id="byline">
+    <h1 id="title">{{ .Title }}</h1>
+    {{ with .Params.subtitle }}
+    <div id="subtitle">{{ . }}</div>
+    {{ end }}
+</div>
+<div id="main-container">
+    <div id="nav-container">
+        <div class="inline-icons">
+            <div id="home"><a href="/#welcome"><i class="fa-solid fa-house"></i></a></div>
+        </div>
+        {{ .TableOfContents }}
+    </div>
+    <main>
+        {{ .Content }}
+    </main>
+</div>
+{{ end }}

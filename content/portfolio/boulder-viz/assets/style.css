@@ -1,0 +1,313 @@
+
+:root {
+    --orange: 235, 120, 0;
+}
+
+main {
+    position: relative;
+    font-size: 13px;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+h3,
+h4,
+h5 {
+    margin: 5px 0
+}
+
+#main-section-container {
+    position: relative;
+    min-width: 848px;
+    max-width: 1120px;
+    /* box-shadow: 0 0 10px 0px #ccc; */
+    margin-top: 10px;
+    margin: auto;
+}
+
+#text-container {
+    position: relative;
+    padding: 10px 20px;
+}
+
+#info {
+    position: absolute;
+    width: 39px;
+    top: 30px;
+    right: 20px;
+    border-radius: 50%;
+    background: rgb(var(--orange));
+    text-align: center;
+    color: white;
+    font-family: Times New Roman;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 90;
+}
+
+#info.beating {
+    animation: heartbeat 1.5s infinite ease-out;
+}
+
+#description {
+    position: absolute;
+    top: 80px;
+    border-radius: 7px;
+    background: #000b;
+    color: white;
+    z-index: -1;
+    padding: 0 10px;
+    width: calc(100% - 40px);
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity .2s ease-in;
+}
+
+#description p {
+    margin: 10px 0
+}
+
+#viz-backgroud {
+	background-image: url(img/wall_blurred.png);
+	background-size: cover;
+	background-position: 50% 30%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	filter: grayscale(0.2);
+}
+
+#viz-container {
+    position: relative;
+    /* background-image: url(img/wall.png); */
+    background-size: cover;
+    background-position: 50% 30%;
+    padding: 40px;
+    padding-bottom: 60px;
+}
+
+#viz {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    width: 100%;
+    column-gap: 5px;
+}
+
+.head-container {
+    position: relative;
+    display: flex;
+    width: fit-content;
+    margin: auto;
+    margin-bottom: 0;
+    justify-content: center;
+}
+
+.athlete-head {
+    display: flex;
+    grid-row: 1;
+    height: 50px;
+    animation-timing-function: ease-in;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    margin-top: 100%;
+    transition: transform .2s ease-in;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.athlete-head:hover,
+.athlete-head:hover+.head-shadow {
+    transition-timing-function: ease-in;
+    animation-play-state: paused;
+    transform: scale(2);
+    z-index: 100;
+}
+
+.athlete-head:hover+.head-shadow {
+    transform: translateY(10px) scale(2.5);
+    opacity: .7;
+    z-index: 1;
+}
+
+.athlete-head .flag {
+    position: absolute;
+    z-index: -1;
+    box-shadow: 0 0 5px -2px;
+    scale: 1.1;
+    border: solid 3px white;
+    box-sizing: border-box;
+    background: white;
+}
+
+.athlete-head img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    margin: auto;
+    background: #fff4;
+    pointer-events: none;
+}
+
+.head-shadow {
+    width: 70px;
+    height: 9px;
+    background: radial-gradient(#0008, #0000);
+    border-radius: 50%;
+    position: absolute;
+    animation-timing-function: ease-in;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+    transition: transform .2s ease-in;
+}
+
+#details {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    padding: 10px 20px;
+    background: #000b;
+    color: white;
+    border-radius: 8px;
+    opacity: 0;
+    z-index: -1;
+    transition: opacity .2s ease-in;
+    line-height: 1.3em;
+}
+
+#details.active,
+#info:hover+#description {
+    opacity: 1;
+    z-index: 100;
+}
+
+#name-div {
+    margin: 5px 0 10px 0;
+}
+
+#athlete-grid,
+#details-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+#details-grid {
+    column-gap: 20px;
+}
+
+.col-1 {
+    grid-column: 1;
+}
+
+.col-2 {
+    grid-column: 2;
+}
+
+.table {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#medals {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+#details h4 {
+    text-align: center;
+}
+
+.medal {
+    display: flex;
+    font-size: 20px;
+}
+
+.medal::before {
+    content: '';
+    background-image: url(img/gold_medal.svg);
+    height: 20px;
+    width: 20px;
+    display: inline-block;
+    background-repeat: no-repeat;
+}
+
+#silver::before {
+    background-image: url(img/silver_medal.svg);
+}
+
+#bronze::before {
+    background-image: url(img/bronze_medal.svg);
+}
+
+#credit {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    padding: 2px 5px;
+    font-size: 11px;
+    background: #000b;
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    height: 20px;
+    width: 54px;
+    transition: all .2s ease-in;
+    cursor: pointer;
+}
+
+#credit:hover {
+    height: 60px;
+    width: 260px;
+    z-index: 100;
+}
+
+#credit a {
+    color: rgb(var(--orange));
+    border-bottom-color: rgb(var(--orange));
+}
+
+#credit h5 {
+    margin-top: 0;
+}
+
+@keyframes heartbeat {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
+
+    15% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+
+    16% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), 0);
+    }
+
+    25% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+}
+
+@media (min-width: 650px) {
+
+    #athlete-grid,
+    #details-grid {
+        grid-template-columns: auto auto;
+        display: grid;
+        column-gap: 25px;
+    }
+}

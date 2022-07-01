@@ -11,7 +11,7 @@
         <ul>
             <li><a id="home" href="/"><i class="fa-solid fa-house"></i></a></li>
             {{ range .Site.Menus.main }}
-            <li><a href="{{ .URL | replaceRE "^/" "" }}">{{ .Identifier }}</a></li>
+            <li><a href="{{ .URL }}">{{ .Identifier }}</a></li>
             {{ end }}
         </ul>
     </nav>

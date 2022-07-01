@@ -15,7 +15,7 @@
         <div class="inline-icons">
             {{ if not .IsSection }}<div id="back"><a href="{{.CurrentSection.Permalink }}"><i
                         class="fa-solid fa-arrow-left"></i></a></div>{{ end }}
-            <div id="home"><a href="/#{{ path.Dir .Path }}"><i class="fa-solid fa-house"></i></a></div>
+            <div id="home"><a href="/#{{ .Section }}"><i class="fa-solid fa-house"></i></a></div>
         </div>
         <nav class="taxonomy">
             <div class="nav-title">Tags</div>
