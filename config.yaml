@@ -11,6 +11,8 @@ ignoreFiles:
     - _cache$
     - \.knit\.md$
     - \.utf8\.md$
+    - \.qmd$
+    - \.ipynb$
 relativeURLS: false
 permalinks:
     blog: /blog/:year/:month/:slug/
@@ -36,4 +38,14 @@ markup:
     goldmark:
         renderer:
             unsafe: true
+        parser:
+            attribute:
+                block: true
+    highlight:
+        style: pygments
+        noClasses: false
 summaryLength: 20
+security:
+    exec:
+        allow:
+            ["^dart-sass-embedded$", "^go$", "^npx$", "^postcss$", "^pandoc$"]
