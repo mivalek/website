@@ -9,9 +9,31 @@
 {{ $resized = $img.Fill $value}}
 {{ end }}
 {{ with $resized }}
---background-img-{{ $key}}: url({{ .RelPermalink }});
+/* --background-img-{{ $key}}: url({{ .RelPermalink }}); */
 {{ end }}
 {{ end }}
+}
+#main-container {
+row-gap: 0;
+}
+
+#main-container > *:not(.wide-image) {
+grid-column: text-start / text-end;
+font-size: 16px;
+}
+
+#main-container > .wide-image {
+grid-column: 1 / screen-end;
+font-size: 16px;
+height: 100vh;
+background-attachment: fixed;
+background-position: center;
+margin: 20px -10px 50px -10px;
+background-size: cover;
+background-repeat: no-repeat;
+/* filter: grayscale(.4); */
+/* background-color: rgba(var(--alt-col), .2); */
+background-blend-mode: overlay;
 }
 </style>
 {{ end }}
@@ -26,14 +48,14 @@
     {{ end }}
 </div>
 <div id="main-container">
-    <div id="nav-container">
+    <!-- <div id="nav-container">
         <div class="inline-icons">
             <div id="home"><a href="/#welcome"><i class="fa-solid fa-house"></i></a></div>
         </div>
         {{ .TableOfContents }}
-    </div>
-    <main>
-        {{ .Content }}
-    </main>
+    </div> -->
+    <!-- <main> -->
+    {{ .Content }}
+    <!-- </main> -->
 </div>
 {{ end }}
