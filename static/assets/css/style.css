@@ -63,6 +63,10 @@ hr {
 	margin: 10px auto 20px auto;
 }
 
+del {
+	text-decoration: line-through;
+}
+
 header {
     display: flex;
 	justify-content: end;
@@ -161,7 +165,7 @@ div#hamburger-bkg {
 	padding: 2em 0;
 	font-size: 20px;
 	display: grid;
-	grid-template-columns: [screen-strat] 1fr [text-start] auto [text-end margin-start] 1fr [margin-end screen-end];
+	grid-template-columns: [screen-start] 1fr [text-start] auto [text-end margin-start] 1fr [margin-end screen-end];
 	gap: 20px;
 }
 
@@ -312,7 +316,16 @@ iframe.viz {
 	width: 100%;
 }
 
+pre {
+	padding: 5px 10px;
+	margin-bottom: 1em;
+	font-size: .80em;
+	background: rgba(var(--alt-col), .1)
+}
 
+pre code {
+	white-space: break-spaces;
+}
 @media (max-width: 750px) {
 	body {
 		overflow-x: hidden;
