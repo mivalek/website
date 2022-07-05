@@ -1,5 +1,6 @@
 ---
 title: Portfolio
-subtitle: A selection of things I've made
-category: portfolio
+_build:
+    render: "never"
+    list: "never"
 ---

@@ -67,7 +67,7 @@ head_css: assets/style.css
         <div id="description">
             <p>Elite boulderers don't tend to fall a lot but there are still differences in how often they do.
             </p>
-            <p>Based on the results from all IFSC bouldering World cups and World championships from 2004, this
+            <p>Based on the results from all IFSC bouldering World cups and World championships between 2004 and 2022, this
                 visualisation compares the performance of the 14 most decorated climbers.</p>
             <p>The height the heads reach represents the number of boulders topped at these events and the
                 frequency
