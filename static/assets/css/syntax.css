@@ -1,5 +1,5 @@
 /* Background */ .bg {  }
-/* PreWrapper */ .chroma { ; }
+/* PreWrapper */ .chroma { }
 /* Other */ .chroma .x {  }
 /* Error */ .chroma .err {  }
 /* CodeLine */ .chroma .cl {  }
@@ -18,7 +18,7 @@
 /* KeywordType */ .chroma .kt { color: #b00040 }
 /* Name */ .chroma .n { color: #555 }
 /* NameAttribute */ .chroma .na { color: #7d9029 }
-/* NameBuiltin */ .chroma .nb { color: #000 }
+/* NameBuiltin */ .chroma .nb { color: rgb(var(--alt-col)); font-weight: bold }
 /* NameBuiltinPseudo */ .chroma .bp {  }
 /* NameClass */ .chroma .nc { color: rgb(var(--alt-col)); font-weight: bold }
 /* NameConstant */ .chroma .no { color: #880000 }

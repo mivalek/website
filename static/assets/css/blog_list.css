@@ -46,6 +46,7 @@ section.listing:nth-child(2n) {
     gap: 25px;
     flex-wrap: wrap;
     margin: 1em 0;
+    align-items: stretch;
 }
 
 .post-card-container {
@@ -57,12 +58,17 @@ section.listing:nth-child(2n) {
     box-shadow: 0 0 10px 0 #ccc;
     padding: 5px 10px;
     display: block;
-    transition: transform .1s ease-in;
+    -moz-transition: transform .2s ease-in;
+    -webkit-transition: transform .2s ease-in;
+    -o-transition: transform .2s ease-in;
+    -ms-transition: transform .2s ease-in;
+    transition: transform .2s ease-in;
     position: relative;
+    height: 100%;
 }
 
 .card:hover {
-    transform: scale(1.01);
+    /* transform: scale(1.01); */
 }
 
 .post-card-container:nth-child(2n) .card {
@@ -70,9 +76,14 @@ section.listing:nth-child(2n) {
 }
 
 .card .img-container {
+    -moz-transform: translate(-8px, -10px) scale(1.1);
+    -webkit-transform: translate(-8px, -10px) scale(1.1);
+    -o-transform: translate(-8px, -10px) scale(1.1);
+    -ms-transform: translate(-8px, -10px) scale(1.1);
     transform: translate(-8px, -10px) scale(1.1);
     width: 100%;
     height: 230px;
+    overflow: hidden;
 }
 
 .card img {
@@ -81,6 +92,24 @@ section.listing:nth-child(2n) {
     object-fit: cover;
     object-position: bottom;
     filter: grayscale();
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    -moz-transition: transform .4s ease-out;
+    -webkit-transition: transform .4s ease-out;
+    -o-transition: transform .4s ease-out;
+    -ms-transition: transform .4s ease-out;
+    transition: transform .4s ease-out;
+}
+
+.card:hover img {
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1);
 }
 
 .img-overlay {
@@ -114,22 +143,27 @@ section.listing:nth-child(2n) {
 }
 
 .card .tags {
-    position: absolute;
-    background-color: rgb(var(--theme-col));
-    padding: 1px 3px;
-    right: -10px
+	position: absolute;
+	right: -10px;
+	top: calc(100% - 10px);
 }
 
 .card .tags a {
-    color: white;
-    border: none;
-    margin: 5px
+	color: white;
+	border: none;
+	margin: 1px;
+	background-color: rgb(var(--theme-col));
+	padding: 2px 5px;
 }
 
 /* @media (min-width: 590px) {
     #byline #subtitle {
         display: block;
         margin-left: 0;
+        -moz-transform: translateX(10vw);
+        -webkit-transform: translateX(10vw);
+        -o-transform: translateX(10vw);
+        -ms-transform: translateX(10vw);
         transform: translateX(10vw);
     }
 } */
@@ -146,6 +180,10 @@ section.listing:nth-child(2n) {
     width: fit-content;
     margin-left: 0;
     margin-top: -5px;
+    -moz-transform: translateX(12vw);
+    -webkit-transform: translateX(12vw);
+    -o-transform: translateX(12vw);
+    -ms-transform: translateX(12vw);
     transform: translateX(12vw);
     max-width: 87%;
 } */
@@ -156,6 +194,10 @@ section.listing:nth-child(2n) {
     border: solid 1px rgb(var(--theme-col));
     border-radius: 3px;
     text-align: center;
+    -moz-transition: transform .1s ease-in;
+    -webkit-transition: transform .1s ease-in;
+    -o-transition: transform .1s ease-in;
+    -ms-transition: transform .1s ease-in;
     transition: transform .1s ease-in;
     margin: 0;
     padding: 0;
@@ -185,8 +227,4 @@ section.listing:nth-child(2n) {
 .month {
     background-color: white;
     margin-top: -1px;
-}
-
-.blog-summary {
-    height: 145px;
 }

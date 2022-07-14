@@ -1,0 +1,67 @@
+
+.tabset {
+	margin: 1em 0 2em 0;
+}
+
+.tab-header {
+	display: flex;
+	padding-left: 1em;
+}
+
+a.tab-label {
+	padding: 0 10px;
+	border: solid 1px rgb(var(--alt-col));
+	border-bottom: none;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background: rgba(var(--alt-col), .2);
+	color: rgb(var(--alt-col));
+	font-weight: bold;
+	cursor: pointer;
+}
+
+a.tab-label:hover {
+	background: rgba(var(--theme-col), .2);
+	color: rgb(var(--theme-col));
+	border-color: rgb(var(--theme-col));
+}
+
+a.tab-label.active {
+	background: rgb(var(--alt-col));
+	color: white;
+	border-color: rgb(var(--alt-col));
+}
+
+.tab-container {
+	position: relative;
+}
+
+.tab-content {
+	z-index: 0;
+	position: absolute;
+	width: 100%;
+    height: 100%;
+}
+
+.tab-content.active {
+	z-index: 1;	
+	background: white;
+}
+
+.tab-content.active::before {
+	content: "Loading...";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: -1;
+}
+
+.tabset iframe {
+	margin: 0;
+    /* height: 100%; */
+}

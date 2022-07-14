@@ -22,7 +22,13 @@ main {
 #background {
     background-image: url(/assets/img/stars.png);
     background-size: cover;
+    -moz-animation: scale 180s ease;
+    -webkit-animation: scale 180s ease;
+    -o-animation: scale 180s ease;
     animation: scale 180s ease;
+    -moz-animation-direction: alternate;
+    -webkit-animation-direction: alternate;
+    -o-animation-direction: alternate;
     animation-direction: alternate;
     position: absolute;
 }
@@ -94,12 +100,45 @@ div#nope {
     z-index: 1;
     position: absolute;
     color: rgba(var(--theme-col), .7);
+    -moz-transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
     transform-style: preserve-3d;
     perspective: 10px;
 }
 
 a.button {
     padding: .5em
+}
+
+@-webkit-keyframes scale {
+    0% {
+        -webkit-transform: scale(1);
+    }
+
+    100% {
+        -webkit-transform: scale(2.5);
+    }
+}
+
+@-moz-keyframes scale {
+    0% {
+        -moz-transform: scale(1);
+    }
+
+    100% {
+        -moz-transform: scale(2.5);
+    }
+}
+
+@-o-keyframes scale {
+    0% {
+        -o-transform: scale(1);
+    }
+
+    100% {
+        -o-transform: scale(2.5);
+    }
 }
 
 @keyframes scale {
