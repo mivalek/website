@@ -102,10 +102,6 @@ document
     .querySelectorAll(".next")
     .forEach((el) => el.addEventListener("click", () => swapApp()));
 
-const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-};
-
 let ifrContent;
 
 const resizeObs = new ResizeObserver((entries) => {

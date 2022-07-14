@@ -35,7 +35,7 @@ document.querySelectorAll(".thumbnail").forEach((el) => {
             "?width=2048&height=1536"
         );
         const caption =
-            e.target.alt +
+            e.target.getAttribute("aria-label") +
             " | &copy; " +
             e.target.getAttribute("year") +
             " Milan Valášek";
@@ -78,7 +78,7 @@ function swapPhoto(next = true) {
     viewerPhoto.setAttribute("index", nextIndex);
     viewerPhoto.setAttribute("last", isNextLast);
     const caption =
-        nextPhoto.alt +
+        nextPhoto.getAttribute("aria-label") +
         " | &copy; " +
         nextPhoto.getAttribute("year") +
         " Milan Valášek";

@@ -1,3 +1,15 @@
+let preScriptOnload = window.onload;
+
+window.addEventListener("load", (event) => {
+    document.querySelectorAll(".hoverable").forEach((el) => {
+        el.addEventListener("mouseenter", (e) => {
+            positionTooltip(e);
+        });
+        el.removeEventListener("mouseout", positionTooltip);
+    });
+    if (preScriptOnload) preScriptOnload();
+});
+
 document.addEventListener("scroll", function (e) {
     document.getElementById("mobile-only").classList.add("active");
 });
@@ -5,13 +17,6 @@ document.addEventListener("scroll", function (e) {
 document
     .getElementById("menu-icon")
     .addEventListener("click", (e) => toggleNav(e));
-
-document.querySelectorAll(".hoverable").forEach((el) => {
-    el.addEventListener("mouseenter", (e) => {
-        positionTooltip(e);
-    });
-    el.removeEventListener("mouseout", positionTooltip);
-});
 
 document.querySelectorAll("#nav-container a").forEach((el) =>
     el.addEventListener("click", (e) => {
@@ -27,11 +32,11 @@ function positionTooltip(e) {
     const ttip = e.target.nextElementSibling;
     ttip.style.transform = "translate(0px, -10px)";
     const ttipDims = ttip.getBoundingClientRect();
-    const ttpiMidpoint = ttipDims.left + ttipDims.width / 2;
+    const ttipMidpoint = ttipDims.left + ttipDims.width / 2;
     const finalDistFromRightEdge =
         windowWidth - (targetMidpoint + ttipDims.width / 2);
     const finalDistFromLeftEdge = targetMidpoint - ttipDims.width / 2;
-    let nudgeBy = targetMidpoint - ttpiMidpoint;
+    let nudgeBy = targetMidpoint - ttipMidpoint;
     if (finalDistFromRightEdge < 10) {
         nudgeBy = windowWidth - ttipDims.right - 10;
     } else if (finalDistFromLeftEdge < 10) {
@@ -76,3 +81,7 @@ activateNav = (section) => {
 
 document.querySelectorAll("section").forEach((i) => observer.observe(i));
 deactivateAllNavs();
+
+const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};

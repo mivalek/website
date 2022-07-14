@@ -16,7 +16,7 @@ document.addEventListener("scroll", function (e) {
     })`;
 });
 
-window.onload = function () {
+window.addEventListener("load", (event) => {
     if (window.location.hash) {
         document.getElementById("load-mask").remove();
     } else {
@@ -31,9 +31,9 @@ window.onload = function () {
         }
     };
     fillGallery();
-};
+});
 
-// bomplete gallery grid if needed
+// complete gallery grid if needed
 function fillGallery() {
     const gallery = document.getElementById("featured-gallery");
     const availableSpace = gallery.clientHeight * gallery.clientWidth;
