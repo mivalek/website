@@ -17,26 +17,26 @@ But due to several factors, political (12 years of progressively more awful Tory
 
 I'm sad to be leaving a career that's been my vocation but there are also exciting things on the horizon...
 
-<div id="" class="wide-image" alt="With Tobey, my bike, in the far north of Scotland" style="background-image:url(/img/john_o_groats.jpg);" loading="lazy"></div>
+<div id="pic-1" class="wide-image lazy" alt="With Tobey, my bike, in the far north of Scotland"></div>
 
 Outside of professional life, I keep a relatively wide range of interests, excelling in none at all.
 
 I discovered climbing around the time I turned 30 and it's since become my main hobby.
 That means that I do it often, not that I'm good at it.
 I've climbed 6c+/V5 indoors and, as many will attest, I am a general waste of time and a potential hazard out on the crag.
-A bit of advice: If you're also going to discover climbing, make sure you do it while your body still adapts with relative ease.
+A bit of advice: If you're also going to discover climbing, make sure you do it earlier in your life than I did, while your body still adapts with relative ease.
 You're welcome.
 
-I ride a Trek Émonda S5 road bicykle called Tobey and it's a much better bike than I will ever be a cyclist.
-Together, we've made it atop the [Bealach na B&agrave;](https://cyclinguphill.com/100-climbs/bealach-na-ba/) as part of my attempt at the North Coast 500 route.
-It hurt.
-A lot.
+I ride a Trek Émonda S5 road bicycle called Tobey which is a much better bike than I will ever be a cyclist.
+Together, we've made it atop the [Bealach na B&agrave;](https://cyclinguphill.com/100-climbs/bealach-na-ba/) as part of my attempt at the North Coast 500 route.\
+It hurt.\
+It hurt a lot.
 
 Not really a runner, I had the good sense to run the 2019 Edinburgh Marathon and failed my 2:45:00 target by 42 seconds.
 Yay!
 I couldn't walk for the next two days. Five stars, won't do again.
 
-<div id="" alt="Me hanging from a boulder in Fontainebleau, France" class="wide-image" style="background-image:url(/img/font.jpg);" loading="lazy"></div>
+<div id="pic-2" alt="Me hanging from a boulder in Fontainebleau, France" class="wide-image lazy"></div>
 
 I have a tendency to embark on random crafts projects that end up consuming my entire being for hours, nay days, on end.
 
@@ -48,9 +48,12 @@ Still, a pretty mean thing for you to say...
 The photos on this page and in the [gallery section](/gallery/) were taken with the Olympus OMD E-M10 Mark II mirrorless camera with a M.Zuiko 12-40mm F2.8 PRO zoom lens.
 There was a time when I knew what any of this meant.
 
+To satisfy my musical tendencies and to assuage the guilt of giving up on the violin, I sometimes bother a sunburst Fender Strat I bought when I was 19 with all the money I made that year working in an internet café while at uni, hoping it would help me get as good as John Frusciante.\
+Spoilers: it didn't.
+
 Oh, and... I'm a repository of useless trivia so if you're starting a pub quiz team, holler at me!
 
-<div id="" alt="Jack-o-lantern. Any resemblance to Al Pacino is strictly intended" class="wide-image" style="background-image:url(/img/al_pumpkino.jpeg);" loading="lazy"></div>
+<div id="pic-3" alt="Jack-o-lantern. Any resemblance to Al Pacino is strictly intended" class="wide-image lazy"></div>
 
 I think this is probably enough for you to get a picture of the kind of person I am.
 If anything, I worry it will give you too accurate a picture...

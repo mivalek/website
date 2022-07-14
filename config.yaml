@@ -33,6 +33,7 @@ menu:
         - identifier: Gallery
           weight: 5
           url: /#gallery
+enableInlineShortcodes: true
 markup:
     defaultMarkdownHandler: goldmark
     goldmark:
