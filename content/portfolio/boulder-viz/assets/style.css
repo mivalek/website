@@ -12,7 +12,11 @@
 	background: white;
 	z-index: 100;
     opacity: 1;
-    transition: opacity .2s ease-in, z-index .2s ease-in .2s
+    -moz-transition: opacity .2s ease-in, z-index .2s ease-in .2s;
+    -webkit-transition: opacity .2s ease-in, z-index .2s ease-in .2s;
+    -o-transition: opacity .2s ease-in, z-index .2s ease-in .2s;
+    -ms-transition: opacity .2s ease-in, z-index .2s ease-in .2s;
+    transition: opacity .2s ease-in, z-index .2s ease-in .2s;
 }
 
 #loading-mask.hidden {
@@ -64,6 +68,9 @@ h5 {
 }
 
 #info.beating {
+    -moz-animation: heartbeat 1.5s infinite ease-out;
+    -webkit-animation: heartbeat 1.5s infinite ease-out;
+    -o-animation: heartbeat 1.5s infinite ease-out;
     animation: heartbeat 1.5s infinite ease-out;
 }
 
@@ -78,6 +85,10 @@ h5 {
     width: calc(100% - 40px);
     font-size: 14px;
     opacity: 0;
+    -moz-transition: opacity .2s ease-in;
+    -webkit-transition: opacity .2s ease-in;
+    -o-transition: opacity .2s ease-in;
+    -ms-transition: opacity .2s ease-in;
     transition: opacity .2s ease-in;
 }
 
@@ -127,10 +138,23 @@ h5 {
     display: flex;
     grid-row: 1;
     height: 50px;
+    -moz-animation-timing-function: ease-in;
+    -webkit-animation-timing-function: ease-in;
+    -o-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
+    -moz-animation-direction: alternate;
+    -webkit-animation-direction: alternate;
+    -o-animation-direction: alternate;
     animation-direction: alternate;
+    -moz-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
     margin-top: 100%;
+    -moz-transition: transform .2s ease-in;
+    -webkit-transition: transform .2s ease-in;
+    -o-transition: transform .2s ease-in;
+    -ms-transition: transform .2s ease-in;
     transition: transform .2s ease-in;
     z-index: 1;
     cursor: pointer;
@@ -138,13 +162,28 @@ h5 {
 
 .athlete-head:hover,
 .athlete-head:hover+.head-shadow {
+    -moz-transition-timing-function: ease-in;
+    -webkit-transition-timing-function: ease-in;
+    -o-transition-timing-function: ease-in;
+    -ms-transition-timing-function: ease-in;
     transition-timing-function: ease-in;
+    -moz-animation-play-state: paused;
+    -webkit-animation-play-state: paused;
+    -o-animation-play-state: paused;
     animation-play-state: paused;
+    -moz-transform: scale(2);
+    -webkit-transform: scale(2);
+    -o-transform: scale(2);
+    -ms-transform: scale(2);
     transform: scale(2);
     z-index: 100;
 }
 
 .athlete-head:hover+.head-shadow {
+    -moz-transform: translateY(10px) scale(2.5);
+    -webkit-transform: translateY(10px) scale(2.5);
+    -o-transform: translateY(10px) scale(2.5);
+    -ms-transform: translateY(10px) scale(2.5);
     transform: translateY(10px) scale(2.5);
     opacity: .7;
     z-index: 1;
@@ -177,9 +216,22 @@ h5 {
     background: radial-gradient(#0008, #0000);
     border-radius: 50%;
     position: absolute;
+    -moz-animation-timing-function: ease-in;
+    -webkit-animation-timing-function: ease-in;
+    -o-animation-timing-function: ease-in;
     animation-timing-function: ease-in;
+    -moz-animation-direction: alternate;
+    -webkit-animation-direction: alternate;
+    -o-animation-direction: alternate;
     animation-direction: alternate;
+    -moz-animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
     animation-iteration-count: infinite;
+    -moz-transition: transform .2s ease-in;
+    -webkit-transition: transform .2s ease-in;
+    -o-transition: transform .2s ease-in;
+    -ms-transition: transform .2s ease-in;
     transition: transform .2s ease-in;
 }
 
@@ -193,6 +245,10 @@ h5 {
     border-radius: 8px;
     opacity: 0;
     z-index: -1;
+    -moz-transition: opacity .2s ease-in;
+    -webkit-transition: opacity .2s ease-in;
+    -o-transition: opacity .2s ease-in;
+    -ms-transition: opacity .2s ease-in;
     transition: opacity .2s ease-in;
     line-height: 1.3em;
 }
@@ -278,6 +334,10 @@ h5 {
     overflow: hidden;
     height: 20px;
     width: 54px;
+    -moz-transition: all .2s ease-in;
+    -webkit-transition: all .2s ease-in;
+    -o-transition: all .2s ease-in;
+    -ms-transition: all .2s ease-in;
     transition: all .2s ease-in;
     cursor: pointer;
 }
@@ -296,6 +356,51 @@ h5 {
 #credit h5 {
     margin-top: 0;
 }
+
+@-moz-keyframes heartbeat {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
+
+    15% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+
+    16% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), 0);
+    }
+
+    25% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+}
+
+@-o-keyframes heartbeat {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
+
+    15% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+
+    16% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), 0);
+    }
+
+    25% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+}
+
 
 @keyframes heartbeat {
     0% {
@@ -319,8 +424,29 @@ h5 {
     }
 }
 
-@media (min-width: 650px) {
+@-webkit-keyframes heartbeat {
+    0% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
 
+    15% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+
+    16% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), 0);
+    }
+
+    25% {
+        box-shadow: 0 0 0 0 rgba(var(--orange), .7);
+    }
+
+    50% {
+        box-shadow: 0 0 0 10px rgba(var(--orange), 0);
+    }
+}
+
+@media (min-width: 650px) {
     #athlete-grid,
     #details-grid {
         grid-template-columns: auto auto;

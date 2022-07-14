@@ -1,5 +1,3 @@
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 async function removeMask(afterMs) {
     await sleep(afterMs);
     document.getElementById("loading-mask").classList.add("hidden");
