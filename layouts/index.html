@@ -100,9 +100,10 @@
                 </div>
                 <div class="portfolio-image-container" width="280px" style="height:200px;filter:grayscale(.4)">
                     {{ with resources.Get "img/boulder_img.png" }}
-                    {{ with .Resize "x250" }}
-                    <img src="{{ .RelPermalink }}" alt="" style="height:200px">
-                    {{ end }}
+                    {{ $placeholder := .Resize "x5" }}
+                    {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
+                    <img class="lazy" src="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}"
+                        data-src="{{ with .Resize "x250" }}{{ .RelPermalink }}{{ end }}" alt="" style="height:200px">
                     {{ end }}
                 </div>
             </a>
@@ -116,7 +117,7 @@
                     </p>
                 </div>
                 <div class="portfolio-image-container">
-                    <img src="/caffe_nerd/assets/img/nerd.svg" alt="" width="200px" style="height:80px">
+                    <img loading="lazy" src="/caffe_nerd/assets/img/nerd.svg" alt="" width="200px" style="height:80px">
                 </div>
             </a>
             <a href="https://and2021.netlify.app/docs/escape/" target="_blank" class="portfolio-item"
@@ -130,9 +131,10 @@
                 </div>
                 <div class="portfolio-image-container" width="280px" style="height:200px">
                     {{ with resources.Get "img/escape.png" }}
-                    {{ with .Resize "x250" }}
-                    <img src="{{ .RelPermalink }}" alt="" style="height:200px">
-                    {{ end }}
+                    {{ $placeholder := .Resize "x5" }}
+                    {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
+                    <img class="lazy" src="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}"
+                        data-src="{{ with .Resize "x250" }}{{ .RelPermalink }}{{ end }}" alt="" style="height:200px">
                     {{ end }}
                 </div>
             </a>
@@ -148,8 +150,8 @@
                     </div>
                 </div>
                 <div class="portfolio-image-container">
-                    <iframe id="cor-viz" class="viz app" src="/viz/cor" data-external="1"
-                        style="height:562px;"></iframe>
+                    <!-- <iframe loading="lazy" id="cor-viz" class="viz app" src="/viz/cor" data-external="1"
+                        style="height:562px;"></iframe> -->
                 </div>
             </div>
             More to come...
@@ -174,9 +176,10 @@
                 <div class="post-container{{ with $page.Params.featured}} featured" alt="featured post{{ end }}">
                     <div class="post-image-container">
                         {{ with $page.Resources.Get "img/bkg.jpg" }}
-                        {{ with .Resize "x250" }}
-                        <img src="{{ .RelPermalink }}" alt="">
-                        {{ end }}
+                        {{ $placeholder := .Resize "x5" }}
+                        {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
+                        <img class="lazy" src="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}"
+                            data-src="{{ with .Resize "x250" }}{{ .RelPermalink }}{{ end }}" alt="">
                         {{ end }}
                     </div>
                     <div class="post">
@@ -206,8 +209,11 @@
             {{ end }}
             <div id="featured-gallery">
                 {{ range shuffle (where $featured_photos "featured" true) }}
+                {{ $placeholder := resources.GetRemote (print "https://am3pap002files.storage.live.com/" .url "?width=8&height=6") }}
+                {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
                 <div class="image-container{{ with .portrait }} portrait{{ end}}{{ with .large }} large{{ end}}">
-                    <img class="thumbnail" src="https://am3pap002files.storage.live.com/{{ .url }}?width=800&height=600"
+                    <img class="thumbnail lazy" src="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}"
+                        data-src="https://am3pap002files.storage.live.com/{{ .url }}?width=800&height=600"
                         alt="{{ with .caption}}{{.}} | {{end}}{{ .location }}" />
                 </div>
                 {{ end }}

@@ -35,10 +35,13 @@
                 {{ with $value.year }}
                 {{ $year = .}}
                 {{ end }}
+                {{ $placeholder := resources.GetRemote (print "https://am3pap002files.storage.live.com/" $value.url "?width=8&height=6") }}
+                {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
                 <div class="image-container{{ with .portrait }} portrait{{ end}}{{ with .large }} large{{ end}}">
-                    <img class="thumbnail" height="250px" loading="lazy"
-                        src="https://am3pap002files.storage.live.com/{{ $value.url }}?width=400&height=300"
-                        alt="{{ with $value.caption}}{{.}} | {{end}}{{ $value.location }}"
+                    <img class="thumbnail lazy" height="250px"
+                        src="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}"
+                        data-src="https://am3pap002files.storage.live.com/{{ $value.url }}?width=400&height=300"
+                        aria-label="{{ with $value.caption}}{{.}} | {{end}}{{ $value.location }}"
                         index="{{ add $n_in_previous_album $index }}" year="{{ $year }}"
                         {{ if and (eq (add $album_index 1) (len $albums)) ( eq (add $index 1) (len $album)) }}last="true"
                         {{ end }} />

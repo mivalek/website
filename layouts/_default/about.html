@@ -1,18 +1,37 @@
 {{ define "head_css"}}
-{{ with $img :=  resources.Get "img/me.jpg" }}
-{{ $sizes := dict "huge" "2560x" "large" "1920x" "medium" "1280x" "small" "400x1000 center" }}
+{{ $pictures := slice "john_o_groats.jpg" "font.jpg" "al_pumpkino.jpeg"}}
 {{ print "<style>" | safeHTML }}
-:root {
-{{ range $key, $value := $sizes }}
-{{ $resized := $img.Resize $value}}
-{{ if eq $key "small"}}
-{{ $resized = $img.Fill $value}}
-{{ end }}
+{{ range $i, $img_name := $pictures}}
+
+{{ with $img :=  resources.Get (print "img/about/" $img_name ) }}
+
+{{ $resized := $img.Resize "x500" }}
 {{ with $resized }}
-/* --background-img-{{ $key}}: url({{ .RelPermalink }}); */
-{{ end }}
-{{ end }}
+#pic-{{ add 1 $i }} {
+background-image: url({{ .RelPermalink }});
 }
+{{ end }}
+
+{{ $resized = $img.Resize "x700" }}
+{{ with $resized }}
+@media (min-height: 500px) {
+#pic-{{ add 1 $i }} {
+background-image: url({{ .RelPermalink }});
+}
+}
+{{ end }}
+
+@media (min-height: 700px) {
+#pic-{{ add 1 $i }} {
+background-image: url({{ .RelPermalink }});
+}
+}
+#pic-{{ add 1 $i }}.lazy {
+background-image: none;
+background: #aaa;
+}
+{{ end }}
+{{ end }}
 #main-container {
 row-gap: 0;
 }
@@ -25,7 +44,7 @@ font-size: 16px;
 #main-container > .wide-image {
 grid-column: 1 / screen-end;
 font-size: 16px;
-height: 100vh;
+height: 103vh;
 background-attachment: fixed;
 background-position: center;
 margin: 20px -10px 50px -10px;
@@ -34,9 +53,23 @@ background-repeat: no-repeat;
 /* filter: grayscale(.4); */
 /* background-color: rgba(var(--alt-col), .2); */
 background-blend-mode: overlay;
+box-shadow: inset 0 0 15px -5px #000;
 }
+
+#home {
+position: sticky;
+top: 0;
+transform: translate(-100px, 25px);
+z-index: -1;
+}
+
+@media (max-width: 750px) {
+#home {
+display: none;
+}
+}
+
 </style>
-{{ end }}
 {{ end }}
 
 {{ define "main" }}
@@ -48,6 +81,7 @@ background-blend-mode: overlay;
     {{ end }}
 </div>
 <div id="main-container">
+    <div id="home"><a href="/#{{ .Section }}"><i class="fa-solid fa-house"></i></a></div>
     <!-- <div id="nav-container">
         <div class="inline-icons">
             <div id="home"><a href="/#welcome"><i class="fa-solid fa-house"></i></a></div>

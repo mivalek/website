@@ -1,4 +1,5 @@
 {{ define "head_css"}}
+<link rel="stylesheet" href="/assets/css/tabset.css">
 {{ partial "background" . }}
 <style>
     .button-container {
@@ -15,6 +16,8 @@
         width: fit-content;
         margin-left: 5%;
         margin-top: -5px;
+        display: block;
+        transform: none !important;
     }
 </style>
 {{ end }}
@@ -22,7 +25,7 @@
 {{ define "main" }}
 <div id="background"></div>
 <div id="byline">
-    <h1 id="title">{{ .Title }}</h1>
+    <h1 id="title">{{ .Title }}{{ with .Params.subtitle }}: {{ .}}{{ end }}</h1>
     <div id="subtitle">{{ .Date.Format "2 Jan 2006" }}</div>
 </div>
 <div id="main-container">
@@ -35,7 +38,19 @@
         {{ .TableOfContents }}
     </div>
     <main>
+        {{ if .Params.preamble }}
+        <div class="preamble">
+            {{ range split ( .RenderString .Params.preamble ) "\n" }}
+            <p>{{ markdownify . }}</p>
+            {{ end }}
+        </div>
+        <hr>
+        {{ end }}
         {{ .Content }}
+        {{ if .File | replaceRE "\\.md$" ".qmd" | os.FileExists }}
+        <div class="quarto"> This post was written using <a class="quarto-link" href="https://quarto.org"><img
+                    class="quarto-icon" src="/img/quarto.svg" alt="Quarto"></a>.</div>
+        {{ end }}
         <div class="button-container">
             {{ if .PrevInSection }}
             <a href="{{ .PrevInSection.RelPermalink }}" class="button">Previous post</a>{{else}}<div class="placeholder"
@@ -47,4 +62,10 @@
         {{ template "_internal/disqus.html" . }}
     </main>
 </div>
+{{ end }}
+
+{{ define "footer_js" }}
+<script src="/assets/js/copy_code.js"></script>
+<script src="/assets/js/footnotes.js"></script>
+<script src="/assets/js/tabset.js"></script>
 {{ end }}

@@ -48,6 +48,7 @@
                         <div class="img-overlay"></div>
                     </div>
                     <h2>{{.Title}}</h2>
+                    {{ with .Params.subtitle }}<h3>{{ . }}</h3>{{ end }}
                     <div class="blog-summary">{{ .Summary | truncate 200 }}</div>
                     <div class="tags">
                         {{range .Params.tags }}
