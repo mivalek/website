@@ -18,6 +18,15 @@ document
     .getElementById("menu-icon")
     .addEventListener("click", (e) => toggleNav(e));
 
+document.addEventListener("click", (e) => {
+    document.querySelector("header nav").classList.remove("active");
+    document
+        .querySelectorAll(
+            "#intro-container, #byline, #background, #main-container, footer"
+        )
+        .forEach((el) => el.classList.remove("inactive"));
+});
+
 document.querySelectorAll("#nav-container a").forEach((el) =>
     el.addEventListener("click", (e) => {
         deactivateAllNavs();
@@ -48,6 +57,11 @@ function positionTooltip(e) {
 function toggleNav(e) {
     e.stopPropagation();
     document.querySelector("header nav").classList.toggle("active");
+    document
+        .querySelectorAll(
+            "#intro-container, #byline, #background, #main-container, footer"
+        )
+        .forEach((el) => el.classList.toggle("inactive"));
 }
 
 // intersection observer highlighting nav menu items
