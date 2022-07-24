@@ -28,9 +28,12 @@
     {{ end }}
     {{ with .Resources.Get .Params.head_css }}
     <link rel="stylesheet" href="{{ . }}">{{ end }}
+    <script>
+        window.addEventListener("load", () => document.querySelector("body").style = "")
+    </script>
 </head>
 
-<body>
+<body style="visibility:hidden">
     {{ block "header" . }}
     {{ partial "header" . }}
     {{ end }}
@@ -48,6 +51,7 @@
     {{ with .Resources.Get .Params.footer_css }}
     <link rel="stylesheet" href="{{ resources.Get . }}">{{ end }}
     <script src="/assets/js/lazy_load.js"></script>
+    <script src="/assets/js/filler.js"></script>
 </body>
 
 </html>
