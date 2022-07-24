@@ -20,7 +20,7 @@ a.tab-label {
 	cursor: pointer;
 }
 
-a.tab-label:hover {
+a.tab-label:hover, a.tab-label:not(.active):focus {
 	background: rgba(var(--theme-col), .2);
 	color: rgb(var(--theme-col));
 	border-color: rgb(var(--theme-col));
