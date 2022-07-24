@@ -76,6 +76,11 @@ ul {
 	margin-left: 1em;
 }
 
+ul.no-marker {
+	list-style: none;
+	margin-left: 0;
+}
+
 a {
 	border: solid 1px transparent;
 }

@@ -69,7 +69,7 @@
                         {{ end }}
                         {{ if $isHov }}
                         <div class="tooltip">
-                            <ul>
+                            <ul class="no-marker">
                                 {{ range $v.details }}
                                 <li>{{ . | safeHTML | markdownify }}</li>
                                 {{ end }}
