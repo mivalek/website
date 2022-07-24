@@ -34,6 +34,7 @@ menu:
           weight: 5
           url: /#gallery
 enableInlineShortcodes: true
+enableEmoji: true
 markup:
     defaultMarkdownHandler: goldmark
     goldmark:
