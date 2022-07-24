@@ -46,11 +46,11 @@
     01 R_Markdown:
         icon: rmarkdown.png
         details:
-            - see _e.g._,  my [lecture handouts](https://and.netlify.app/lectures/01/handout/)
+            - see _e.g._,  my [lecture handouts](https://and2022.netlify.app/lectures/01/handout/)
     02 xaringan:
         icon: xaringan.svg
         details:
-            - see _e.g._,  my [lecture slides](https://and.netlify.app/lectures/01/slides/)
+            - see _e.g._,  my [lecture slides](https://and2022.netlify.app/lectures/01/slides/)
 04 Web design:
     01 HTML:
         icon: fa-solid fa-code
