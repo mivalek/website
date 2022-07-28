@@ -3,9 +3,9 @@
 {{ with .Resources.Get $img_name }}
 {{ $img = .}}
 {{ end }}
-{{ $img_url := "" }}
+{{ $img_url := .Site.BaseURL }}
 {{ with $img.Resize "x200" }}
-{{ $img_url = .Permalink | absURL }}
+{{ $img_url = print $img_url .Permalink }}
 {{ end }}
 {{ $desc := cond .IsHome "A personal website of yet another university teacher turned data scientist" .Description }}
 {{ if eq $desc "" }}
