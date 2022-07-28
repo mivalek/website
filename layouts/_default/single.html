@@ -1,25 +1,7 @@
 {{ define "head_css"}}
+<link rel="stylesheet" href="/assets/css/blog_post.css">
 <link rel="stylesheet" href="/assets/css/tabset.css">
 {{ partial "background" . }}
-<style>
-    .button-container {
-        display: flex;
-        justify-content: space-between;
-        flex-flow: row;
-        margin: 2em 0
-    }
-
-    #byline #subtitle {
-        font-size: 20px;
-        background: #999999e6;
-        padding: 0 10px;
-        width: fit-content;
-        margin-left: 5%;
-        margin-top: -5px;
-        display: block;
-        transform: none !important;
-    }
-</style>
 {{ end }}
 
 {{ define "main" }}
@@ -38,6 +20,13 @@
         {{ .TableOfContents }}
     </div>
     <main>
+        {{ $readTime := mul (div (countwords .Content) .Site.Params.blogReadSpeed) 60 }}
+
+        {{ $minutes := math.Round (div $readTime 60) }}
+
+        <div id="read-time"><i class="fa-solid fa-clock"></i> About {{ $minutes }} minutes at
+            {{.Site.Params.blogReadSpeed}} words/minute</div>
+
         {{ if .Params.preamble }}
         <div class="preamble">
             {{ range split ( .RenderString .Params.preamble ) "\n" }}

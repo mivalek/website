@@ -14,6 +14,8 @@ ignoreFiles:
     - \.qmd$
     - \.ipynb$
 relativeURLS: false
+params:
+    blogReadSpeed: 220
 permalinks:
     blog: /blog/:year/:month/:slug/
 menu:

@@ -46,6 +46,12 @@
                         {{ end }}
                         {{ end }}
                         <div class="img-overlay"></div>
+                        {{ $readTime := mul (div (countwords .Content) .Site.Params.blogReadSpeed) 60 }}
+                        {{ $minutes := math.Round (div $readTime 60) }}
+                        {{ if lt $minutes 1 }}
+                        {{ $minutes = "< 1" }}
+                        {{ end }}
+                        <div class="read-time">{{ $minutes }} min read</div>
                     </div>
                     <h2>{{.Title}}</h2>
                     <div class="blog-summary">{{ .Summary | truncate 200 }}</div>
