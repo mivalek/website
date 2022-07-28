@@ -2,7 +2,7 @@
 {{ if not .IsSection }}
 {{ $img_name = "img/bkg.jpg" }}
 {{ end }}
-{{ with $img :=  .Resources.Get $img_name }}
+{{ with $img := .Resources.Get $img_name }}
 {{ $sizes := dict "huge" "2560x" "large" "1920x" "medium" "1280x" "small" "400x1000" }}
 {{ print "<style>" | safeHTML }}
 :root {

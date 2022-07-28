@@ -1,8 +1,11 @@
-{{ $img_url := "mival.netlify.app/img/bkg.jpg" }}
-{{ if .IsSection }}
-{{ with .Resources.Get "img/bkg.jpg" }}
-{{ $img_url = .Permalink }}
+{{ $img :=  resources.Get "img/intro.jpg" }}
+{{ $img_name := cond .IsSection "bkg.jpg" "img/bkg.jpg" }}
+{{ with .Resources.Get $img_name }}
+{{ $img = .}}
 {{ end }}
+{{ $img_url := "" }}
+{{ with $img.Resize "x200" }}
+{{ $img_url = .Permalink }}
 {{ end }}
 {{ $desc := cond .IsHome "A personal website of yet another university teacher turned data scientist" .Description }}
 {{ if eq $desc "" }}
@@ -26,7 +29,7 @@
 <meta itemprop="image" content="{{ $img_url }}">
 
 <!-- Twitter Card data -->
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ .Title }}">
 <meta name="twitter:description" content="{{ $desc }}">
 <meta name="twitter:creator" content="@mivalek">
