@@ -7,6 +7,10 @@ window.addEventListener("load", (event) => {
         });
         el.removeEventListener("mouseout", positionTooltip);
     });
+    document.querySelectorAll(".scroll-tab").forEach((el) => {
+        const h = el.dataset.height;
+        el.querySelector("table").style.height = h;
+    });
     if (preScriptOnload) preScriptOnload();
 });
 
