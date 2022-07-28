@@ -5,7 +5,7 @@
 {{ end }}
 {{ $img_url := "" }}
 {{ with $img.Resize "x200" }}
-{{ $img_url = .Permalink }}
+{{ $img_url = .Permalink | absURL }}
 {{ end }}
 {{ $desc := cond .IsHome "A personal website of yet another university teacher turned data scientist" .Description }}
 {{ if eq $desc "" }}
