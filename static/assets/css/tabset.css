@@ -20,7 +20,7 @@ a.tab-label {
 	cursor: pointer;
 }
 
-a.tab-label:hover, a.tab-label:not(.active):focus {
+a.tab-label:hover, a.tab-label:not(.active):focus-visible {
 	background: rgba(var(--theme-col), .2);
 	color: rgb(var(--theme-col));
 	border-color: rgb(var(--theme-col));
@@ -30,6 +30,7 @@ a.tab-label.active {
 	background: rgb(var(--alt-col));
 	color: white;
 	border-color: rgb(var(--alt-col));
+	outline: none;
 }
 
 .tab-container {

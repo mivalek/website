@@ -34,7 +34,7 @@ h2 {
 	margin: .2em 0 1em 0;
 }
 
-h3 {
+h3, h4 {
 	font-size: 1.2em;
 	margin: .2em 0 .5em 0;
 }
@@ -54,6 +54,7 @@ sup {
 
 code {
 	font-family: 'Roboto Mono', monospace;
+	font-size: .95em;
 }
 
 hr {
@@ -68,11 +69,22 @@ del {
 
 ol {
 	list-style: decimal;
+	margin-left: 3em;
+	margin-bottom: 1.5em;
+}
+
+.footnotes ol {
 	margin-left: 1em;
+	margin-bottom: 1em;
 }
 
 ul {
 	list-style: disc;
+	margin-left: 2em;
+	margin-bottom: 1.5em;
+}
+
+li ul, li ol {
 	margin-left: 1em;
 }
 
@@ -85,12 +97,16 @@ a {
 	border: solid 1px transparent;
 }
 
-a:focus {
-	outline: solid 3px rgb(var(--alt-col)) !important;
-	border-color: transparent  !important;
+a:focus-visible {
+	outline: solid 3px rgb(var(--alt-col));
+	/* border-color: transparent  !important; */
 }
 
-.sr-only:not(:focus):not(:active) {
+a:active:focus-visible {
+	outline: none;
+}
+
+.sr-only:not(:focus-visible):not(:active) {
 	clip: rect(0 0 0 0); 
 	clip-path: inset(50%);
 	height: 1px;
@@ -149,6 +165,14 @@ nav ul {
 	margin-left: 0;
 }
 
+nav li ul {
+	margin-left: 1em;
+	font-size: .85em;
+}
+
+nav li ul, nav li ul li {
+	margin-bottom: 0;
+}
 div#hamburger-bkg {
     background: rgb(var(--theme-col));
     height: 120px;
@@ -245,13 +269,14 @@ a, span.hoverable {
 	cursor: pointer;
 }
 
-a:hover, span.hoverable:hover, .tooltip a:hover {
+a:hover, span.hoverable:hover, .tooltip a:hover, #home a:hover, #back a:hover {
 	border-bottom: solid 1px rgb(var(--theme-col));
 	color: rgb(var(--theme-col));
 }
 
 .footnotes {
 	font-size: .8em;
+	margin-top: 3em;
 }
 
 a.footnote-ref, a.footnote-backref {
@@ -412,7 +437,7 @@ iframe.viz {
 pre {
 	padding: 5px 10px;
 	margin-bottom: 1em;
-	font-size: .80em;
+	font-size: .9em;
 	border: solid 1px rgba(var(--theme-col), .3)
 }
 
@@ -426,6 +451,7 @@ pre.chroma {
 	border: none;
 	position: relative;
 }
+
 @media (max-width: 750px) {
 	body {
 		overflow-x: hidden;
@@ -510,20 +536,24 @@ pre.chroma {
 	}
 
 	#nav-container a {
-		-webkit-transition: all .4s ease-in-out;
-		-moz-transition: all .4s ease-in-out;
-		-o-transition: all .4s ease-in-out;
-		transition: all .4s ease-in-out;
+		-webkit-transition: all .2s ease-in-out;
+		-moz-transition: all .2s ease-in-out;
+		-o-transition: all .2s ease-in-out;
+		transition: all .2s ease-in-out;
 	}
 
 	#nav-container a.active {
 		font-weight: 800;
 		color: rgb(var(--theme-col));		
 		font-size: 1.05em;
-		-webkit-transition: all .4s ease-in-out;
-		-moz-transition: all .4s ease-in-out;
-		-o-transition: all .4s ease-in-out;
-		transition: all .4s ease-in-out;
+		-webkit-transition: all .2s ease-in-out;
+		-moz-transition: all .2s ease-in-out;
+		-o-transition: all .2s ease-in-out;
+		transition: all .2s ease-in-out;
+	}
+
+	table {
+		max-width: 100%;
 	}
 }
 
@@ -543,161 +573,4 @@ pre.chroma {
 	#main-container {
 		gap: 80px;
 	}
-}
-
-
-.copy-btn {
-	cursor: pointer;
-	position: absolute;
-	top: 4px;
-	right: 5px;
-	border: solid 1px;
-	color: rgb(var(--alt-col));
-	padding: 0 4px;
-	text-align: center;
-	border-radius: 4px;
-}
-
-.copy-btn:hover, .copy-btn:focus {
-	background: rgb(var(--alt-col));
-	color: white;
-	border-color: rgb(var(--alt-col));
-}
-
-.copy-btn:active:hover {
-	background: rgba(var(--theme-col), .4);
-	border-color: rgb(var(--theme-col));
-	color: rgb(var(--theme-col));
-}
-
-.copy-msg {
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: rgb(var(--alt-col));
-	color: white;
-	font-size: 1.1em;
-	pointer-events: none;
-}
-
-.copy-msg, .copy-btn{
-	opacity: 0;
-	-webkit-transition: opacity .2s ease-in;
-	-moz-transition: opacity .2s ease-in;
-	-o-transition: opacity .2s ease-in;
-	transition: opacity .2s ease-in;
-}
-
-pre:hover .copy-btn, .copy-msg.active, .copy-btn:focus {
-	opacity: 1;
-}
-
-.preamble {
-	font-style: italic;
-	color: #555;
-}
-
-.preamble > p {
-	margin: .5em 0;
-}
-
-table {
-	max-width: calc(100vw - 40px);
-	width: fit-content;
-	overflow-x: auto;
-	display: block;
-	font-size: 13px;
-	margin: auto;
-	margin-bottom: 2em;
-	
-}
-
-thead, tbody {
-	border-bottom: solid .5px #0006
-}
-
-tr:nth-of-type(2n-1) {
-	background: #0001;
-}
-
-thead tr {
-	background: none !important;
-}
-th {
-	text-align: center !important;
-	font-weight: bold;
-}
-
-td {
-	padding: 3px 8px;
-	vertical-align: middle;
-}
-
-.quarto {
-	margin-top: 2em;
-	font-size: .8em;
-	text-align: center;
-	color: #666;
-}
-
-a.quarto-link {
-	border: none;
-}
-
-.quarto-icon {
-	height: 16px;
-	margin-bottom: -3.5px;
-}
-
-.quarto-icon:hover {
-	filter: hue-rotate(160deg);
-}
-
-kbd {
-	display: inline-block;
-	border: solid 1px #000a;
-	font-size: .8em;
-	border-radius: 4px;
-	padding: 0 3px;
-}
-
-kbd.ctrl::before {
-	content: "Ctrl";
-}
-
-kbd.cmd::before {
-	content: "⌘ Cmd";
-}
-
-kbd.alt::before {
-	content: "Alt";
-}
-
-kbd.shift::before {
-	content: "⇧ Shift";
-}
-
-kbd.opt::before {
-	content: "⌥ Opt";
-}
-
-kbd.back::before {
-	content: "← Backspace";
-}
-
-kbd.tab::before {
-	content: "Tab ↹";
-}
-
-kbd.enter::before {
-	content: "↵ Enter";
-}
-
-kbd.win::before {
-	content: "⊞ Win";
 }

@@ -120,6 +120,17 @@ section.listing:nth-child(2n) {
     right: 0;
 }
 
+.read-time {
+	background: rgba(var(--alt-col), 0.7);
+	display: block;
+	padding: 0 5px;
+	color: white;
+    font-weight: bold;
+	position: absolute;
+    bottom: 0;
+    left: 8px
+}
+
 .post-card-container:nth-child(2n-1) .img-overlay {
     background-color: rgba(var(--alt-col), .2);
 }

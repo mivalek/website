@@ -1,0 +1,238 @@
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    flex-flow: row;
+    margin: 2em 0
+}
+
+#byline #subtitle {
+    font-size: 20px;
+    background: #999999e6;
+    padding: 0 10px;
+    width: fit-content;
+    margin-left: 5%;
+    margin-top: -5px;
+    display: block;
+    transform: none !important;
+}
+
+#read-time {
+    color: rgb(var(--alt-col));
+    margin-bottom: 1.5em;
+    margin-top: 15px;
+}
+
+#read-time i {
+    margin-right: .3em;
+}
+    
+.copy-btn {
+	cursor: pointer;
+	position: absolute;
+	top: 4px;
+	right: 5px;
+	border: solid 1px;
+	color: rgb(var(--alt-col));
+	padding: 0 4px;
+	text-align: center;
+	border-radius: 4px;
+}
+
+.copy-btn:hover, .copy-btn:focus {
+	background: rgb(var(--alt-col));
+	color: white;
+	border-color: rgb(var(--alt-col));
+}
+
+.copy-btn:active:hover {
+	background: rgba(var(--theme-col), .4);
+	border-color: rgb(var(--theme-col));
+	color: rgb(var(--theme-col));
+}
+
+.copy-msg {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgb(var(--alt-col));
+	color: white;
+	font-size: 1.1em;
+	pointer-events: none;
+}
+
+.copy-msg, .copy-btn{
+	opacity: 0;
+	-webkit-transition: opacity .2s ease-in;
+	-moz-transition: opacity .2s ease-in;
+	-o-transition: opacity .2s ease-in;
+	transition: opacity .2s ease-in;
+}
+
+pre:hover .copy-btn, .copy-msg.active, .copy-btn:focus {
+	opacity: 1;
+}
+
+.preamble {
+	font-style: italic;
+	color: #555;
+}
+
+.preamble > p {
+	margin: .5em 0;
+}
+
+table {
+	max-width: calc(100vw - 40px);
+	width: fit-content;
+	overflow-x: auto;
+	display: block;
+	font-size: 13px;
+	margin: auto;
+	margin-bottom: 2em;
+	
+}
+
+thead, tbody {
+	border-bottom: solid .5px #0006
+}
+
+.scroll-tab table {
+	border-bottom: solid .5px #0004;
+}
+
+.scroll-tab thead {
+	position: sticky;
+	top: 0;
+	background: white;
+	box-shadow: 0 0 1px;
+}
+
+.scroll-tab tbody {
+	border-bottom: none;
+}
+tr:nth-of-type(2n-1) {
+	background: #0001;
+}
+
+thead tr {
+	background: none !important;
+}
+th {
+	text-align: center !important;
+	font-weight: bold;
+}
+
+td {
+	padding: 3px 8px;
+	vertical-align: middle;
+}
+
+.quarto {
+	margin-top: 2em;
+	font-size: .8em;
+	text-align: center;
+	color: #666;
+}
+
+a.quarto-link {
+	border: none;
+}
+
+.quarto-icon {
+	height: 16px;
+	margin-bottom: -3.5px;
+}
+
+.quarto-icon:hover {
+	filter: hue-rotate(160deg);
+}
+
+kbd {
+	display: inline-block;
+	border: solid 1px #000a;
+	font-size: .8em;
+	border-radius: 4px;
+	padding: 0 3px;
+}
+
+kbd.ctrl::before {
+	content: "Ctrl";
+}
+
+kbd.cmd::before {
+	content: "⌘ Cmd";
+}
+
+kbd.alt::before {
+	content: "Alt";
+}
+
+kbd.shift::before {
+	content: "⇧ Shift";
+}
+
+kbd.opt::before {
+	content: "⌥ Opt";
+}
+
+kbd.back::before {
+	content: "← Backspace";
+}
+
+kbd.tab::before {
+	content: "Tab ↹";
+}
+
+kbd.enter::before {
+	content: "↵ Enter";
+}
+
+kbd.win::before {
+	content: "⊞ Win";
+}
+
+.extra-box {
+	padding: 10px 20px;
+	margin: 1em 5px 2em 5px;
+	box-shadow: 0 0 10px 0 #ccc;
+	font-size: .9em;
+	position: relative;
+}
+
+.extra-box::before {
+	content: "EXTRA";
+	background: rgb(var(--theme-col));
+	color: white;
+	font-weight: bold;
+	font-size: 12px;
+	padding: 1px 4px;
+	position: absolute;
+	top: -8px;
+	right: -8px;
+}
+
+[data-tag]::before {
+	content: attr(data-tag);
+}
+
+.warn-box {
+	border: solid 2px rgb(var(--theme-col));
+	padding: .3em 1em;
+	margin: 1.5em 0;
+}
+
+.warn-box h4, .warn-box h5 {
+	color: rgb(var(--theme-col));
+	font-size: 1.1em;
+}
+
+@media (min-width: 750px) {
+	table {
+		max-width: 100%;
+	}
+}
