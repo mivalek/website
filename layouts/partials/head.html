@@ -3,7 +3,7 @@
 {{ with .Resources.Get $img_name }}
 {{ $img = .}}
 {{ end }}
-{{ $img_url := .Site.BaseURL }}
+{{ $img_url := .Site.Params.hostedOn }}
 {{ with $img.Resize "x200" }}
 {{ $img_url = print $img_url .Permalink }}
 {{ end }}

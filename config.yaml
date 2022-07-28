@@ -15,6 +15,7 @@ ignoreFiles:
     - \.ipynb$
 relativeURLS: false
 params:
+    hostedOn: "mival.netlify.app"
     blogReadSpeed: 220
 permalinks:
     blog: /blog/:year/:month/:slug/
