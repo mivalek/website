@@ -1,7 +1,46 @@
+{{ $img_url := "mival.netlify.app/img/bkg.jpg" }}
+{{ if .IsSection }}
+{{ with .Resources.Get "img/bkg.jpg" }}
+{{ $img_url = .Permalink }}
+{{ end }}
+{{ end }}
+{{ $desc := cond .IsHome "A personal website of yet another university teacher turned data scientist" .Description }}
+{{ if eq $desc "" }}
+{{ $desc = .Params.preamble | markdownify | truncate 150 }}
+{{ end }}
+{{ if eq $desc "" }}
+{{ $desc = .Summary | truncate 150 }}
+{{ end }}
+{{ if eq $desc "" }}
+{{ $desc = .Params.subtitle | markdownify }}
+{{ end }}
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1">
 <title>{{ .Title }}</title>
+<meta name="description" content="{{ $desc }}" />
+<meta name="author" content="Milan Valášek">
+<!-- Schema.org markup for Google+ -->
+<meta itemprop="name" content="{{ .Title }}">
+<meta itemprop="description" content="{{ $desc }}">
+<meta itemprop="image" content="{{ $img_url }}">
+
+<!-- Twitter Card data -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ .Title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:creator" content="@mivalek">
+<!-- Twitter summary card with large image must be at least 280x150px -->
+<meta name="twitter:image:src" content="{{ $img_url }}">
+
+<!-- Open Graph data -->
+<meta property="og:title" content="{{ .Title }}" />
+<meta property="og:type" content="{{ cond (and (eq .Section "blog") .IsPage) "article" "website" }}" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta property="og:image" content="{{ $img_url }}" />
+<meta property="og:description" content="{{ $desc }}" />
+<meta property="og:site_name" content="Milan's pages" />
+<meta property="article:published_time" content="{{ .Date }}" />
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Roboto+Mono:wght@300&display=swap');
 </style>
