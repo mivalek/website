@@ -4,7 +4,7 @@
 {{ $img = .}}
 {{ end }}
 {{ $img_url := .Site.Params.hostedOn }}
-{{ with $img.Resize "x200" }}
+{{ with $img.Resize "x300" }}
 {{ $img_url = print $img_url .Permalink }}
 {{ end }}
 {{ $desc := cond .IsHome "A personal website of yet another university teacher turned data scientist" .Description }}
@@ -34,7 +34,7 @@
 <meta name="twitter:description" content="{{ $desc }}">
 <meta name="twitter:creator" content="@mivalek">
 <!-- Twitter summary card with large image must be at least 280x150px -->
-<meta name="twitter:image:src" content="{{ $img_url }}">
+<meta name="twitter:image" content="{{ $img_url }}">
 
 <!-- Open Graph data -->
 <meta property="og:title" content="{{ .Title }}" />
