@@ -139,7 +139,7 @@ If you look at `page.content` you'll see the entire HTML document as a bytes lit
     b'<!DOCTYPE html>\n<html class="client-nojs" lang="en" dir="ltr">\n<head>\n<meta charset="UTF-8"/>\n<title>2007 IFSC Climbing World Cup - Wikipedia</title>\n<script>document.documentElement.className="client'...
 
 To be able to work with it, we need to parse it.
-`BeautifulSoup` (imported in our code as `bs`) makes this very easy; all we need to do is give it the raw content of the page and specify a parser, teh tool that breaks down the bytes literal above into manageable HTML code:
+`BeautifulSoup` (imported in our code as `bs`) makes this very easy; all we need to do is give it the raw content of the page and specify a parser, the tool that breaks down the bytes literal above into manageable HTML code:
 
 ``` python
 soup = bs(page.content, "html.parser")
