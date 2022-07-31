@@ -154,6 +154,18 @@
 	padding: 0 7px;
 }
 
+
+section {
+	position: relative;
+	margin: 10px 0 40px 0;
+}
+
+section:nth-child(2n) {
+	background: rgba(var(--alt-col), .1);
+	box-shadow: 0 0 10px 0 #ccc;
+	padding: 20px 30px;
+}
+
 section:nth-child(2n) .skill-area h3 {
 	background: #e8f3f9;
 }
