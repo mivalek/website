@@ -35,7 +35,33 @@
         </div>
         <hr>
         {{ end }}
-        {{ .Content }}
+        {{ $sections := split .Content "<h2 " }}
+
+        {{ range $index, $p := $sections }}
+        {{ $headingId := replaceRE "id=\"(.*)\"" "$1" (index ( findRE "id=\".*?\"" $p 1 ) 0 )}}
+        {{ $pp := trim $p " \n" }}
+        {{ if (eq $index 0) }}
+        {{ printf "%s\n" $pp |
+        safeHTML }}
+        {{ else if ne $pp "" }}
+        <section id="{{ $headingId }}-section">
+            {{ $subsections := split $pp "<h3 " }}
+            {{ range $subInd, $subP := $subsections }}
+            {{ $headingId = replaceRE "id=\"(.*)\"" "$1" (index ( findRE "id=\".*?\"" $subP 1 ) 0 )}}
+            {{ $subPp := trim $subP " \n" }}
+            {{ if (eq $subInd 0) }}
+            <a class="anchor" id="{{ $headingId }}"></a>
+            {{ printf "<h2 %s\n" ( replaceRE "id=\".*?\"" "" $subPp 1 ) | safeHTML }}
+            {{ else if ne $subPp "" }}
+            <div id="{{ $headingId }}-section" class="subsection">
+                <a class="anchor" id="{{ $headingId }}"></a>
+                {{ printf "<h3 %s\n" ( replaceRE "id=\".*?\"" "" $subPp 1 ) | safeHTML }}
+            </div>
+            {{ end }}
+            {{ end }}
+        </section>
+        {{ end }}
+        {{end}}
         {{ if .File | replaceRE "\\.md$" ".qmd" | os.FileExists }}
         <div class="quarto"> This post was written using <a class="quarto-link" href="https://quarto.org"><img
                     class="quarto-icon" src="/img/quarto.svg" alt="Quarto"></a>.</div>
