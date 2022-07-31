@@ -1,7 +1,7 @@
 ---
 title: "Making an interactive data visualisation, Part 1"
 subtitle: "Getting data"
-date: 2022-07-28T15:37:28+01:00
+date: 2022-07-28T10:00:28+01:00
 tags:
     - data science
     - Python
@@ -362,20 +362,35 @@ for i in years:
 ```
 
     Year 2007 data scraped
+
     Year 2008 data scraped
+
     Year 2009 data scraped
+
     Year 2010 data scraped
+
     Year 2011 data scraped
+
     Year 2012 data scraped
+
     Year 2013 data scraped
+
     Year 2014 data scraped
+
     Year 2015 data scraped
+
     Year 2016 data scraped
+
     Year 2017 data scraped
+
     Year 2018 data scraped
+
     Year 2019 data scraped
+
     Skipping year 2020
+
     Year 2021 data scraped
+
     Year 2022 data scraped
 
 This time the code ran without problems, although the 2020 page got skipped.
