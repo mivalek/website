@@ -25,31 +25,33 @@
     <main>
         {{ $n_in_previous_album := 0 }}
         {{ range $album_index, $albums := .Site.Data.photos}}
-        <a class="anchor" id="{{ .album | lower }}-{{ .year }}"></a>
-        <h2>{{ .album | title }} {{ .year }}</h2>
-        <div class="gallery-container">
-            <div class="gallery">
-                {{ $album := .photos}}
-                {{ $year := .year }}
-                {{ range $index, $value := $album  }}
-                {{ with $value.year }}
-                {{ $year = .}}
-                {{ end }}
-                {{ $placeholder := resources.GetRemote (print "https://am3pap002files.storage.live.com/" $value.url "?width=8&height=6") }}
-                {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
-                <div class="image-container{{ with .portrait }} portrait{{ end}}{{ with .large }} large{{ end}}">
-                    <img class="thumbnail lazy" height="250px"
-                        src="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}"
-                        data-src="https://am3pap002files.storage.live.com/{{ $value.url }}?width=400&height=300"
-                        aria-label="{{ with $value.caption}}{{.}} | {{end}}{{ $value.location }}"
-                        index="{{ add $n_in_previous_album $index }}" year="{{ $year }}"
-                        {{ if and (eq (add $album_index 1) (len $albums)) ( eq (add $index 1) (len $album)) }}last="true"
-                        {{ end }} />
+        <section id="{{ .album | lower }}-{{ .year }}-section">
+            <a class="anchor" id="{{ .album | lower }}-{{ .year }}"></a>
+            <h2>{{ .album | title }} {{ .year }}</h2>
+            <div class="gallery-container">
+                <div class="gallery">
+                    {{ $album := .photos}}
+                    {{ $year := .year }}
+                    {{ range $index, $value := $album  }}
+                    {{ with $value.year }}
+                    {{ $year = .}}
+                    {{ end }}
+                    {{ $placeholder := resources.GetRemote (print "https://am3pap002files.storage.live.com/" $value.url "?width=8&height=6") }}
+                    {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
+                    <div class="image-container{{ with .portrait }} portrait{{ end}}{{ with .large }} large{{ end}}">
+                        <img class="thumbnail lazy" height="250px"
+                            src="data:image/jpeg;base64,{{ $placeholder.Content | base64Encode }}"
+                            data-src="https://am3pap002files.storage.live.com/{{ $value.url }}?width=400&height=300"
+                            aria-label="{{ with $value.caption}}{{.}} | {{end}}{{ $value.location }}"
+                            index="{{ add $n_in_previous_album $index }}" year="{{ $year }}"
+                            {{ if and (eq (add $album_index 1) (len $albums)) ( eq (add $index 1) (len $album)) }}last="true"
+                            {{ end }} />
+                    </div>
+                    {{ end }}
+                    {{ $n_in_previous_album = len $album}}
                 </div>
-                {{ end }}
-                {{ $n_in_previous_album = len $album}}
             </div>
-        </div>
+        </section>
         {{ end }}
     </main>
 </div>
