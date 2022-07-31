@@ -34,7 +34,12 @@ document.addEventListener("click", (e) => {
 document.querySelectorAll("#nav-container a").forEach((el) =>
     el.addEventListener("click", (e) => {
         deactivateAllNavs();
-        e.target.classList.add("active");
+        const targ = e.target;
+        targ.classList.add("active");
+        const firstChildOfParentList =
+            targ.parentElement.parentElement.parentElement.firstElementChild;
+        if (firstChildOfParentList.tagName === "A")
+            firstChildOfParentList.classList.add("active");
     })
 );
 
@@ -72,23 +77,36 @@ function toggleNav(e) {
 
 const obsOpts = {
     root: null,
-    rootMargin: "0px",
-    threshold: 0.5,
+    rootMargin: "-54% 0% -45% 0%",
 };
+
+window.addEventListener("DOMContentLoaded", () => {
+    document
+        .querySelectorAll("section[id], .subsection[id]")
+        .forEach((i) => observer.observe(i));
+});
 
 const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
+        const section = entry.target.id.replace("-section", "");
         if (entry.isIntersecting) {
-            activateNav(entry.target.id.replace("-section", ""));
-        }
+            // activateNav(entry.target.id.replace("-section", ""));
+            document
+                .querySelector(`#nav-container a[href="#${section}"]`)
+                .classList.add("active");
+        } else
+            document
+                .querySelector(`#nav-container a[href="#${section}"]`)
+                .classList.remove("active");
     });
 }, obsOpts);
 
-deactivateAllNavs = () =>
+const deactivateAllNavs = () =>
     document
         .querySelectorAll("#nav-container a")
         .forEach((el) => el.classList.remove("active"));
-activateNav = (section) => {
+
+const activateNav = (section) => {
     deactivateAllNavs();
 
     const navMenu = document.querySelector(
@@ -97,7 +115,6 @@ activateNav = (section) => {
     if (navMenu) navMenu.classList.add("active");
 };
 
-document.querySelectorAll("section").forEach((i) => observer.observe(i));
 deactivateAllNavs();
 
 const sleep = (milliseconds) => {
