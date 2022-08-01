@@ -13,7 +13,7 @@ format: hugo
 jupyter: python3
 execute:
     echo: true
-preamble: 
+preamble:
     This is the first part of a mini-series about creating the [interactive visualisation of bouldering data](/portfolio/boulder-viz/) shown on the main page of this website.
 
     In this post, I will show how to use Python to scrape some of the data the visualisation is based on from the web.
@@ -23,19 +23,17 @@ preamble:
     Finally, in {{< link "Part 3" "blog/03_boulder_viz_pt3/index.md" >}}, I will show how I built the viz using HTML, CSS, and JavaScript.
 ---
 
-
-
 <!-- Something <kbd class="ctrl"></kbd>+<kbd class="cmd"></kbd> <kbd class="alt"></kbd> <kbd class="opt"></kbd> <kbd class="back"></kbd> <kbd class="shift"></kbd> <kbd class="enter"></kbd> <kbd class="tab"></kbd> <kbd class="win"></kbd> -->
 
 I'll start this post with a little bit of background on why I made the visualisation in the first place.
-Now, I am *really* into climbing.
+Now, I am _really_ into climbing.
 Though I'm not particularly good at it, I do it quite a bit.
 I'm into it so much that I've been watching pretty much all the top-tier climbing competitions for the past few years.
 So, when I decided to find some data and do something fun with it in order to build up my data science portfolio after I quit being a uni teacher, climbing data were the obvious choice.
 I didn't know what kind of data I would be able to get or what I would do once I have them but I was quite excited.
 
 The fun thing about projects like these is that you end up not only exercising your creative, design, and analytical skills but also learning something new about the subject matter.
-For example, I always knew that [Akiyo Noguchi](https://en.wikipedia.org/wiki/Akiyo_Noguchi) was pretty amazing, but playing with the app made me learn more about *quite how amazing* she was[^1].
+For example, I always knew that [Akiyo Noguchi](https://en.wikipedia.org/wiki/Akiyo_Noguchi) was pretty amazing, but playing with the app made me learn more about _quite how amazing_ she was[^1].
 
 ## Finding Data
 
@@ -73,10 +71,12 @@ Bear with me...
 
 A competition boulder is basically a set of artificial "holds" mounted on a wall about four metres high.
 The task is to figure out a way of getting from a designated starting position to the top, placing both hands on the labelled final hold.
+
 Depending on the competition and round, there are 3-5 boulders problems that you've never seen before to solve with a four or five minute time limit per problem.
 You are allowed as many attempts as you can fit within this short time window but attempts count.
 If you manage to touch both hands to the final hold, you are awarded a Top and the number of attempts you required is recorded.
 In addition to the top, one of the other holds, usually roughly in the middle of the boulder, is designated a "bonus" (pre-2018) or a "zone" (2018 onwards) hold that also counts, albeit less than a top.
+
 Someone who scored four bonuses/zones in 20 attempts has a better score that someone who scored three of these, even if they only needed three attempts.
 However, even a single top counts more than any number of bonuses/zones.
 Obviously, because the bonuses/zones are along the way to the top, if you score a top, you're also awarded a bonus/zone for that boulder.
@@ -121,7 +121,7 @@ There are three steps that that we need to take here:
 For step 1, we'll use the `requests` Python library, for step 2, we'll use `BeautifulSoup` from the `bs4` library and for step 3, we will use `pandas`.
 Let's go ahead and import these packages:
 
-``` python
+```python
 import requests
 from bs4 import BeautifulSoup as bs
 import pandas as pd
@@ -129,7 +129,7 @@ import pandas as pd
 
 Now we can use the `get()` function from `requests` to request the 2007 world cup page:
 
-``` python
+```python
 url = "https://en.wikipedia.org/wiki/2007_IFSC_Climbing_World_Cup"
 page = requests.get(url)
 ```
@@ -141,11 +141,11 @@ If you look at `page.content` you'll see the entire HTML document as a bytes lit
 To be able to work with it, we need to parse it.
 `BeautifulSoup` (imported in our code as `bs`) makes this very easy; all we need to do is give it the raw content of the page and specify a parser, the tool that breaks down the bytes literal above into manageable HTML code:
 
-``` python
+```python
 soup = bs(page.content, "html.parser")
 ```
 
-Inside of the `soup` variable, there is now an object we can query with `.select()` using [CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) (*e.g.,* `type`, `.class`, `#id`).
+Inside of the `soup` variable, there is now an object we can query with `.select()` using [CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) (_e.g.,_ `type`, `.class`, `#id`).
 In order to know what to select, though, we first need to inspect the webpage to see what identifiable properties the table of interest has.
 One way to do this is to open developer tools in your browser (<kbd class="ctrl"></kbd>+<kbd class="shift"></kbd>+<kbd>C</kbd> on Windows or <kbd class="cmd"></kbd>+<kbd class="shift"></kbd>+<kbd>C</kbd> on MacOS works both for Firefox and Chrome), clicking inside of the table and then looking up the HTML tree till you find the `<table>` element:
 
@@ -158,7 +158,7 @@ The `.select()` method only selects the first occurrence so even if there are mo
 Once selected, we can then use the extremely convenient `read_html()` function from `pandas` to extract the data from the table.
 All we have to do is pass the selected table to the function as a string:
 
-``` python
+```python
 resultsHTML = soup.select(".wikitable.sortable")
 results_df = pd.read_html(str(resultsHTML))
 ```
@@ -166,7 +166,7 @@ results_df = pd.read_html(str(resultsHTML))
 The returned object is a list with a `pandas` data frame as its first element, in this case `results_df[0]`.
 To make it slightly easier to work with the data frame, we can take it out of the list by reassigning it to `results_df`:
 
-``` python
+```python
 results_df = results_df[0]
 ```
 
@@ -176,7 +176,7 @@ Adding a little formatting, this is what the data frame looks like:
 <div class="scroll-tab" data-height="310px">
 
 | No.            | Location                            | D   | G   | Gold                                 | Silver                                             | Bronze                       |
-|:---------------|:------------------------------------|:----|:----|:-------------------------------------|:---------------------------------------------------|:-----------------------------|
+| :------------- | :---------------------------------- | :-- | :-- | :----------------------------------- | :------------------------------------------------- | :--------------------------- |
 | 1              | Erlangen 30 - 31 March 2007         | B   | M   | Mykhaylo Shalagin 4t5 4b5            | Kilian Fischhuber 3t4 3b4                          | Jonas Baumann 3t5 4b4        |
 | 1              | Erlangen 30 - 31 March 2007         | B   | W   | Olga Shalagina 4t6 4b6               | Juliette Danion 4t11 4b11                          | Chloé Graftiaux 2t2 3b3      |
 | 2              | Tarnów 13 - 14 April 2007           | S   | M   | Evgenii Vaitsekhovskii 1.010 (quali) | Csaba Komondi 2.000                                | Sergei Sinitcyn 3.000        |
@@ -237,7 +237,7 @@ Now, since we're only interested in the individual boulder world cups, we might 
 Just like with all programming, there is more than one way to go about doing this but to me, it make sense to subset only those rows that have the letter B in the "D" (discipline) column and a number in the "No." column.
 The first part of the condition is simple:
 
-``` python
+```python
 results_df["D"] == "B"
 ```
 
@@ -245,16 +245,16 @@ The second part needs a little attention.
 A data frame column can only contain values of one class.
 Because the "No." column contains both numbers and words, all of these are character strings.
 Since each column of a `pandas` data frame is a [`pandas.Series`](https://pandas.pydata.org/docs/reference/api/pandas.Series.html) object, we can use the `pandas.Series.str.isnumeric()` method to check whether or not each value in the column is numeric.
-It's good to know that this method returns `False` for strings that include anything other numerals, *i.e.,* even values like `"1.3"` or `"-23"`, but, since we're not expecting any negative or decimal numbers in the "No." column, this is not a concern.
+It's good to know that this method returns `False` for strings that include anything other numerals, _i.e.,_ even values like `"1.3"` or `"-23"`, but, since we're not expecting any negative or decimal numbers in the "No." column, this is not a concern.
 The second part of the condition thus is:
 
-``` python
+```python
 results_df["No."].str.isnumeric()
 ```
 
 Putting it all together, we can subset our `results_df` like this:
 
-``` python
+```python
 results_df = results_df[results_df["No."].str.isnumeric() & ( results_df["D"] == "B" )]
 ```
 
@@ -273,7 +273,7 @@ The code below does exactly that.
 In each iteration of the `for` loop, the `i` variable takes a different value, starting with `2007` and ending with `2022`.
 Because all the world cup page URLs are the same save for the year, we can use [Python's f-strings](https://realpython.com/python-string-formatting/#3-string-interpolation-f-strings-python-36) to insert the year into the given URL.
 
-``` python
+```python
 all_res = pd.DataFrame()
 years = list(range(2007, 2023))
 for i in years:
@@ -318,7 +318,7 @@ It also uses the `try - except - else` expression to avoid any other problems.
 If the code in the `try:` block produces an error for any reason, the `except:` block is evaluated. If the code runs fine, the `else:` code is run instead.
 See comments in the code for more details on how the inconsistencies listed above are reconciled.
 
-``` python
+```python
 # empty data frame to store all results
 all_res = pd.DataFrame()
 years = list(range(2007, 2023))
@@ -400,7 +400,7 @@ While a few climbing world cups did indeed take place, scraping the data from th
 Just as a quick check, let's look at the last 10 rows of the `all_res` data frame to see that we really got to the year 2022:
 
 | Year | Location                     | D   | G   | Gold                       | Silver                     | Bronze                     |
-|-----:|:-----------------------------|:----|:----|:---------------------------|:---------------------------|:---------------------------|
+| ---: | :--------------------------- | :-- | :-- | :------------------------- | :------------------------- | :------------------------- |
 | 2022 | Seoul 6--8 May               | B   | M   | Kokoro Fujii 4T4Z 11 4     | Tomoa Narasaki 4T4Z 12 8   | Yoshiyuki Ogata 3T4Z 6 7   |
 | 2022 | Seoul 6--8 May               | B   | W   | Natalia Grossman 4T4Z 7 5  | Oriane Bertone 3T4Z 5 5    | Brooke Raboutou 3T3Z 6 5   |
 | 2022 | Salt Lake City 20--22 May    | B   | M   | Mejdi Schalck 4T4Z 9 6     | Yoshiyuki Ogata 4T4Z 11 10 | Rei Kawamata 3T4Z 14 12    |
@@ -415,7 +415,7 @@ Just as a quick check, let's look at the last 10 rows of the `all_res` data fram
 That all looks just fine, wll done us!
 All that's left to do is save the data in some useful format, for example as a CSV file:
 
-``` python
+```python
 all_res.to_csv("data/wiki_data.csv", index=False)
 ```
 
@@ -428,5 +428,4 @@ Next time, we'll talk about how to wrangle untidy data to get it in a convenient
 Toodle pip!
 
 [^1]: Yes, I am a bit of a fanboi, so what?!
-
 [^2]: The world cup is an annual series of elite climbing competitions that take place around the world. There is an overall world cup leaderboard but there is also one for each of the constituent comps. The world climbing championships is another event altogether.

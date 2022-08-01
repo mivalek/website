@@ -83,10 +83,12 @@ Bear with me...
 
 A competition boulder is basically a set of artificial "holds" mounted on a wall about four metres high.
 The task is to figure out a way of getting from a designated starting position to the top, placing both hands on the labelled final hold.
+
 Depending on the competition and round, there are 3-5 boulders problems that you've never seen before to solve with a four or five minute time limit per problem.
 You are allowed as many attempts as you can fit within this short time window but attempts count.
 If you manage to touch both hands to the final hold, you are awarded a Top and the number of attempts you required is recorded.
 In addition to the top, one of the other holds, usually roughly in the middle of the boulder, is designated a "bonus" (pre-2018) or a "zone" (2018 onwards) hold that also counts, albeit less than a top.
+
 Someone who scored four bonuses/zones in 20 attempts has a better score that someone who scored three of these, even if they only needed three attempts.
 However, even a single top counts more than any number of bonuses/zones.
 Obviously, because the bonuses/zones are along the way to the top, if you score a top, you're also awarded a bonus/zone for that boulder.
