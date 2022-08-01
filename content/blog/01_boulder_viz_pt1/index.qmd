@@ -58,7 +58,7 @@ Let's find ourselves some data then, shall we?
 
 Now, in an ideal world, I'd be pointing you to the website of the [International Federation of Sport Climbing](https://www.ifsc-climbing.org/index.php), the organising body behind all top-tier climbing competitions.
 I'd be signposting their [results service](https://ifsc.results.info/#/), where you can find all official score boards from all of these competitions since 1990 and I'd be showing you how to pull all this tasty data from it.
-Sadly, in our actual world, these websites have terms and conditions that are not exactly welcoming to automated tools and don't allow web scraping, not even for educational purposes, it seems. :sad_face:
+Sadly, in our actual world, these websites have terms and conditions that are not exactly welcoming to automated tools and don't allow web scraping, not even for educational purposes, it seems. :disappointed:
 
 And so, as the next best thing, let's look at the [Wikipedia page of the climbing world cup](https://en.wikipedia.org/wiki/IFSC_Climbing_World_Cup)[^2]:
 
