@@ -11,6 +11,11 @@ window.addEventListener("load", (event) => {
         const h = el.dataset.height;
         el.querySelector("table").style.height = h;
     });
+    // add target="_blank" to external links
+    // document.querySelectorAll("a[href^='http']").forEach((link) => {
+    //     if (!link.href.includes(window.location.origin))
+    //         link.setAttribute("target", "_blank");
+    // });
     if (preScriptOnload) preScriptOnload();
 });
 

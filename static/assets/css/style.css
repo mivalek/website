@@ -106,6 +106,15 @@ a:active:focus-visible {
 	outline: none;
 }
 
+main a[target="_blank"]::after {
+	content: '\f08e';
+	font-family: "Font Awesome 6 Free";
+	font-weight: 900;
+	font-size: .5em;
+	vertical-align: super;
+	margin-left: 2px;
+}
+
 .sr-only:not(:focus-visible):not(:active) {
 	clip: rect(0 0 0 0); 
 	clip-path: inset(50%);
