@@ -25,7 +25,16 @@
 #read-time i {
     margin-right: .3em;
 }
-    
+
+main a[target="_blank"]::after {
+	content: '\f08e';
+	font-family: "Font Awesome 6 Free";
+	font-weight: 900;
+	font-size: .5em;
+	vertical-align: super;
+	margin-left: 2px;
+}
+
 .copy-btn {
 	cursor: pointer;
 	position: absolute;
