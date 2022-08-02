@@ -7,7 +7,7 @@ document.querySelectorAll(".tabset").forEach((ts) => {
     const heights = [];
     const nTabs = ts.childElementCount;
     for (let i = 0; i < nTabs; i++) {
-        const tab = ts.children[0];
+        const tab = ts.children[0]; // 0 is not a bug!
         heights.push(tab.scrollHeight);
         const tabContent = document.createElement("div");
         tabContent.classList.add("tab-content");
@@ -20,8 +20,11 @@ document.querySelectorAll(".tabset").forEach((ts) => {
         tabHeader.appendChild(tabLabel);
         tabContent.appendChild(tab);
         tabContainer.appendChild(tabContent);
-        tab.id = null;
+        tab.removeAttribute("id");
         if (i === 0) {
+            if (tab.hasAttribute("data-src")) {
+                tab.classList.add("lazy");
+            }
             tabContent.classList.add("active");
             tabLabel.classList.add("active");
         }
