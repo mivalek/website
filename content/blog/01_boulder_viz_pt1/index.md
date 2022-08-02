@@ -50,7 +50,7 @@ Sadly, in our actual world, these websites have terms and conditions that are no
 
 And so, as the next best thing, let's look at the [Wikipedia page of the climbing world cup](https://en.wikipedia.org/wiki/IFSC_Climbing_World_Cup)[^2]:
 
-<iframe src="https://en.wikipedia.org/wiki/IFSC_Climbing_World_Cup" height="400">
+<iframe class="lazy" data-src="https://en.wikipedia.org/wiki/IFSC_Climbing_World_Cup" height="400">
 </iframe>
 
 In the left hand side box on the page embedded above, you can see that each edition of the IFSC Climbing World Cup from 2007 has a wikipedia page.
@@ -362,35 +362,20 @@ for i in years:
 ```
 
     Year 2007 data scraped
-
     Year 2008 data scraped
-
     Year 2009 data scraped
-
     Year 2010 data scraped
-
     Year 2011 data scraped
-
     Year 2012 data scraped
-
     Year 2013 data scraped
-
     Year 2014 data scraped
-
     Year 2015 data scraped
-
     Year 2016 data scraped
-
     Year 2017 data scraped
-
     Year 2018 data scraped
-
     Year 2019 data scraped
-
     Skipping year 2020
-
     Year 2021 data scraped
-
     Year 2022 data scraped
 
 This time the code ran without problems, although the 2020 page got skipped.
