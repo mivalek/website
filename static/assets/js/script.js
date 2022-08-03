@@ -129,7 +129,6 @@ const mobileNavObsOpts = {
 
 const mobileNavObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
-        console.log(entry.isIntersecting);
         if (entry.isIntersecting) {
             document.getElementById("mobile-only").classList.add("active");
         } else
