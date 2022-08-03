@@ -64,7 +64,7 @@ And so, as the next best thing, let's look at the [Wikipedia page of the climbin
 
 [^2]: The world cup is an annual series of elite climbing competitions that take place around the world. There is an overall world cup leaderboard but there is also one for each of the constituent comps. The world climbing championships is another event altogether.
 
-<iframe class="lazy" data-src="https://en.wikipedia.org/wiki/IFSC_Climbing_World_Cup" height=400></iframe>
+<iframe class="lazy" src="https://en.wikipedia.org/wiki/IFSC_Climbing_World_Cup" height=400></iframe>
 
 In the left hand side box on the page embedded above, you can see that each edition of the IFSC Climbing World Cup from 2007 has a wikipedia page.
 That's really handy because, provided the pages are formatted reasonably uniformly, we should be able to relatively easily scrape them for the data we want.
