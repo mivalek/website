@@ -210,7 +210,7 @@
                     <div class="post">
                         <h3>{{$page.Title}}</h3>
                         <p class="published">Published on {{$page.Date.Format "2 Jan 2006"}}</p>
-                        <p>{{ $page.Summary }}</p>
+                        <p>{{ $page.Summary | truncate 500 }}</p>
                     </div>
                     <a href="{{.Permalink}}"></a>
                 </div>

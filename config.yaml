@@ -49,7 +49,7 @@ markup:
     highlight:
         style: pygments
         noClasses: false
-summaryLength: 20
+summaryLength: 100
 security:
     exec:
         allow:
