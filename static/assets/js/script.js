@@ -19,10 +19,6 @@ window.addEventListener("load", (event) => {
     if (preScriptOnload) preScriptOnload();
 });
 
-document.addEventListener("scroll", function (e) {
-    document.getElementById("mobile-only").classList.add("active");
-});
-
 document
     .getElementById("menu-icon")
     .addEventListener("click", (e) => toggleNav(e));
@@ -125,3 +121,20 @@ deactivateAllNavs();
 const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
+
+const mobileNavObsOpts = {
+    root: null,
+    rootMargin: "10% 0% -100% 0%",
+};
+
+const mobileNavObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+        console.log(entry.isIntersecting);
+        if (entry.isIntersecting) {
+            document.getElementById("mobile-only").classList.add("active");
+        } else
+            document.getElementById("mobile-only").classList.remove("active");
+    });
+}, mobileNavObsOpts);
+
+mobileNavObserver.observe(document.getElementById("main-container"));
