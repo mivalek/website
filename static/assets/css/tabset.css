@@ -16,7 +16,7 @@ a.tab-label {
 	border-top-right-radius: 5px;
 	background: rgba(var(--alt-col), .2);
 	color: rgb(var(--alt-col));
-	font-weight: bold;
+	font-weight: 400;
 	cursor: pointer;
 }
 

@@ -23,6 +23,7 @@ body {
 	min-width: 320px;
 	line-height: 1.5;
 	position: relative;	
+	font-weight: 300;
 }
 
 p {
@@ -44,7 +45,7 @@ em, i {
 }
 
 strong {
-	font-weight: bold;
+	font-weight: 400;
 }
 
 sup {
@@ -126,10 +127,10 @@ header {
     background: none;
     padding: 7px;
 	opacity: 0;
-	-webkit-transition: all .3s ease-in .5s;
-	-moz-transition: all .3s ease-in .5s;
-	-o-transition: all .3s ease-in .5s;
-	transition: all .3s ease-in .5s;
+	-webkit-transition: all .3s ease-in;
+	-moz-transition: all .3s ease-in;
+	-o-transition: all .3s ease-in;
+	transition: all .3s ease-in;
 }
 
 #menu-icon {
@@ -211,7 +212,7 @@ div#hamburger-bkg {
 
 #byline #title {
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 400;
 	background: rgba(var(--theme-col), .9);
 	color: white;
     padding: 0 20px 5px 20px;
@@ -354,7 +355,7 @@ a.button:hover {
 
 footer {
 	background: rgba(var(--alt-col), .35);
-	font-weight: bold;
+	font-weight: 400;
 	position: relative;
 	color: white;
 	padding: 20px 40px;
@@ -538,7 +539,7 @@ pre.chroma {
 	}
 
 	#nav-container a.active {
-		font-weight: 800;
+		font-weight: 400;
 		color: rgb(var(--theme-col));		
 		font-size: 1.05em;
 		-webkit-transition: all .2s ease-in-out;

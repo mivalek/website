@@ -133,7 +133,7 @@ thead tr {
 }
 th {
 	text-align: center !important;
-	font-weight: bold;
+	font-weight: 400;
 }
 
 td {
@@ -217,7 +217,7 @@ kbd.win::before {
 	content: "EXTRA";
 	background: rgb(var(--theme-col));
 	color: white;
-	font-weight: bold;
+	font-weight: 400;
 	font-size: 12px;
 	padding: 1px 4px;
 	position: absolute;

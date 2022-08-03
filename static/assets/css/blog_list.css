@@ -67,10 +67,6 @@ section.listing:nth-child(2n) {
     height: 100%;
 }
 
-.card:hover {
-    /* transform: scale(1.01); */
-}
-
 .post-card-container:nth-child(2n) .card {
     background-color: rgba(var(--alt-col), .15);
 }
@@ -125,7 +121,7 @@ section.listing:nth-child(2n) {
 	display: block;
 	padding: 0 5px;
 	color: white;
-    font-weight: bold;
+    font-weight: 400;
 	position: absolute;
     bottom: 0;
     left: 8px
@@ -230,7 +226,7 @@ section.listing:nth-child(2n) {
 
 .day {
     font-size: 1.3em;
-    font-weight: bold;
+    font-weight: 400;
     background-color: white;
     margin-bottom: -1px;
 }
