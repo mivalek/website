@@ -1,18 +1,19 @@
 document.addEventListener("scroll", function (e) {
-    const limit = 400;
+    const limit = window.innerHeight * 0.6;
     const scrollPos = window.scrollY;
+    const introEl = document.getElementById("intro")
     if (scrollPos > limit) {
-        document.getElementById("intro").style.opacity = 0;
-        document.getElementById("intro").style.filter = "blur(5px)";
-        document.getElementById("intro").style.transform = "scale(1.2)";
+        introEl.style.opacity = 0;
+        introEl.style.filter = "blur(5px)";
+        introEl.style.transform = "scale(1.2)";
         return;
     }
     const factor = scrollPos / limit;
-    document.getElementById("intro").style.transition = "none";
-    document.getElementById("intro").style.opacity = 1 - factor;
-    document.getElementById("intro").style.filter = `blur(${factor * 5}px)`;
-    document.getElementById("intro").style.transform = `scale(${
-        1 + factor / 5
+    introEl.style.transition = "none";
+    introEl.style.opacity = 1 - factor;
+    introEl.style.filter = `blur(${factor * 7}px)`;
+    introEl.style.transform = `scale(${
+        1 + factor / 2
     })`;
 });
 
