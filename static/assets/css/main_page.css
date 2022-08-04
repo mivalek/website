@@ -64,41 +64,11 @@
 }
 
 
-#logo-container {
+#intro-logo {
 	position: absolute;
-	display: flex;
-	width: 50px;
-	padding: 5px;
-	border: solid 1px #fff7;
-	top: 1em;
-	right: .5em;
-}
-
-#logo-container::before, #logo-container::after {
-	font-variant: small-caps;
-	color: #fff;
-	position: absolute;
-	font-size: 9px;
-	font-weight: 500;
-}
-
-#logo-container::before {
-	content: "milan";
-	bottom: -2px;
-	left: -13px;
-	writing-mode: vertical-lr;
-	text-orientation: upright;
-	letter-spacing: -2px;
-	line-height: 12px;
-	opacity: 0.4;
-}
-
-#logo-container::after {
-	content: "valasek";
-	bottom: -13px;
-	left: -9px;
-	letter-spacing: 2px;
-	opacity: 0.8;
+	width: 60px;
+	top: .8em;
+	right: .8em;
 }
 
 #title {
@@ -430,27 +400,10 @@ a[target="_blank"] h3 i {
 }
 
 @media (min-width: 580px) {
-	#logo-container {	
-		width: 100px;
-		padding: 10px;
-		border-width: 2px;
+	#intro-logo {
+		width: 80px;
+		top: 1em;
 		right: 1em;
-	}	
-
-	#logo-container::before, #logo-container::after {
-		font-size: 18px;
-		font-weight: 700;
-	}
-	#logo-container::before {
-		bottom: -5px;
-		left: -20px;
-		letter-spacing: -3px;
-	}
-
-	#logo-container::after {
-		bottom: -25px;
-		left: -19px;
-		letter-spacing: 3px;
 	}
 
 	.post-image-container {
@@ -550,7 +503,13 @@ a[target="_blank"] h3 i {
 	}
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1024px) {	
+	#intro-logo {
+		width: 100px;
+		top: 1.5em;
+		right: 1.5em;
+	}
+
 	#author-section {
 		flex-direction: row;
 	}
