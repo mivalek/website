@@ -220,7 +220,7 @@ section:nth-child(2n) .skill-area h3 {
 	position: relative;
     display: flex;
     gap: 20px;
-	align-items: center;
+	align-items: start;
     margin: 1em 0;
 	-webkit-transition: all .2s ease-in;
 	-moz-transition: all .2s ease-in;
@@ -237,8 +237,21 @@ section:nth-child(2n) .skill-area h3 {
 	/* padding: 0 .3em; */
 }
 
+
 .post {
 	margin: 0 .5em;
+	height: 350px;
+	overflow: hidden;
+	position: relative;
+}
+
+.post::before {
+	content: '';
+	width: 100%;
+	display: block;
+	position: absolute;
+	height: 350px;
+	background: linear-gradient(transparent 295px, #e8f3f9 346px);
 }
 
 .post-container:nth-child(2n) {
@@ -411,7 +424,13 @@ a[target="_blank"] h3 i {
 	}
 	.post {
 		margin-left: 0;
-	}	
+		height: 250px;
+	}
+	
+	.post::before {
+		height: 250px;
+		background: linear-gradient(transparent 195px, #e8f3f9 246px);
+	}
 	.post-container:nth-child(2n) .post {
 		margin-left: 0.5em;
 		margin-right: 0;
