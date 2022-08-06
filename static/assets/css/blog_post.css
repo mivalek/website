@@ -35,6 +35,37 @@ main a[target="_blank"]::after {
 	margin-left: 2px;
 }
 
+.foldable {
+	display: flex;
+	flex-direction: column;
+}
+
+.code-fold {
+	width: 6.5em;
+	align-self: end;
+	text-align: center;
+}
+
+.code-fold > * {
+	pointer-events: none;
+}
+
+.code-fold > .hide, .code-fold[unfold] > .show {
+	display: none;
+}
+
+.code-fold[unfold] > .hide {
+	display: inline;
+}
+
+.code-fold + * {
+	display: none;
+}
+
+.code-fold[unfold] + * {
+	display: block
+}
+
 .copy-btn {
 	cursor: pointer;
 	position: absolute;
@@ -45,6 +76,7 @@ main a[target="_blank"]::after {
 	padding: 0 4px;
 	text-align: center;
 	border-radius: 4px;
+	background-color: transparent;
 }
 
 .copy-btn:hover, .copy-btn:focus {

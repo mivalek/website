@@ -164,6 +164,7 @@ header nav a {
 nav ul {
 	list-style: none;
 	margin-left: 0;
+	margin-bottom: 0;
 }
 
 nav li ul {
@@ -307,7 +308,12 @@ nav a, nav a:hover, #back a, #back a:hover, #home a, #home a:hover {
 	gap: 4em
 }
 
-a.button {
+button {
+	cursor: pointer;
+	margin-bottom: 1em;
+}
+
+main button, a.button {
 	border: solid 1px rgb(var(--theme-col));
 	color: white;
 	background: rgba(var(--theme-col), .85);
@@ -315,7 +321,7 @@ a.button {
 	font-size: .9em;
 }
 
-a.button:hover {
+main button:hover, a.button:hover {
 	background: rgb(var(--theme-col));
 }
 
