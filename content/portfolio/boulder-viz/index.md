@@ -67,18 +67,8 @@ head_css: assets/style.css
         <div id="description">
             <p>Elite boulderers don't tend to fall a lot but there are still differences in how often they do.
             </p>
-            <p>Based on the results from all IFSC bouldering World cups and World championships between 2004 and 2022, this
-                visualisation compares the performance of the 14 most decorated climbers.</p>
-            <p>The height the heads reach represents the number of boulders topped at these events and the
-                frequency
-                with which they drop represents number of attempts per topped boulder. For example, in her
-                lustrous
-                career spanning almost 20 years, Noguchi Akiyo topped the most World cup and World champs
-                boulders
-                (895) and, while doing so,
-                fell the least often. Akiyo retired in 2021 after winning bronze at the first ever Olympic
-                climbing
-                competition. I still miss her... &#128546;</p>
+            <p>Based on the results from all IFSC bouldering World cups and World championships between 2004 and 2022, this visualisation compares the performance of the 14 most decorated climbers.</p>
+            <p>The height the heads reach represents the number of boulders topped at these events and the frequency with which they drop represents number of attempts per topped boulder. For example, in her lustrous career spanning almost 20 years, Noguchi Akiyo topped the most World cup and World champs boulders (895) and, while doing so, fell the least often. Akiyo retired in 2021 after winning bronze at the first ever Olympic climbing competition. I still miss her... &#128546;</p>
             <p>Hover over heads to see more interesting statistics.</p>
             </p>
         </div>
