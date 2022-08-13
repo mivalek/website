@@ -570,9 +570,3 @@ a[target="_blank"] h3 i {
 		position: relative;
 	}
 }
-
-@media (min-width: 1340px) {
-	#main-container {
-		gap: 80px;
-	}
-}

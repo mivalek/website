@@ -516,7 +516,7 @@ header, footer, .footnotes, .footnote-ref, .quarto, button, .button, table, nav,
 
 @media (min-width: 750px) {
 	#main-container {
-		grid-template-columns: [screen-strat] minmax(50px, 1fr) [nav-start] 160px [nav-end text-start] minmax(500px, 1000px) [text-end margin-start] 1fr [margin-end screen-end];
+		grid-template-columns: [screen-strat] minmax(10px, 1fr) [nav-start] 200px [nav-end text-start] minmax(500px, 1000px) [text-end margin-start] 1fr [margin-end screen-end];
 		gap: 20px;
 	}
 	
@@ -586,7 +586,10 @@ header, footer, .footnotes, .footnote-ref, .quarto, button, .button, table, nav,
 	}
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1024px) {	
+	#main-container {
+		gap: 40px;
+	}
 	#background {
 	background-image: var(--background-img-large);
 	}
@@ -598,8 +601,9 @@ header, footer, .footnotes, .footnote-ref, .quarto, button, .button, table, nav,
 @media (min-width: 1340px) {
 	#background {
 	background-image: var(--background-img-huge);
-	}
+	}	
 	#main-container {
-		gap: 80px;
+		grid-template-columns: [screen-strat] minmax(10px, 1fr) [nav-start] 250px [nav-end text-start] minmax(500px, 1000px) [text-end margin-start] 1fr [margin-end screen-end];
+		gap: 20px;
 	}
 }
