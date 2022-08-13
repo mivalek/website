@@ -92,20 +92,26 @@ const observer = new IntersectionObserver((entries, observer) => {
         const section = entry.target.id.replace("-section", "");
         if (entry.isIntersecting) {
             // activateNav(entry.target.id.replace("-section", ""));
-            document
-                .querySelector(`#nav-container a[href="#${section}"]`)
-                .classList.add("active");
-        } else
-            document
-                .querySelector(`#nav-container a[href="#${section}"]`)
-                .classList.remove("active");
+            const navLink = document.querySelector(
+                `#nav-container a[href="#${section}"]`
+            );
+            navLink.classList.add("active");
+            navLink.parentElement.classList.add("active");
+        } else {
+            const navLink = document.querySelector(
+                `#nav-container a[href="#${section}"]`
+            );
+            navLink.classList.remove("active");
+            navLink.parentElement.classList.remove("active");
+        }
     });
 }, obsOpts);
 
 const deactivateAllNavs = () =>
-    document
-        .querySelectorAll("#nav-container a")
-        .forEach((el) => el.classList.remove("active"));
+    document.querySelectorAll("#nav-container a").forEach((el) => {
+        el.classList.remove("active");
+        el.parentElement.classList.remove("active");
+    });
 
 const activateNav = (section) => {
     deactivateAllNavs();
@@ -113,7 +119,10 @@ const activateNav = (section) => {
     const navMenu = document.querySelector(
         `#nav-container a[href="#${section}"]`
     );
-    if (navMenu) navMenu.classList.add("active");
+    if (navMenu) {
+        navMenu.classList.add("active");
+        navMenu.parentElement.classList.add("active");
+    }
 };
 
 deactivateAllNavs();

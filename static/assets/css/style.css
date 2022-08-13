@@ -547,6 +547,23 @@ header, footer, .footnotes, .footnote-ref, .quarto, button, .button, table, nav,
 		margin-bottom: 10px;
 	}
 
+	#nav-container li li {
+		max-height: 0;
+		margin-bottom: 0;
+		opacity: 0;
+		overflow: hidden;
+		-webkit-transition: all .2s ease-in;
+		-moz-transition: all .2s ease-in;
+		-o-transition: all .2s ease-in;
+		transition: all .2s ease-in;
+	}
+
+	#nav-container li.active li {
+		max-height: 100px;
+		margin-bottom: 10px;
+		opacity: 1;
+	}
+
 	#nav-container a {
 		-webkit-transition: all .2s ease-in-out;
 		-moz-transition: all .2s ease-in-out;
