@@ -37,8 +37,10 @@ document.querySelectorAll("#nav-container a").forEach((el) =>
         deactivateAllNavs();
         const targ = e.target;
         targ.classList.add("active");
-        const firstChildOfParentList =
-            targ.parentElement.parentElement.parentElement.firstElementChild;
+        const parentOfUl = targ.parentElement.parentElement.parentElement;
+        console.log(parentOfUl);
+        if (parentOfUl.tagName === "LI") parentOfUl.classList.add("active");
+        const firstChildOfParentList = parentOfUl.firstElementChild;
         if (firstChildOfParentList.tagName === "A")
             firstChildOfParentList.classList.add("active");
     })
