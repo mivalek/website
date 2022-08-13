@@ -1,0 +1,695 @@
+---
+title: "Making an interactive data visualisation, Part 2"
+subtitle: "Data wrangling"
+date: 2022-08-13T12:21:24+01:00
+tags:
+    - data science
+    - R
+    - tutorial
+featured: false
+# draft: true
+# for Quarto posts (must rename to .qmd)
+format: hugo
+execute:
+    cache: true
+preamble:
+    Welcome to the second part of a mini-series about creating the [interactive visualisation of bouldering data](/portfolio/boulder-viz/) shown on the main page of this website.
+
+    In the {{< link "first part" "blog/01_boulder_viz_pt1/index.md" >}}, I showed how to use Python to scrape some of the data the visualisation is based on from the web. If you haven't read it, I would encourage you to do that before reading on.
+
+    This part deals with processing the scraped data using R to get them in a shape that's suitable for building the visualisation.
+
+    Finally, in {{< link "Part 3" "blog/03_boulder_viz_pt3/index.md" >}}, I will show how I built the viz using HTML, CSS, and JavaScript.
+---
+
+We left off in the previous part in a place where we ended up with quite a lot of IFSC bouldering world cup data scraped from Wikipedia and saved in a CSV file.
+Today, we will talk about data cleaning and wrangling, two steps that are integral to most data science projects.
+To spice things up a little, we won't be using the CSV file from Part 1 but, instead, we'll use a file including all [world cup and world championships results](data/raw_data_2004_2022.json) since 2004.
+The data set is stored in JSON[^1] format and is pretty messy!
+
+[^1]: [JavaScript Object Notation](https://www.json.org/json-en.html)
+
+I will be performing the data-wrangling in `R` using several packages from the `tidyverse` dialect.
+Of course, you can, more or less easily, do the same thing in any other language but I think `R`/`tiydverse` provide a pretty neat toolset for this kind of data processing.
+
+:::{.warn-box}
+#### A little disclaimer
+
+This post also only covers a part of the data wrangling I had to do to make the visualisation.
+The reason for this is that, in order to walk you through the thinking and coding behind the entire process, the blog post would have to be unbearable long.
+It's already a pretty long read as is.
+
+Also, just like last time with Python, I am assuming a certain level of familiarity with R here.
+:::
+
+With all that out of the way, let's get to work!
+
+
+## Exploring the data set
+
+### Start point and end goal
+
+There is quite a lot of data in the first file so, to make talking about the data a little easier, here is a heavily truncated version of the JSON file:
+
+:::{style="font-size:.85em;"}
+```{r}
+#| echo: false
+#| warning: false
+#| resutls: asis
+sub("^(\\[.*?\\}),\\s*\\{\"year.*$", "\\1]", readLines("data/raw_data_2004_2022.json")) |>
+    jsonlite::prettify() |>
+    gsub("(,\\s*)\"6.*?(\\s+\\])", "\\1...\\2", x = _) |>
+    sub(".\\]\\s*$", ",\n  ...\n]", x = _) |>
+    gsub(" {4}", "  ", x = _)
+```
+:::
+
+If you are familiar with JSON, you'll notice that this is an array of objects.
+Each object (only one is showing in the output above) represents a single competition.
+There are a number of `"key": "value"` pairs with all sorts of information about the details of the event.
+The `"results"` element contains an object of objects, each one representing a climbing discipline (bouldering, lead, speed, combined).
+Every one of these contains two arrays of results: one for men and one for women, respectively.
+Inside these, is an array of character strings but if you look at it, you'll notice that it's basically a table, with each of the elements corresponding to a row (the first one is the table's header) and with individual columns separated by a new line character `\n`.
+
+
+At this point, I think it makes sense to look at the actual values in the JSON file to anticipate what kinds of operations we might want to perform.
+For instance, it might be interesting to extract the date of each event from the `"name"` element, while the rest of the info contained therein can already be found elsewhere.
+Likewise, the last three "columns" of the results tables-to-be will need a little more processing to extract details about number of tops, bonuses/zones, and attempts as well as the athlete's rank in the particular round of the competition.
+If the last sentence read like word salad, you might want to check out the {{{< link "section in the previous blogpost" "blog/01_boulder_viz_pt1/index.md" "a-rough-guide-to-competitive-bouldering" >}}} that explains the basic rules of international bouldering competitions. 
+
+```{r}
+#| include: false
+#| file: 'data/comp_data.R'
+```
+
+Ultimately, we're for a neatly processed data set with each row corresponding to an athlete's performance in a given round of a single competition.
+This data set will likely have thousands of rows (`r nrow(boulder_data) |> prettyNum(big.mark = ",")` to be precise), so here's the first 30 in a table, just to give you an idea:
+
+:::{.scroll-tab data-height="337px"}
+```{r}
+#| echo: false
+boulder_data[1:30, ] |> knitr::kable()
+```
+:::
+
+Technically, we don't need any of the even information (dates, location, _etc._), an even ID would suffice.
+But given that we have the data, it makes sense to tidy it up like this.
+
+### R begins
+
+OK, now that we have a better notion of what the data contains and what the end goal is, let's go ahead and read it into `R`.
+The `jsonlite` package offers pretty powerful tools for working with JSON and for translating it into `R`'s data frames and _vice-versa_.
+Here, I'm reading in the JSON file and converting it to a data frame.
+Because of the multiple levels of nesting in the data, I am telling `R` to flatten the resulting data frame instead of creating a nested one.
+It's really down to your preference: if you like working with nested data frames, knock yourself out!
+
+```{r}
+ifsc_data <- jsonlite::fromJSON(readLines("data/raw_data_2004_2022.json"), flatten = TRUE)
+```
+
+Let's see what columns we end up with:
+
+```{r}
+names(ifsc_data)
+```
+
+As a very quick data check, let's look at the `year` column to make sure the values in it make sense:
+
+```{r}
+ifsc_data$year |> range()
+```
+
+It looks like, despite the file name, there are some records going as far back as 2000.
+Let's see what pre-2004 events we have here:
+
+```{r}
+#| eval: false
+ifsc_data |> dplyr::filter(year < 2004) |> dplyr::pull(name)
+```
+
+```{r}
+#| echo: false
+ifsc_data |> dplyr::filter(year < 2004) |> dplyr::pull(name) |> head(10)
+cat("[output truncated]")
+```
+
+As you can see, these events were all organised under the auspices of UIAA, the International Climbing and Mountaineering Federation (actually, the _Union Internationale des Associations d'Alpinisme_) and not those of the IFSC.
+The IFSC took over the world cups championships in 2004 and so, let's just focus on this data:
+
+```{r}
+ifsc_data <- ifsc_data |> dplyr::filter(year > 2003)
+```
+
+OK, now, the data frame is flattened to some extent but there are still nested data for each results table:
+
+```{r}
+class(ifsc_data$results.Boulder.women)
+head(ifsc_data$results.Boulder.women[[1]])
+```
+
+We can break down the procedure of getting the date into the desired format above into reshaping and cleaning.
+I am not using these terms in some well-defined technical sense here and, as we will see, these two processes share some of the operations but I think that, whenever there's a complex task to be dealt with, it makes sense to break it down into more manageable chunks and tackle them one at a time.
+Let's do that then!
+
+## Reshaping the data
+
+### Keeping only bouldering data
+
+Notice that all competitions have two of these results list per discipline (one for women, one for men), regardless of whether or not the event in question included the given discipline.
+For instance, the 2022 World Cup in Meiringen, Switzerland was a bouldering only even and so the lead and combined results columns will be empty:
+
+```{r}
+ifsc_data$results.Combined.women[1]
+ifsc_data$results.Lead.men[1]
+```
+
+Because we're only interested in bouldering data, let's subset the data.
+Just like with everything else, there are several ways of doing this.
+What we can do is first get a logical vector (_e.g._, one that only contains `TRUE` and `FALSE` values), with each element of the vector corresponding to whether or not the given row in `ifsc_data` contains bouldering results for either men or women.
+In more functional terms, we will apply a function that returns `TRUE` if that row contains a non-null list in either `results.Boulder.men` or `results.Boulder.women` to each row of our data.
+I am using base R's `apply()` instead of the appropriate `tidyverse` counterpart because, well, I just can never remember which of the `purrr::map`s or `purrr::walk`s to use. `¯\_(ツ)_/¯`
+As `apply()` returns a list, the final step of the pipeline turns the output into a single logical vector.
+
+In case you're not familiar with the `|>` or `\(x)` syntax, the former (added to R 4.0) is the [forward pipe operator](https://rdrr.io/r/base/pipeOp.html) very similar to `magrittr`'s `%>%`, while the latter is a lambda syntax for anonymous functions (added to R 4.1).
+`\(x) x + 1` is the same as `function(x) x + 1`.
+
+```{r}
+boulder_ind <- ifsc_data |>
+    apply(1, \(x) !(is.null(x$results.Boulder.men) |
+                    is.null(x$results.Boulder.women))) |>
+    unlist()
+```
+
+As promised, we get a logical vector identifying rows that do contain bouldering results.
+Here's the first 20 elements:
+
+```{r}
+#| echo: false
+boulder_ind[1:20]
+```
+
+Now we can simply use the `boulder_ind` vector to subset our data.
+Another thing we can do in the same command is get rid of the `results...` columns we don't need.
+I'm using `dplyr::select()` to do this as well as rearrange the columns a little:
+
+```{r}
+boulder_data <- ifsc_data[boulder_ind, ] |>
+    dplyr::select(
+        year, name, results.location, results.type, results.Boulder.men, results.Boulder.women
+    )
+```
+
+### Tidier format
+
+Let's give the columns better names:
+
+```{r}
+    names(boulder_data) <- c("year", "full_title", "location", "type", "men", "women")
+```
+
+At this stage, it would be useful to see the first few rows of the data frame, just to get a feel for it.
+However, because the `men` and `women` columns still contain lists of results, the raw printout would be really messy.
+To get around that, here's a somewhat edited printout:
+
+```{r}
+#| echo: false
+print_df <- boulder_data
+print_df$full_title <- gsub("^(.{20}).*", "\\1...", print_df$full_title)
+print_df$men <- "[men's results]"
+print_df$women <- "[women's results]"
+
+old_width <- options()$width
+options(width = 999)
+head(print_df)
+```
+
+The last thing in the "reshaping" chapter is to transform the data set into the long format, where every row represents a single set results.
+In other words, we want two rows per event, one for women's results and one for men's results.
+The `pivot_longer()` function form the `tidyr` package does this job with remarkable ease.
+
+```{r}
+boulder_data <- boulder_data |>
+    tidyr::pivot_longer(cols=c(men, women), names_to = "gender", values_to = "results")
+```
+
+```{r}
+#| echo: false
+print_df <- print_df |>
+    tidyr::pivot_longer(cols=c(men, women), names_to = "gender", values_to = "results")
+print_df |> as.data.frame() |> head()
+```
+
+The benefit of this format is that now we can start extracting the results data from a single column.
+To do that, we need to figure out an algorithm to apply to each row of our data set.
+Let's get cleaning!
+
+## Data cleaning
+
+To start the data cleaning part, let's remind ourselves what the results look like.
+Because the `results` column is a list, it's easier to just work with a single element.
+
+```{r}
+class(boulder_data$results)
+boulder_data$results[[1]] |>
+    head() |>
+    as.matrix()
+```
+
+### Converting results to data frame
+
+As a first step towards extracting the data out of the vector of results, it would make sense to transform it into tabular data, _i.e._, a data frame.
+However, if you look carefully, you'll see that the number of column headings, separated by "`\n`" is one less than the number of columns in the subsequent rows.
+That is because what's supposed to be the "Athlete" column comprises 2 lines: the name of the athlete and the athlete's starting number and country code.
+
+Because of this, a reasonable algorithm would be to:
+
+1. extract the vector of column names from the first element of `results`
+1. add an extra column name `"rem"` as the third element of 1.
+1. convert the rest of the elements into a one-column data frame
+1. separate the values into columns by the `\n` character, passing vector from 1. as column names
+1. remove the `rem` column
+
+The above algorithm can be implemented as follows:
+
+```{r}
+#| warning: false
+header <- boulder_data$results[[1]][1] |>
+    strsplit("\\n") |>
+    unlist()
+header <- c(header[1:2], "rem", header[-(1:2)])
+header
+res_data <- boulder_data$results[[1]][-1] |>
+    data.frame() |>
+    tidyr::separate(1, into = header, sep = "\\n") |>
+    dplyr::select(-rem)
+```
+
+Here's a selection of the resulting data frame:
+
+```{r}
+#| echo: false
+res_data[c(1, 15, 30, nrow(res_data)), ]
+```
+
+In the output above, you can see that Benjamin Hanna has a missing value in the `Final` column and Sam Avezou has one in the `Final` and `Semi-final` columns.
+This is not a problem at all, it just means that these athletes did not progress to the given rounds and so don't have a result for them.
+The final row is a different story, though.
+This athlete had a "Did Not Start" (DNS) status and so they do not have a rank.
+The absence of rank causes the data to shift columns.
+
+Because entries without a rank will not contain any useful information, we may as well get rid of them.
+One way to do that is to convert the `Rank` column into `numeric`,
+This will result in entries such as the one we are talking about having `NA` in this column.
+After this conversion, we can simply remove any rows that have a missing value in the `Rank` column.
+
+```{r}
+#| warning: false
+res_data <- res_data |>
+    dplyr::mutate(Rank = as.numeric(Rank)) |>
+    dplyr::filter(!is.na(Rank))
+```
+
+Looking at the last few rows of the data, you can see that the offending entry has been removed:
+
+```{r}
+#| echo: false
+tail(res_data)
+```
+
+Now that the results are tabulated, we can combine results across rows of `boulder_data`.
+That, however, assumes that the raw data are all formatted uniformly.
+If there's one thing that's always true about real-world data, it's that **they are messy AF** and so this assumption is likely to not hold.
+To check it, can have a look at the **unique values** of the individual result header rows:
+
+```{r}
+apply(boulder_data, 1, \(x) x$results[1]) |>
+    unique() |>
+    as.matrix()
+```
+
+Our assumption of uniformity is clearly wrong as there are four different formats in the data.
+This is not a huge problem, though, because the code above can handle all of these.
+However, when it comes to combining the individual results data frames, they should have the same column names and, while missing columns can easily be filled with `NA`s, spelling differences are a bit of an issue.
+Luckily, the only spelling difference is "`Semi-Final`" vs "`Semi-final`" which can easily be resolved by converting the header names to lower case.
+
+It stands to reason that if the format of the headers differs across events, the data will do so too.
+To illustrate this point, here's a little printout of the different kinds of formats:
+
+```{r}
+#| echo: false
+apply(boulder_data[c(1, 110, 172, 220),], 1, \(x) data.frame(year = x$year, result = x$results[2])) |>
+    do.call("rbind", args = _)
+```
+
+Nothing catastrophic here either but notice that there are two different formats for results, *e.g.*, "4T5z 6 8 (1)" and "5t10 5b10 (2)".
+Let's put a pin in this nuisance and get back to it once we've combined the results across events.
+By the way, it is really only one event in Sheffield, UK, in 2010 that was a 2-rounder, which is why there is no semi-final in the data.
+Ain't that just grand!
+
+Let's try using the code above (with a couple of minor tweaks) applying it as a function to every row of `boulder_data` to create a nw column in our data set, `results_clean`:
+
+```{r}
+#| warning: false
+boulder_data$results_clean <- boulder_data |>
+    apply(1, \(x) {
+        header <- x$results[1] |>
+            strsplit("\\n") |>
+            unlist() |>
+            tolower()
+        header <- c(header[1:2], "rem", header[-(1:2)])
+        res_data <- x$results[-1] |>
+            data.frame() |>
+            tidyr::separate(1, into = header, sep = "\\n") |>
+            dplyr::select(-rem) |>
+            dplyr::mutate(rank = as.numeric(rank)) |>
+            dplyr::filter(!is.na(rank))
+        }
+    )
+```
+
+Now, we can finally get rid of the nesting within the data set:
+
+```{r}
+#| warning: false
+boulder_data <- boulder_data |> tidyr::unnest(results_clean)
+```
+
+Let's take a look at 20 randomly selected rows of the resulting data to see that the unnesting was performed correctly and that we indeed ended up with one row per event per athlete:
+
+```{r}
+#| echo: false
+boulder_data[sort(sample(nrow(boulder_data), 20)), ]
+```
+
+One more step till our data is in true long format, _i.e._, one row per athlete per round within each competition.
+This is just `tidyr::pivot_longer()` again with the `cols=` argument set to columns from `qualification` to `final`:
+
+```{r}
+boulder_data <- boulder_data |>
+    dplyr::select(-results) |>
+    tidyr::pivot_longer(cols = qualification:final, names_to = "round", values_to = "score") 
+```
+
+Et voil&agrave;!
+
+```{r}
+#| echo: false
+head(boulder_data)
+```
+
+With the data set in the long format, we can now start extracting information from the `full_title` and `score` columns.
+Let's start with the former.
+
+### Extracting event dates
+
+Now, technically, it would be a better idea to work with this column before we unnested our data as it now contains about 100 times more rows but that felt out of order within the narrative of the blog.
+Besides the computational overheads are not going to be significant, so who really cares?
+
+OK, so the only interesting bit of data that we don't yet have in a dedicated column is the start and end date of the event.
+What we need is to extract the relevant bits of the individual `character` string.
+I have a personal preference for doing this kind of thing using [regular expressions](https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html) but again, different folks, different strokes...
+
+In order to do this my way, we need to identify the pattern that tells the computer which pieces of the string to grab and which ones to disregard.
+Looking at the `full_title` column, we can see that the dates are the last bit of each of the string:
+
+"[beginning-of-string]...whatever...[digit(s)] - [digit(s)]\n[letters][end-of-string]"
+
+We can translate this pattern into regular expressions like so:
+
+:::{.hl-inline-code}
+<style>
+    .hl-inline-code code {
+        color: rgb(var(--theme-col));
+        font-weight: 600
+    }
+</style>
+
+`"^.*?\\d+ - \\d+\\n[A-z]+$"`, where:
+
+- `^` and `$` stand for beginning and end of string, respectively
+- `\\d` stands for digit
+- `[A-z]` means any upper- or lower-case letter
+- `\\` is simply the escaped backslash
+- `.` is any character
+- `+` means _one or more_ occurrences of the preceding character
+- `*` means _zero or more_ occurrences of the preceding character
+- `?` indicates lazy search; it tells the program to grab _as few instances_ identified by the preceding expression _as possible so that the entire pattern still makes sense_
+
+With this in mind, let's break down the entire pattern:
+
+:::{.no-marker}
+
+- `^.*?` - starting from the beginning of a string, find any characters but only as few as possible for the rest of the pattern to still be valid
+- `\\d+` - then, find one or more digits
+- &nbsp;`-`&nbsp;&nbsp;- then a space, followed by a dash, followed by another space
+- `\\d+` - then again, one or more digits
+- `\\n` - then the line break character `\n`
+- `[A-z]+$` - and finally any letter (big or small) at the end of the string
+
+:::
+
+Great, so now we have a pattern that identifies the individual components of interest but we also need to tell the program to _extract_ them.
+For this, we can use the grouping operators `()`, to get:
+
+`"^.*?(\\d+ - \\d+\\n[A-z]+)$"`
+
+:::
+
+All we have to do now is replace the identified pattern with the part captured within the parentheses using the `sub()` function:
+
+```{r}
+sub(pattern = "^.*?(\\d+ - \\d+\\n[A-z]+)$",
+    replacement = "\\1" , # \\1 just inserts the group inside of the first set of ()s
+    x = "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr")
+```
+
+This is already pretty neat but we can do even better.
+We can identify multiple groups with `()`s, not just one, which allows us to do something like this:
+
+```{r}
+sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)$",
+    replacement = "\\1-\\3; \\2-\\3" , # \\1 just inserts the group inside of the first set of ()s
+    x = "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr")
+```
+
+What's more, if we know the year, we can insert it in the `replacement=` string:
+
+```{r}
+year <- 2022
+sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)$",
+    replacement = paste0("\\1-\\3-", year, "; \\2-\\3-", year), # \\1 just inserts the group inside of the first set of ()s
+    x = "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr")
+```
+
+Awesome!
+A couple more things though.
+Firstly, every time I work with white spaces, I like to account for the option of there being two spaces instead of one or even maybe a tab character.
+To do that, we can replace the spaces in our patter with `\\s+` meaning one or more white characters.
+
+Secondly, and much more importantly, our regular expression above doesn't account for the possibility of an event spilling into two calendar months.
+For these cases, we need a different pattern:
+
+```{r}
+year <- 2016
+sub(pattern = "^.*?(\\d+)\\s*-\\s*(\\d+)\\n([A-z]+)\\s*-\\s*([A-z]+)$",
+    replacement = paste0("\\1-\\3-", year, "; \\2-\\4-", year), # \\1 just inserts the group inside of the first set of ()s
+    x = "Boulder  Speed\nIFSC Climbing Worldcup (B, S) - Chongqing (CHN) 2016\nChongqingWC\n30 - 1\nApr - May")
+```
+
+Putting it all together, we can _conditionally_ create a new column `dates` in our data set using `dplyr::mutate()` and `dplyr::ifelse()`, and then separate it into `start` and `end` variables and convert the strings to dates.
+The only caveat here is that, to put the correct year inside the `replacement=` argument, we have to perform the operation by row.
+Otherwise we would essentially be passing the entire vector of years to the `paste0()` function.
+This function would then only use the first element, which would result in all dates having the year 2022 in them.
+Running the `dplyr::mutate()` command in a row-wise fashion gets around this problem.
+This is exactly what `dplyr::rowwise()` is for:
+
+```{r}
+boulder_data <- boulder_data |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+        date = dplyr::if_else(
+            grepl("^.*?(\\d+) - (\\d+)\\n([A-z]+)$", full_title),
+            sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)$",
+                replacement = paste0("\\1-\\3-", year, "; \\2-\\3-", year),
+                x = full_title),
+            sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)\\s*-\\s*([A-z]+)$",
+                replacement = paste0("\\1-\\3-", year, "; \\2-\\4-", year),
+                x = full_title)    
+        )        
+    ) |>
+    tidyr::separate(date, c("start", "end"), sep = "; ") |>
+    dplyr::mutate(
+        dplyr::across(start:end, ~ as.Date(.x, format = "%d-%b-%Y"))
+    )
+```
+
+The `dplyr::across(...)` bit applies the `as.Date()` function to all columns from the column `start` to the column `end` (so just these two, really), converting the strings to dates.
+Here's another random 20 rows showing that it worked:
+
+```{r}
+#| echo: false
+boulder_data[sort(sample(nrow(boulder_data), 20)), c("full_title", "start", "end")] |>
+    dplyr::mutate(full_title = gsub("^.*?\\n(.*?\\n\\d.*)$", "...\\1", full_title))
+```
+
+### Parsing scores
+
+With the dates out of the way, let's now turn to the `score` column.
+We previously noticed that there are two formats in which the scores are recorded, *e.g.*, "4T5z 6 8 (1)" and "4t6 5b8 (1)".
+This discrepancy stems from the fact that the scoring system (explained briefly in {{{< link "Part 1" "blog/01_boulder_viz_pt1/index.md" "a-rough-guide-to-competitive-bouldering" >}}) was changed as part of a general rules revision in 2018.
+The relevant change here is that the "bonus" holds got renamed to "zone" holds, which explains the change from "b" to "z" in the scores.
+Furthermore, the notation has changed from "No. tops/attempts No. bonuses/attempts" to "No. tops/No.zones top attempts zone attempts".
+Actually, the two scores at the start of this paragraph are equivalent: four tops in six attempts and five bonuses/zones in 8 attempts.
+Finally, the number in parentheses represents the athlete's rank in the given round of the competition.
+
+I think that the best way of extracting data from the scores is to separate them into five columns: `tops`, `zones`, `top_attempts`, `zone_attempts`, and `round_rank`.
+We can go about it in a very similar way to how we treated the start and end dates.
+We just need to keep in mind that, because of the variability in score notation, we need two regular expression patterns:
+
+```{r}
+sub("(\\d)T(\\d)z\\s+(\\d+)\\s+(\\d+)\\s+\\((\\d+)\\)", "\\1; \\3; \\2; \\4; \\5", "4T5z 6 8 (1)")
+sub("(\\d)t(\\d+)\\s+(\\d)b(\\d+)\\s+\\((\\d+)\\)", "\\1; \\2; \\3; \\4; \\5", "4t6 5b8 (1)")
+```
+
+The only new expressions here are `\\(` and `\\)` which stands for literal `()`s rather than groups to be captured.
+
+There's one more catch, because, of course there is!
+Because the boulders at the world events are pretty tough, it can happen that an athlete doesn't manage to get a single top or a bonus.
+In the new scoring system, that is not a problem, they just get a score of 0T0z 0 0 but in the old system, that would only be 0t 0b.
+Obviously, this breaks our pattern matching expression!
+
+Luckily, there's an easy way out of this issue: we can just replace `"b\\s"` with `"b0 "` and `"t\\s"` with `"t0 "`.
+
+OK, let's see how we can code this all up.
+First, it would be good to take care of the "DNS" (did not start) scores by replacing them with "0T0z 0 0 (00)".
+Next, we take care of the 0 top/bonus cases.
+Then, we can do the pattern replacement but let's make it case insensitive, in case the Ts, zs, and bs can be either upper- or lower-case.
+As the next step, let's then separate the individual pieces of data into their respective columns.
+And finally, since this is all we need to do with this data set, let's use `dplyr::select()` to rearrange the columns and get rid of the ones we don't need.
+
+```{r}
+boulder_data <- boulder_data |>
+    dplyr::mutate(
+        score = gsub("DNS", "0T0z 0 0 (00)", score),
+        score = gsub("t\\s", "t0 ", score, ignore.case = TRUE),
+        score = gsub("b\\s", "b0 ", score, ignore.case = TRUE),
+        score = dplyr::if_else(
+            grepl("z", score), # if score contains z...
+            # ... do this...
+            sub(
+                pattern = "(\\d)t(\\d)z\\s+(\\d+)\\s+(\\d+)\\s+\\((\\d+)\\)",
+                replacement = "\\1; \\3; \\2; \\4; \\5",
+                x = score,
+                ignore.case = TRUE
+            ),
+            # ... else do this
+            sub(
+                pattern = "(\\d)t(\\d+)\\s+(\\d)b(\\d+)\\s+\\((\\d+)\\)",
+                replacement = "\\1; \\2; \\3; \\4; \\5",
+                x = score,
+                ignore.case = TRUE
+            )
+        )
+    ) |>
+    tidyr::separate(
+        score,
+        into = c("tops", "top_attempts", "zones", "zone_attempts", "round_rank"),
+        sep = "; "
+    ) |>
+    dplyr:: select(
+        year, start, end, location, type, gender, rank, athlete, round, tops,
+        top_attempts, zones, zone_attempts, round_rank
+    )
+```
+
+And that's it; we made it! :tada::tada::tada:
+
+Here's the top 30 rows of the final data, formatted as a nice table.
+If you want, you can compare it to the table at the top of this post to make sure they are identical.
+
+:::{.scroll-tab data-height="337px"}
+```{r}
+#| echo: false
+#| results: asis
+boulder_data[1:30, ] |> knitr::kable()
+```
+:::
+
+```{r}
+#| include: false
+options(width = old_width)
+```
+
+## Outro
+
+This was quite a long blog but I think you'll agree that we've covered quite a lot of ground.
+If you're interested, below, you can find the complete code, all in one place.
+Cool what you can do with about 80 lines of code...
+
+:::{.foldable}
+```{r}
+#| eval: false
+#| file: 'data/comp_data.R'
+```
+:::
+
+```{r}
+#| echo: false
+#| eval: false
+
+
+winners <- boulder_data |>
+    dplyr::filter(round == "Final" & rank %in% 1:3) |>
+    dplyr::group_by(gender, athlete, rank) |>
+    dplyr::tally() |>
+    dplyr::group_by(athlete) |>
+    dplyr::mutate(total_medals = sum(n)) |>
+    dplyr::ungroup()
+
+# Athlete data ------------------------------------------------------------
+
+athletes <- jsonlite::fromJSON(readLines("C:/Users/mv298/OneDrive/Documents/ifsc_data/boulder_winner_data_2004_2022.json"))
+names(athletes) <- gsub("\\s+", "_", names(athletes))
+athletes <- athletes |>
+    dplyr::mutate(
+        across(!c(name, country), as.numeric),
+        birth_year = 2022 - age)
+
+post2003_athletes <- athletes |> dplyr::filter(active_since >= 2003) |> dplyr::pull(name)
+elite <- winners |> dplyr::filter(total_medals > 10 & gender == "women") |> dplyr::pull(athlete) |> unique()
+elite <- intersect(elite, post2003_athletes)
+elite <- winners |> dplyr::filter(total_medals > 10) |> dplyr::pull(athlete) |> unique()
+
+participations <- boulder_data |>
+    dplyr::filter(round == "Qualification") |>
+    dplyr::group_by(athlete) |>
+    dplyr::summarise(participations = dplyr::n())
+
+falls <- boulder_data |>
+    dplyr::filter(athlete %in% intersect(elite, post2003_athletes)) |>
+    dplyr::group_by(athlete) |>  
+    dplyr::summarise(
+        tops = sum(tops, na.rm=TRUE),
+        attempts = sum(top_attempts, na.rm=TRUE),
+        gold = sum(rank == "1") / 3,
+        silver = sum(rank == "2") / 3,
+        bronze = ceiling(sum(rank == "3") / 3),
+    ) |>
+    dplyr::mutate(fall_freq = attempts/tops,
+        fall_freq2 = min(fall_freq) / fall_freq ) |>
+    dplyr::arrange(-tops) |>
+    dplyr::left_join(athletes, by=c("athlete" = "name")) |>
+    dplyr::select(-participations) |>
+    dplyr::left_join(participations) |> 
+    dplyr::mutate(tops_per_event = tops/participations)
+
+# paste("const data =", jsonlite::toJSON(falls)) |> writeLines("C:/Users/mv298/OneDrive/Documents/ifsc_data/tops_data.js")
+
+```
+
+I think this is a good time to conclude Part 2.
+Like I said at the beginning, there are a few more things that need doing to get the data required for the visualisation we're recreating.
+If you'd like me to add them to this post, let me know in the comments.
+
+See you in {{{< link "Part 3" "blog/03_boulder_viz_pt3/index.md" >}}} for some HTML, CSS, and JavaScript.
+What a time to be alive!
