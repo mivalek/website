@@ -1,6 +1,7 @@
 {{ define "head_css"}}
 <link rel="stylesheet" href="/assets/css/blog_post.css">
 <link rel="stylesheet" href="/assets/css/tabset.css">
+<link rel="stylesheet" href="/assets/css/highlight_toolbar.css">
 {{ partial "background" . }}
 {{ end }}
 
@@ -74,8 +75,13 @@
             {{ if .NextInSection }}<a href="{{ .NextInSection.RelPermalink }}" class="button">Next
                 post</a>{{else}}<div class="placeholder" aria-hidden="true"></div>{{ end }}
         </div>
-        {{ template "_internal/disqus.html" . }}
+        <div id="comments-container">
+            {{ template "_internal/disqus.html" . }}
+        </div>
     </main>
+</div>
+<div id="highlight-toolbar">
+    <div id="tweet"><i class="fab fa-twitter"></i></div>
 </div>
 {{ end }}
 
@@ -84,4 +90,5 @@
 <script src="/assets/js/footnotes.js"></script>
 <script src="/assets/js/tabset.js"></script>
 <script src="/assets/js/code_fold.js"></script>
+<script src="/assets/js/highlight_toolbar.js"></script>
 {{ end }}

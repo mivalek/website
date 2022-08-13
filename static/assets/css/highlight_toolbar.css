@@ -1,0 +1,34 @@
+#highlight-toolbar {
+	display: none;
+	position: absolute;
+	z-index: 100;
+	background: black;
+	color: white;
+	padding: 1px 10px;
+	border-radius: 2em;
+    border-bottom-left-radius: 0;
+    transform: translateY(-170%);
+	cursor: pointer;
+    transition: color .2s ease-in;
+}
+
+#highlight-toolbar.active {
+    display: block;
+}
+
+#highlight-toolbar:hover {
+    color: rgb(var(--alt-col));
+}
+
+
+
+#tweet {
+	margin-top: 1px;
+	font-size: 1.3em;
+    pointer-events: none;
+}
+
+::selection {
+    background-color: rgb(var(--alt-col));
+    color: white;
+}

@@ -1,1 +1,1 @@
-{{ $linkPath := index .Params 1 }}{{ if os.FileExists $linkPath }}<a href="{{ ref .  $linkPath }}">{{ index .Params 0 }}</a>{{ else }}{{ index .Params 0 }}{{ end }}
+{{ $linkPath := index .Params 1 }}{{ if os.FileExists $linkPath }}<a href="{{ ref .  $linkPath }}{{ if len .Params | eq 3 }}#{{ index .Params 2 }}{{ end }}">{{ index .Params 0 }}</a>{{ else }}{{ index .Params 0 }}{{ end }}

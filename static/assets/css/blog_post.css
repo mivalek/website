@@ -166,6 +166,7 @@ thead tr {
 th {
 	text-align: center !important;
 	font-weight: 400;
+	padding: 0 2px;
 }
 
 td {
