@@ -102,7 +102,7 @@ For instance, it might be interesting to extract the date of each event from the
 Likewise, the last three "columns" of the results tables-to-be will need a little more processing to extract details about number of tops, bonuses/zones, and attempts as well as the athlete's rank in the particular round of the competition.
 If the last sentence read like word salad, you might want to check out the {{< link "section in the previous blogpost" "blog/01_boulder_viz_pt1/index.md" "a-rough-guide-to-competitive-bouldering" >}} that explains the basic rules of international bouldering competitions.
 
-Ultimately, we're for a neatly processed data set with each row corresponding to an athlete's performance in a given round of a single competition.
+Ultimately, we're after a neatly processed data set with each row corresponding to an athlete's performance in a given round of a single competition.
 This data set will likely have thousands of rows (45,876 to be precise), so here's the first 30 in a table, just to give you an idea:
 
 <div class="scroll-tab" data-height="337px">

@@ -82,7 +82,7 @@ If the last sentence read like word salad, you might want to check out the {{{< 
 #| file: 'data/comp_data.R'
 ```
 
-Ultimately, we're for a neatly processed data set with each row corresponding to an athlete's performance in a given round of a single competition.
+Ultimately, we're after a neatly processed data set with each row corresponding to an athlete's performance in a given round of a single competition.
 This data set will likely have thousands of rows (`r nrow(boulder_data) |> prettyNum(big.mark = ",")` to be precise), so here's the first 30 in a table, just to give you an idea:
 
 :::{.scroll-tab data-height="337px"}
