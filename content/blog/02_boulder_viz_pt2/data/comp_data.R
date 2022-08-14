@@ -29,16 +29,16 @@ boulder_data <- boulder_data |>
     dplyr::mutate(
         date = dplyr::if_else(
             # if date doesn't spill into two calendar months
-            grepl("^.*?(\\d+) - (\\d+)\\n([A-z]+)$", full_title),
+            grepl("^.*?(\\d+)\\s*-\\s*(\\d+)\\n([A-z]+)$", full_title),
             # e.g., "...\n11 - 13\nApr" -> "11-Apr-2008; 13-Apr-2008"
             sub(
-                pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)$",
+                pattern = "^.*?(\\d+)\\s*-\\s*(\\d+)\\n([A-z]+)$",
                 replacement = paste0("\\1-\\3-", year, "; \\2-\\3-", year),
                 x = full_title
             ),
             # e.g., "...\n30 - 2\nApr - May" -> "30-Apr-2008; 2-May-2008"
             sub(
-                pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)\\s*-\\s*([A-z]+)$",
+                pattern = "^.*?(\\d+)\\s*-\\s*(\\d+)\\n([A-z]+)\\s*-\\s*([A-z]+)$",
                 replacement = paste0("\\1-\\3-", year, "; \\2-\\4-", year),
                 x = full_title
             )

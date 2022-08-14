@@ -536,7 +536,7 @@ boulder_data[sort(sample(nrow(boulder_data), 20)), c("full_title", "start", "end
 
 With the dates out of the way, let's now turn to the `score` column.
 We previously noticed that there are two formats in which the scores are recorded, *e.g.*, "4T5z 6 8 (1)" and "4t6 5b8 (1)".
-This discrepancy stems from the fact that the scoring system (explained briefly in {{{< link "Part 1" "blog/01_boulder_viz_pt1/index.md" "a-rough-guide-to-competitive-bouldering" >}}) was changed as part of a general rules revision in 2018.
+This discrepancy stems from the fact that the scoring system (explained briefly in {{{< link "Part 1" "blog/01_boulder_viz_pt1/index.md" "a-rough-guide-to-competitive-bouldering" >}}}) was changed as part of a general rules revision in 2018.
 The relevant change here is that the "bonus" holds got renamed to "zone" holds, which explains the change from "b" to "z" in the scores.
 Furthermore, the notation has changed from "No. tops/attempts No. bonuses/attempts" to "No. tops/No.zones top attempts zone attempts".
 Actually, the two scores at the start of this paragraph are equivalent: four tops in six attempts and five bonuses/zones in 8 attempts.
