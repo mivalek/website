@@ -22,8 +22,6 @@ preamble:
     Finally, in {{< link "Part 3" "blog/03_boulder_viz_pt3/index.md" >}}, I will show how I built the viz using HTML, CSS, and JavaScript.
 ---
 
-
-
 We left off in the previous part in a place where we ended up with quite a lot of IFSC bouldering world cup data scraped from Wikipedia and saved in a CSV file.
 Today, we will talk about data cleaning and wrangling, two steps that are integral to most data science projects.
 To spice things up a little, we won't be using the CSV file from Part 1 but, instead, we'll use a file including all [world cup and world championships results](data/raw_data_2004_2022.json) since 2004.
@@ -36,7 +34,7 @@ Of course, you can, more or less easily, do the same thing in any other language
 
 #### A little disclaimer
 
-This post also only covers a part of the data wrangling I had to do to make the visualisation.
+This post only covers a part of the data wrangling I had to do to make the visualisation.
 The reason for this is that, in order to walk you through the thinking and coding behind the entire process, the blog post would have to be unbearable long.
 It's already a pretty long read as is.
 
@@ -86,7 +84,7 @@ There is quite a lot of data in the first file so, to make talking about the dat
         }
       },
       ...
-    ] 
+    ]
 
 </div>
 
@@ -108,7 +106,7 @@ This data set will likely have thousands of rows (45,876 to be precise), so here
 <div class="scroll-tab" data-height="337px">
 
 | year | start      | end        | location        | type      | gender | rank | athlete           | round         | tops | top_attempts | zones | zone_attempts | round_rank |
-|-----:|:-----------|:-----------|:----------------|:----------|:-------|-----:|:------------------|:--------------|:-----|:-------------|:------|:--------------|:-----------|
+| ---: | :--------- | :--------- | :-------------- | :-------- | :----- | ---: | :---------------- | :------------ | :--- | :----------- | :---- | :------------ | :--------- |
 | 2022 | 2022-04-08 | 2022-04-10 | Meiringen (SUI) | World cup | men    |    1 | Tomoa Narasaki    | qualification | 4    | 6            | 5     | 8             | 1          |
 | 2022 | 2022-04-08 | 2022-04-10 | Meiringen (SUI) | World cup | men    |    1 | Tomoa Narasaki    | semi-final    | 4    | 14           | 4     | 11            | 2          |
 | 2022 | 2022-04-08 | 2022-04-10 | Meiringen (SUI) | World cup | men    |    1 | Tomoa Narasaki    | final         | 2    | 3            | 3     | 6             | 1          |
@@ -142,35 +140,35 @@ This data set will likely have thousands of rows (45,876 to be precise), so here
 
 </div>
 
-Technically, we don't need any of the even information (dates, location, *etc.*), an even ID would suffice.
+Technically, we don't need any of the even information (dates, location, _etc._), an even ID would suffice.
 But given that we have the data, it makes sense to tidy it up like this.
 
 ### R begins
 
 OK, now that we have a better notion of what the data contains and what the end goal is, let's go ahead and read it into `R`.
-The `jsonlite` package offers pretty powerful tools for working with JSON and for translating it into `R`'s data frames and *vice-versa*.
+The `jsonlite` package offers pretty powerful tools for working with JSON and for translating it into `R`'s data frames and _vice-versa_.
 Here, I'm reading in the JSON file and converting it to a data frame.
 Because of the multiple levels of nesting in the data, I am telling `R` to flatten the resulting data frame instead of creating a nested one.
 It's really down to your preference: if you like working with nested data frames, knock yourself out!
 
-``` r
+```r
 ifsc_data <- jsonlite::fromJSON(readLines("data/raw_data_2004_2022.json"), flatten = TRUE)
 ```
 
 Let's see what columns we end up with:
 
-``` r
+```r
 names(ifsc_data)
 ```
 
-     [1] "year"                   "name"                   "url"                   
-     [4] "results.location"       "results.year"           "results.type"          
-     [7] "results.Boulder.men"    "results.Boulder.women"  "results.Lead.men"      
+     [1] "year"                   "name"                   "url"
+     [4] "results.location"       "results.year"           "results.type"
+     [7] "results.Boulder.men"    "results.Boulder.women"  "results.Lead.men"
     [10] "results.Lead.women"     "results.Combined.men"   "results.Combined.women"
 
 As a very quick data check, let's look at the `year` column to make sure the values in it make sense:
 
-``` r
+```r
 ifsc_data$year |> range()
 ```
 
@@ -179,48 +177,48 @@ ifsc_data$year |> range()
 It looks like, despite the file name, there are some records going as far back as 2000.
 Let's see what pre-2004 events we have here:
 
-``` r
+```r
 ifsc_data |> dplyr::filter(year < 2004) |> dplyr::pull(name)
 ```
 
-     [1] "Lead\nUIAA Worldcup - Imst (AUT) 2003\nImst\n22 - 23\nMay"                                            
+     [1] "Lead\nUIAA Worldcup - Imst (AUT) 2003\nImst\n22 - 23\nMay"
      [2] "Boulder • Speed\nUIAA Worldcup - Yekaterinburg (RUS) 2003 (B+S)\nYekaterinburg B+S\n30 - 1\nMay - Jun"
-     [3] "Speed\nUIAA Worldcup - Yekaterinburg (RUS) 2003 (S)\nYekaterinburg S\n4\nJun"                         
-     [4] "Lead • Speed\nUIAA Worldcup - Yekaterinburg (RUS) 2003 (D+S)\nYekaterinburg D+S\n6 - 8\nJun"          
-     [5] "Boulder\nUIAA Worldcup - Fiera di Primiero (ITA) 2003\nFiera di Primiero\n13 - 15\nJun"               
-     [6] "Speed\nUIAA Worldcup - Lecco (ITA) 2003 (speed)\nLecco Speed\n23\nJun"                                
-     [7] "Boulder\nUIAA Worldcup - Lecco (ITA) 2003 (boulder)\nLecco Bouldern\n24 - 25\nJun"                    
-     [8] "Lead\nUIAA Worldcup - Lecco (ITA) 2003 (difficulty)\nLecco\n27 - 28\nJun"                             
-     [9] "Lead • Boulder • Speed\nUIAA Worldchampionship - Chamonix (FRA) 2003\nChamonix\n9 - 13\nJul"          
-    [10] "Boulder\nUIAA Worldcup - L'Argentière (FRA) 2003\nArgentiere\n24 - 25\nJul"                           
+     [3] "Speed\nUIAA Worldcup - Yekaterinburg (RUS) 2003 (S)\nYekaterinburg S\n4\nJun"
+     [4] "Lead • Speed\nUIAA Worldcup - Yekaterinburg (RUS) 2003 (D+S)\nYekaterinburg D+S\n6 - 8\nJun"
+     [5] "Boulder\nUIAA Worldcup - Fiera di Primiero (ITA) 2003\nFiera di Primiero\n13 - 15\nJun"
+     [6] "Speed\nUIAA Worldcup - Lecco (ITA) 2003 (speed)\nLecco Speed\n23\nJun"
+     [7] "Boulder\nUIAA Worldcup - Lecco (ITA) 2003 (boulder)\nLecco Bouldern\n24 - 25\nJun"
+     [8] "Lead\nUIAA Worldcup - Lecco (ITA) 2003 (difficulty)\nLecco\n27 - 28\nJun"
+     [9] "Lead • Boulder • Speed\nUIAA Worldchampionship - Chamonix (FRA) 2003\nChamonix\n9 - 13\nJul"
+    [10] "Boulder\nUIAA Worldcup - L'Argentière (FRA) 2003\nArgentiere\n24 - 25\nJul"
 
     [output truncated]
 
-As you can see, these events were all organised under the auspices of UIAA, the International Climbing and Mountaineering Federation (actually, the *Union Internationale des Associations d'Alpinisme*) and not those of the IFSC.
+As you can see, these events were all organised under the auspices of UIAA, the International Climbing and Mountaineering Federation (actually, the _Union Internationale des Associations d'Alpinisme_) and not those of the IFSC.
 The IFSC took over the world cups championships in 2004 and so, let's just focus on this data:
 
-``` r
+```r
 ifsc_data <- ifsc_data |> dplyr::filter(year > 2003)
 ```
 
 OK, now, the data frame is flattened to some extent but there are still nested data for each results table:
 
-``` r
+```r
 class(ifsc_data$results.Boulder.women)
 ```
 
     [1] "list"
 
-``` r
+```r
 head(ifsc_data$results.Boulder.women[[1]])
 ```
 
-    [1] "Rank\nAthlete\nQualification\nSemi-final\nFinal"                        
-    [2] "1\nJanja GARNBRET\n2 • SLO\n5T5z 10 10 (1)\n4T4z 6 6 (1)\n4T4z 5 5 (1)" 
+    [1] "Rank\nAthlete\nQualification\nSemi-final\nFinal"
+    [2] "1\nJanja GARNBRET\n2 • SLO\n5T5z 10 10 (1)\n4T4z 6 6 (1)\n4T4z 5 5 (1)"
     [3] "2\nNatalia GROSSMAN\n1 • USA\n4T5z 4 5 (3)\n3T4z 6 7 (2)\n3T4z 8 16 (2)"
-    [4] "3\nAndrea Kümin\n5 • SUI\n3T5z 6 6 (9)\n2T3z 3 6 (5)\n1T2z 1 3 (3)"     
-    [5] "4\nOriane BERTONE\n3 • FRA\n3T5z 10 6 (15)\n2T4z 3 5 (3)\n1T2z 1 5 (4)" 
-    [6] "5\nFutaba ITO\n4 • JPN\n4T5z 6 6 (7)\n2T3z 4 8 (6)\n0T2z 0 8 (5)"       
+    [4] "3\nAndrea Kümin\n5 • SUI\n3T5z 6 6 (9)\n2T3z 3 6 (5)\n1T2z 1 3 (3)"
+    [5] "4\nOriane BERTONE\n3 • FRA\n3T5z 10 6 (15)\n2T4z 3 5 (3)\n1T2z 1 5 (4)"
+    [6] "5\nFutaba ITO\n4 • JPN\n4T5z 6 6 (7)\n2T3z 4 8 (6)\n0T2z 0 8 (5)"
 
 We can break down the procedure of getting the date into the desired format above into reshaping and cleaning.
 I am not using these terms in some well-defined technical sense here and, as we will see, these two processes share some of the operations but I think that, whenever there's a complex task to be dealt with, it makes sense to break it down into more manageable chunks and tackle them one at a time.
@@ -233,14 +231,14 @@ Let's do that then!
 Notice that all competitions have two of these results list per discipline (one for women, one for men), regardless of whether or not the event in question included the given discipline.
 For instance, the 2022 World Cup in Meiringen, Switzerland was a bouldering only even and so the lead and combined results columns will be empty:
 
-``` r
+```r
 ifsc_data$results.Combined.women[1]
 ```
 
     [[1]]
     NULL
 
-``` r
+```r
 ifsc_data$results.Lead.men[1]
 ```
 
@@ -249,7 +247,7 @@ ifsc_data$results.Lead.men[1]
 
 Because we're only interested in bouldering data, let's subset the data.
 Just like with everything else, there are several ways of doing this.
-What we can do is first get a logical vector (*e.g.*, one that only contains `TRUE` and `FALSE` values), with each element of the vector corresponding to whether or not the given row in `ifsc_data` contains bouldering results for either men or women.
+What we can do is first get a logical vector (_e.g._, one that only contains `TRUE` and `FALSE` values), with each element of the vector corresponding to whether or not the given row in `ifsc_data` contains bouldering results for either men or women.
 In more functional terms, we will apply a function that returns `TRUE` if that row contains a non-null list in either `results.Boulder.men` or `results.Boulder.women` to each row of our data.
 I am using base R's `apply()` instead of the appropriate `tidyverse` counterpart because, well, I just can never remember which of the `purrr::map`s or `purrr::walk`s to use. `¯\_(ツ)_/¯`
 As `apply()` returns a list, the final step of the pipeline turns the output into a single logical vector.
@@ -257,7 +255,7 @@ As `apply()` returns a list, the final step of the pipeline turns the output int
 In case you're not familiar with the `|>` or `\(x)` syntax, the former (added to R 4.0) is the [forward pipe operator](https://rdrr.io/r/base/pipeOp.html) very similar to `magrittr`'s `%>%`, while the latter is a lambda syntax for anonymous functions (added to R 4.1).
 `\(x) x + 1` is the same as `function(x) x + 1`.
 
-``` r
+```r
 boulder_ind <- ifsc_data |>
     apply(1, \(x) !(is.null(x$results.Boulder.men) |
                     is.null(x$results.Boulder.women))) |>
@@ -274,7 +272,7 @@ Now we can simply use the `boulder_ind` vector to subset our data.
 Another thing we can do in the same command is get rid of the `results...` columns we don't need.
 I'm using `dplyr::select()` to do this as well as rearrange the columns a little:
 
-``` r
+```r
 boulder_data <- ifsc_data[boulder_ind, ] |>
     dplyr::select(
         year, name, results.location, results.type, results.Boulder.men, results.Boulder.women
@@ -285,7 +283,7 @@ boulder_data <- ifsc_data[boulder_ind, ] |>
 
 Let's give the columns better names:
 
-``` r
+```r
     names(boulder_data) <- c("year", "full_title", "location", "type", "men", "women")
 ```
 
@@ -305,7 +303,7 @@ The last thing in the "reshaping" chapter is to transform the data set into the 
 In other words, we want two rows per event, one for women's results and one for men's results.
 The `pivot_longer()` function form the `tidyr` package does this job with remarkable ease.
 
-``` r
+```r
 boulder_data <- boulder_data |>
     tidyr::pivot_longer(cols=c(men, women), names_to = "gender", values_to = "results")
 ```
@@ -327,29 +325,29 @@ Let's get cleaning!
 To start the data cleaning part, let's remind ourselves what the results look like.
 Because the `results` column is a list, it's easier to just work with a single element.
 
-``` r
+```r
 class(boulder_data$results)
 ```
 
     [1] "list"
 
-``` r
+```r
 boulder_data$results[[1]] |>
     head() |>
     as.matrix()
 ```
 
-         [,1]                                                                        
-    [1,] "Rank\nAthlete\nQualification\nSemi-final\nFinal"                           
-    [2,] "1\nTomoa Narasaki\n148 • JPN\n4T5z 6 8 (1)\n4T4z 14 11 (2)\n2T3z 3 6 (1)"  
+         [,1]
+    [1,] "Rank\nAthlete\nQualification\nSemi-final\nFinal"
+    [2,] "1\nTomoa Narasaki\n148 • JPN\n4T5z 6 8 (1)\n4T4z 14 11 (2)\n2T3z 3 6 (1)"
     [3,] "2\nYoshiyuki Ogata\n147 • JPN\n4T5z 10 13 (3)\n2T4z 5 6 (5)\n2T3z 5 19 (2)"
-    [4,] "3\nMejdi Schalck\n92 • FRA\n4T5z 10 10 (11)\n3T4z 8 5 (3)\n2T3z 7 9 (3)"   
-    [5,] "4\nPaul Jenft\n116 • FRA\n4T5z 8 17 (9)\n2T4z 5 7 (6)\n2T3z 15 18 (4)"     
-    [6,] "5\nColin Duffy\n99 • USA\n5T5z 14 12 (3)\n3T4z 10 12 (4)\n1T4z 19 27 (5)"  
+    [4,] "3\nMejdi Schalck\n92 • FRA\n4T5z 10 10 (11)\n3T4z 8 5 (3)\n2T3z 7 9 (3)"
+    [5,] "4\nPaul Jenft\n116 • FRA\n4T5z 8 17 (9)\n2T4z 5 7 (6)\n2T3z 15 18 (4)"
+    [6,] "5\nColin Duffy\n99 • USA\n5T5z 14 12 (3)\n3T4z 10 12 (4)\n1T4z 19 27 (5)"
 
 ### Converting results to data frame
 
-As a first step towards extracting the data out of the vector of results, it would make sense to transform it into tabular data, *i.e.*, a data frame.
+As a first step towards extracting the data out of the vector of results, it would make sense to transform it into tabular data, _i.e._, a data frame.
 However, if you look carefully, you'll see that the number of column headings, separated by "`\n`" is one less than the number of columns in the subsequent rows.
 That is because what's supposed to be the "Athlete" column comprises 2 lines: the name of the athlete and the athlete's starting number and country code.
 
@@ -363,7 +361,7 @@ Because of this, a reasonable algorithm would be to:
 
 The above algorithm can be implemented as follows:
 
-``` r
+```r
 header <- boulder_data$results[[1]][1] |>
     strsplit("\\n") |>
     unlist()
@@ -371,9 +369,9 @@ header <- c(header[1:2], "rem", header[-(1:2)])
 header
 ```
 
-    [1] "Rank"          "Athlete"       "rem"           "Qualification" "Semi-final"    "Final"        
+    [1] "Rank"          "Athlete"       "rem"           "Qualification" "Semi-final"    "Final"
 
-``` r
+```r
 res_data <- boulder_data$results[[1]][-1] |>
     data.frame() |>
     tidyr::separate(1, into = header, sep = "\\n") |>
@@ -399,7 +397,7 @@ One way to do that is to convert the `Rank` column into `numeric`,
 This will result in entries such as the one we are talking about having `NA` in this column.
 After this conversion, we can simply remove any rows that have a missing value in the `Rank` column.
 
-``` r
+```r
 res_data <- res_data |>
     dplyr::mutate(Rank = as.numeric(Rank)) |>
     dplyr::filter(!is.na(Rank))
@@ -420,17 +418,17 @@ That, however, assumes that the raw data are all formatted uniformly.
 If there's one thing that's always true about real-world data, it's that **they are messy AF** and so this assumption is likely to not hold.
 To check it, can have a look at the **unique values** of the individual result header rows:
 
-``` r
+```r
 apply(boulder_data, 1, \(x) x$results[1]) |>
     unique() |>
     as.matrix()
 ```
 
-         [,1]                                             
+         [,1]
     [1,] "Rank\nAthlete\nQualification\nSemi-final\nFinal"
     [2,] "Rank\nAthlete\nQualification\nSemi-Final\nFinal"
-    [3,] "Rank\nAthlete\nQualification\nFinal"            
-    [4,] "Rank\nAthlete"                                  
+    [3,] "Rank\nAthlete\nQualification\nFinal"
+    [4,] "Rank\nAthlete"
 
 Our assumption of uniformity is clearly wrong as there are four different formats in the data.
 This is not a huge problem, though, because the code above can handle all of these.
@@ -446,14 +444,14 @@ To illustrate this point, here's a little printout of the different kinds of for
     3 2010                   1\nChloé Graftiaux\n62 • BEL\n4t4 5b5 (9)\n4t5 4b4 (2)
     4 2006                                                       1\nOlga Bibik\nRUS
 
-Nothing catastrophic here either but notice that there are two different formats for results, *e.g.*, "4T5z 6 8 (1)" and "5t10 5b10 (2)".
+Nothing catastrophic here either but notice that there are two different formats for results, _e.g._, "4T5z 6 8 (1)" and "5t10 5b10 (2)".
 Let's put a pin in this nuisance and get back to it once we've combined the results across events.
 By the way, it is really only one event in Sheffield, UK, in 2010 that was a 2-rounder, which is why there is no semi-final in the data.
 Ain't that just grand!
 
 Let's try using the code above (with a couple of minor tweaks) applying it as a function to every row of `boulder_data` to create a nw column in our data set, `results_clean`:
 
-``` r
+```r
 boulder_data$results_clean <- boulder_data |>
     apply(1, \(x) {
         header <- x$results[1] |>
@@ -473,56 +471,56 @@ boulder_data$results_clean <- boulder_data |>
 
 Now, we can finally get rid of the nesting within the data set:
 
-``` r
+```r
 boulder_data <- boulder_data |> tidyr::unnest(results_clean)
 ```
 
 Let's take a look at 20 randomly selected rows of the resulting data to see that the unnesting was performed correctly and that we indeed ended up with one row per event per athlete:
 
     # A tibble: 20 × 11
-        year full_title                                                                                                               location           type         gender results      rank athlete                 qualification `semi-final`  final      
-       <int> <chr>                                                                                                                    <chr>              <chr>        <chr>  <list>      <dbl> <chr>                   <chr>         <chr>         <chr>      
-     1  2019 "Boulder\nIFSC Climbing Worldcup (B) - Meiringen (SUI) 2019\nMeiringenWC\n5 - 6\nApr"                                    Meiringen (SUI)    World cup    men    <chr [116]>    87 Dylan Chuat             2T3z 7 6 (44) <NA>          <NA>       
-     2  2019 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2019\nMunichWC\n18 - 19\nMay"                                        Munich (GER)       World cup    men    <chr [120]>    75 Vladislav Budnik        0T3z 0 6 (38) <NA>          <NA>       
-     3  2018 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2018\nMunichWC\n17 - 18\nAug"                                        Munich (GER)       World cup    men    <chr [129]>    93 Ciarán Scanlon          1T1z 3 3 (47) <NA>          <NA>       
-     4  2017 "Boulder\nIFSC Climbing Worldcup (B) - Vail (USA) 2017\nVailWC\n9 - 10\nJun"                                             Vail (USA)         World cup    women  <chr [56]>     39 Alexis Mascarenas       2t7 2b5 (20)  <NA>          <NA>       
-     5  2016 "Boulder\nIFSC Climbing Worldcup (B) - Meiringen (SUI) 2016\nMeiringenWC\n15 - 16\nApr"                                  Meiringen (SUI)    World cup    women  <chr [60]>     49 Itziar ZABALA Zurinaga  0t 3b3 (25)   <NA>          <NA>       
-     6  2016 "Lead • Boulder • Speed\nIFSC Climbing World Championships - Paris (FRA) 2016\nWCH Paris\n14 - 18\nSep"                  Paris (FRA)        World champs men    <chr [124]>    65 Stephane Hanssens       1t1 1b1 (33)  <NA>          <NA>       
-     7  2016 "Lead • Boulder • Speed\nIFSC Climbing World Championships - Paris (FRA) 2016\nWCH Paris\n14 - 18\nSep"                  Paris (FRA)        World champs men    <chr [124]>   111 Efe Can Sevil           0t 0b (56)    <NA>          <NA>       
-     8  2015 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2015\nMunich\n14 - 15\nAug"                                          Munich (GER)       World cup    men    <chr [125]>    65 Pawel Jelonek           1t2 3b12 (33) <NA>          <NA>       
+        year full_title                                                                                                               location           type         gender results      rank athlete                 qualification `semi-final`  final
+       <int> <chr>                                                                                                                    <chr>              <chr>        <chr>  <list>      <dbl> <chr>                   <chr>         <chr>         <chr>
+     1  2019 "Boulder\nIFSC Climbing Worldcup (B) - Meiringen (SUI) 2019\nMeiringenWC\n5 - 6\nApr"                                    Meiringen (SUI)    World cup    men    <chr [116]>    87 Dylan Chuat             2T3z 7 6 (44) <NA>          <NA>
+     2  2019 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2019\nMunichWC\n18 - 19\nMay"                                        Munich (GER)       World cup    men    <chr [120]>    75 Vladislav Budnik        0T3z 0 6 (38) <NA>          <NA>
+     3  2018 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2018\nMunichWC\n17 - 18\nAug"                                        Munich (GER)       World cup    men    <chr [129]>    93 Ciarán Scanlon          1T1z 3 3 (47) <NA>          <NA>
+     4  2017 "Boulder\nIFSC Climbing Worldcup (B) - Vail (USA) 2017\nVailWC\n9 - 10\nJun"                                             Vail (USA)         World cup    women  <chr [56]>     39 Alexis Mascarenas       2t7 2b5 (20)  <NA>          <NA>
+     5  2016 "Boulder\nIFSC Climbing Worldcup (B) - Meiringen (SUI) 2016\nMeiringenWC\n15 - 16\nApr"                                  Meiringen (SUI)    World cup    women  <chr [60]>     49 Itziar ZABALA Zurinaga  0t 3b3 (25)   <NA>          <NA>
+     6  2016 "Lead • Boulder • Speed\nIFSC Climbing World Championships - Paris (FRA) 2016\nWCH Paris\n14 - 18\nSep"                  Paris (FRA)        World champs men    <chr [124]>    65 Stephane Hanssens       1t1 1b1 (33)  <NA>          <NA>
+     7  2016 "Lead • Boulder • Speed\nIFSC Climbing World Championships - Paris (FRA) 2016\nWCH Paris\n14 - 18\nSep"                  Paris (FRA)        World champs men    <chr [124]>   111 Efe Can Sevil           0t 0b (56)    <NA>          <NA>
+     8  2015 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2015\nMunich\n14 - 15\nAug"                                          Munich (GER)       World cup    men    <chr [125]>    65 Pawel Jelonek           1t2 3b12 (33) <NA>          <NA>
      9  2015 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2015\nMunich\n14 - 15\nAug"                                          Munich (GER)       World cup    women  <chr [87]>      6 Katja Debevec           3t5 4b9 (5)   4t15 4b15 (4) 1t3 3b4 (6)
-    10  2014 "Boulder • Speed\nIFSC Climbing Worldcup (B,S) - Baku (AZE) 2014\nBaku\n3 - 4\nMay"                                      Baku (AZE)         World cup    women  <chr [39]>     37 Konul Huseynova         0t 0b (37)    <NA>          <NA>       
-    11  2014 "Lead • Boulder • Speed\nIFSC Climbing Worldcup (L, B, S) - Haiyang (CHN) 2014\nHaiyang\n20 - 22\nJun"                   Haiyang (CHN)      World cup    men    <chr [26]>     18 Jabee Kim               2t5 4b10 (15) 0t 1b3 (18)   <NA>       
-    12  2013 "Boulder\nIFSC Climbing Worldcup (B) - Vail (USA) 2013\nVail\n7 - 8\nJun"                                                Vail (USA)         World cup    women  <chr [38]>     12 Monika Retschy          4t6 5b5 (6)   0t 1b1 (12)   <NA>       
-    13  2012 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2012\nMunich\n25 - 26\nAug"                                          Munich (GER)       World cup    women  <chr [52]>     27 Diane Merrick           2t4 5b11 (27) <NA>          <NA>       
-    14  2010 "Boulder\nIFSC Climbing Worldcup (B) - Eindhoven (NED) 2010\nWC Eindhoven\n25 - 26\nJun"                                 Eindhoven (NED)    World cup    women  <chr [41]>     39 Radka Petkova           0t 3b3 (39)   <NA>          <NA>       
-    15  2009 "Boulder\nIFSC Climbing Worldcup (B) - Hall (AUT) 2009\nWC Hall\n1 - 2\nMay"                                             Hall (AUT)         World cup    women  <chr [48]>     31 Diane Merrick           2t3 5b5 (16)  <NA>          <NA>       
-    16  2009 "Boulder\nIFSC Climbing Worldcup (B) - Vail (USA) 2009\nWC Vail\n5 - 6\nJun"                                             Vail (USA)         World cup    men    <chr [41]>     14 Julian Bautista         4t6 5b8 (20)  1t2 2b5 (14)  <NA>       
+    10  2014 "Boulder • Speed\nIFSC Climbing Worldcup (B,S) - Baku (AZE) 2014\nBaku\n3 - 4\nMay"                                      Baku (AZE)         World cup    women  <chr [39]>     37 Konul Huseynova         0t 0b (37)    <NA>          <NA>
+    11  2014 "Lead • Boulder • Speed\nIFSC Climbing Worldcup (L, B, S) - Haiyang (CHN) 2014\nHaiyang\n20 - 22\nJun"                   Haiyang (CHN)      World cup    men    <chr [26]>     18 Jabee Kim               2t5 4b10 (15) 0t 1b3 (18)   <NA>
+    12  2013 "Boulder\nIFSC Climbing Worldcup (B) - Vail (USA) 2013\nVail\n7 - 8\nJun"                                                Vail (USA)         World cup    women  <chr [38]>     12 Monika Retschy          4t6 5b5 (6)   0t 1b1 (12)   <NA>
+    13  2012 "Boulder\nIFSC Climbing Worldcup (B) - Munich (GER) 2012\nMunich\n25 - 26\nAug"                                          Munich (GER)       World cup    women  <chr [52]>     27 Diane Merrick           2t4 5b11 (27) <NA>          <NA>
+    14  2010 "Boulder\nIFSC Climbing Worldcup (B) - Eindhoven (NED) 2010\nWC Eindhoven\n25 - 26\nJun"                                 Eindhoven (NED)    World cup    women  <chr [41]>     39 Radka Petkova           0t 3b3 (39)   <NA>          <NA>
+    15  2009 "Boulder\nIFSC Climbing Worldcup (B) - Hall (AUT) 2009\nWC Hall\n1 - 2\nMay"                                             Hall (AUT)         World cup    women  <chr [48]>     31 Diane Merrick           2t3 5b5 (16)  <NA>          <NA>
+    16  2009 "Boulder\nIFSC Climbing Worldcup (B) - Vail (USA) 2009\nWC Vail\n5 - 6\nJun"                                             Vail (USA)         World cup    men    <chr [41]>     14 Julian Bautista         4t6 5b8 (20)  1t2 2b5 (14)  <NA>
     17  2009 "Lead • Boulder • Speed • Combined\nIFSC Climbing World Championships - Qinghai (CHN) 2009\nQuinghai\n30 - 5\nJun - Jul" Qinghai (CHN)      World champs men    <chr [70]>      6 Sean McColl             4t5 4b4 (6)   3t5 3b4 (4)   3t4 4b5 (6)
-    18  2009 "Lead • Boulder • Speed • Combined\nIFSC Climbing World Championships - Qinghai (CHN) 2009\nQuinghai\n30 - 5\nJun - Jul" Qinghai (CHN)      World champs women  <chr [52]>     41 Nadezhda Bryakina       1t2 1b2 (41)  <NA>          <NA>       
-    19  2007 "Lead • Boulder • Speed\nIFSC Climbing World Championship (L + B + S) - Aviles (ESP) 2007\nAviles\n17 - 23\nSep"         Aviles (ESP)       World champs men    <chr [132]>    55 Ignasi TARRAZONA GASQUE 2t2 3b3 (28)  <NA>          <NA>       
-    20  2004 "Boulder\nUIAA Worldcup - Bardonecchia (ITA) 2004\nBardonecchia\n19 - 21\nAug"                                           Bardonecchia (ITA) World cup    women  <chr [28]>      8 Nataliya Perlova        <NA>          <NA>          <NA>       
+    18  2009 "Lead • Boulder • Speed • Combined\nIFSC Climbing World Championships - Qinghai (CHN) 2009\nQuinghai\n30 - 5\nJun - Jul" Qinghai (CHN)      World champs women  <chr [52]>     41 Nadezhda Bryakina       1t2 1b2 (41)  <NA>          <NA>
+    19  2007 "Lead • Boulder • Speed\nIFSC Climbing World Championship (L + B + S) - Aviles (ESP) 2007\nAviles\n17 - 23\nSep"         Aviles (ESP)       World champs men    <chr [132]>    55 Ignasi TARRAZONA GASQUE 2t2 3b3 (28)  <NA>          <NA>
+    20  2004 "Boulder\nUIAA Worldcup - Bardonecchia (ITA) 2004\nBardonecchia\n19 - 21\nAug"                                           Bardonecchia (ITA) World cup    women  <chr [28]>      8 Nataliya Perlova        <NA>          <NA>          <NA>
 
-One more step till our data is in true long format, *i.e.*, one row per athlete per round within each competition.
+One more step till our data is in true long format, _i.e._, one row per athlete per round within each competition.
 This is just `tidyr::pivot_longer()` again with the `cols=` argument set to columns from `qualification` to `final`:
 
-``` r
+```r
 boulder_data <- boulder_data |>
     dplyr::select(-results) |>
-    tidyr::pivot_longer(cols = qualification:final, names_to = "round", values_to = "score") 
+    tidyr::pivot_longer(cols = qualification:final, names_to = "round", values_to = "score")
 ```
 
 Et voilà!
 
     # A tibble: 6 × 9
-       year full_title                                                                              location        type      gender  rank athlete         round         score         
-      <int> <chr>                                                                                   <chr>           <chr>     <chr>  <dbl> <chr>           <chr>         <chr>         
-    1  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        1 Tomoa Narasaki  qualification 4T5z 6 8 (1)  
+       year full_title                                                                              location        type      gender  rank athlete         round         score
+      <int> <chr>                                                                                   <chr>           <chr>     <chr>  <dbl> <chr>           <chr>         <chr>
+    1  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        1 Tomoa Narasaki  qualification 4T5z 6 8 (1)
     2  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        1 Tomoa Narasaki  semi-final    4T4z 14 11 (2)
-    3  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        1 Tomoa Narasaki  final         2T3z 3 6 (1)  
+    3  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        1 Tomoa Narasaki  final         2T3z 3 6 (1)
     4  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        2 Yoshiyuki Ogata qualification 4T5z 10 13 (3)
-    5  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        2 Yoshiyuki Ogata semi-final    2T4z 5 6 (5)  
-    6  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        2 Yoshiyuki Ogata final         2T3z 5 19 (2) 
+    5  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        2 Yoshiyuki Ogata semi-final    2T4z 5 6 (5)
+    6  2022 "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr" Meiringen (SUI) World cup men        2 Yoshiyuki Ogata final         2T3z 5 19 (2)
 
 With the data set in the long format, we can now start extracting information from the `full_title` and `score` columns.
 Let's start with the former.
@@ -559,9 +557,9 @@ We can translate this pattern into regular expressions like so:
 -   `[A-z]` means any upper- or lower-case letter
 -   `\\` is simply the escaped backslash
 -   `.` is any character
--   `+` means *one or more* occurrences of the preceding character
--   `*` means *zero or more* occurrences of the preceding character
--   `?` indicates lazy search; it tells the program to grab *as few instances* identified by the preceding expression *as possible so that the entire pattern still makes sense*
+-   `+` means _one or more_ occurrences of the preceding character
+-   `*` means _zero or more_ occurrences of the preceding character
+-   `?` indicates lazy search; it tells the program to grab _as few instances_ identified by the preceding expression _as possible so that the entire pattern still makes sense_
 
 With this in mind, let's break down the entire pattern:
 
@@ -569,14 +567,14 @@ With this in mind, let's break down the entire pattern:
 
 -   `^.*?` - starting from the beginning of a string, find any characters but only as few as possible for the rest of the pattern to still be valid
 -   `\\d+` - then, find one or more digits
--    `-`  - then a space, followed by a dash, followed by another space
+-   `-`  - then a space, followed by a dash, followed by another space
 -   `\\d+` - then again, one or more digits
 -   `\\n` - then the line break character `\n`
 -   `[A-z]+$` - and finally any letter (big or small) at the end of the string
 
 </div>
 
-Great, so now we have a pattern that identifies the individual components of interest but we also need to tell the program to *extract* them.
+Great, so now we have a pattern that identifies the individual components of interest but we also need to tell the program to _extract_ them.
 For this, we can use the grouping operators `()`, to get:
 
 `"^.*?(\\d+ - \\d+\\n[A-z]+)$"`
@@ -585,7 +583,7 @@ For this, we can use the grouping operators `()`, to get:
 
 All we have to do now is replace the identified pattern with the part captured within the parentheses using the `sub()` function:
 
-``` r
+```r
 sub(pattern = "^.*?(\\d+ - \\d+\\n[A-z]+)$",
     replacement = "\\1" , # \\1 just inserts the group inside of the first set of ()s
     x = "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr")
@@ -596,7 +594,7 @@ sub(pattern = "^.*?(\\d+ - \\d+\\n[A-z]+)$",
 This is already pretty neat but we can do even better.
 We can identify multiple groups with `()`s, not just one, which allows us to do something like this:
 
-``` r
+```r
 sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)$",
     replacement = "\\1-\\3; \\2-\\3" , # \\1 just inserts the group inside of the first set of ()s
     x = "Boulder\nIFSC - Climbing World Cup (B) - Meiringen (SUI) 2022\nMeiringen\n8 - 10\nApr")
@@ -606,7 +604,7 @@ sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)$",
 
 What's more, if we know the year, we can insert it in the `replacement=` string:
 
-``` r
+```r
 year <- 2022
 sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)$",
     replacement = paste0("\\1-\\3-", year, "; \\2-\\3-", year), # \\1 just inserts the group inside of the first set of ()s
@@ -623,7 +621,7 @@ To do that, we can replace the spaces in our patter with `\\s+` meaning one or m
 Secondly, and much more importantly, our regular expression above doesn't account for the possibility of an event spilling into two calendar months.
 For these cases, we need a different pattern:
 
-``` r
+```r
 year <- 2016
 sub(pattern = "^.*?(\\d+)\\s*-\\s*(\\d+)\\n([A-z]+)\\s*-\\s*([A-z]+)$",
     replacement = paste0("\\1-\\3-", year, "; \\2-\\4-", year), # \\1 just inserts the group inside of the first set of ()s
@@ -632,14 +630,14 @@ sub(pattern = "^.*?(\\d+)\\s*-\\s*(\\d+)\\n([A-z]+)\\s*-\\s*([A-z]+)$",
 
     [1] "30-Apr-2016; 1-May-2016"
 
-Putting it all together, we can *conditionally* create a new column `dates` in our data set using `dplyr::mutate()` and `dplyr::ifelse()`, and then separate it into `start` and `end` variables and convert the strings to dates.
+Putting it all together, we can _conditionally_ create a new column `dates` in our data set using `dplyr::mutate()` and `dplyr::ifelse()`, and then separate it into `start` and `end` variables and convert the strings to dates.
 The only caveat here is that, to put the correct year inside the `replacement=` argument, we have to perform the operation by row.
 Otherwise we would essentially be passing the entire vector of years to the `paste0()` function.
 This function would then only use the first element, which would result in all dates having the year 2022 in them.
 Running the `dplyr::mutate()` command in a row-wise fashion gets around this problem.
 This is exactly what `dplyr::rowwise()` is for:
 
-``` r
+```r
 boulder_data <- boulder_data |>
     dplyr::rowwise() |>
     dplyr::mutate(
@@ -650,8 +648,8 @@ boulder_data <- boulder_data |>
                 x = full_title),
             sub(pattern = "^.*?(\\d+) - (\\d+)\\n([A-z]+)\\s*-\\s*([A-z]+)$",
                 replacement = paste0("\\1-\\3-", year, "; \\2-\\4-", year),
-                x = full_title)    
-        )        
+                x = full_title)
+        )
     ) |>
     tidyr::separate(date, c("start", "end"), sep = "; ") |>
     dplyr::mutate(
@@ -663,8 +661,8 @@ The `dplyr::across(...)` bit applies the `as.Date()` function to all columns fro
 Here's another random 20 rows showing that it worked:
 
     # A tibble: 20 × 3
-       full_title                           start      end       
-       <chr>                                <date>     <date>    
+       full_title                           start      end
+       <chr>                                <date>     <date>
      1 "...Innsbruck\n22 - 26\nJun"         2022-06-22 2022-06-26
      2 "...Innsbruck\n22 - 26\nJun"         2022-06-22 2022-06-26
      3 "...MoscowWC\n12 - 14\nApr"          2019-04-12 2019-04-14
@@ -689,7 +687,7 @@ Here's another random 20 rows showing that it worked:
 ### Parsing scores
 
 With the dates out of the way, let's now turn to the `score` column.
-We previously noticed that there are two formats in which the scores are recorded, *e.g.*, "4T5z 6 8 (1)" and "4t6 5b8 (1)".
+We previously noticed that there are two formats in which the scores are recorded, _e.g._, "4T5z 6 8 (1)" and "4t6 5b8 (1)".
 This discrepancy stems from the fact that the scoring system (explained briefly in {{< link "Part 1" "blog/01_boulder_viz_pt1/index.md" "a-rough-guide-to-competitive-bouldering" >}}) was changed as part of a general rules revision in 2018.
 The relevant change here is that the "bonus" holds got renamed to "zone" holds, which explains the change from "b" to "z" in the scores.
 Furthermore, the notation has changed from "No. tops/attempts No. bonuses/attempts" to "No. tops/No.zones top attempts zone attempts".
@@ -700,13 +698,13 @@ I think that the best way of extracting data from the scores is to separate them
 We can go about it in a very similar way to how we treated the start and end dates.
 We just need to keep in mind that, because of the variability in score notation, we need two regular expression patterns:
 
-``` r
+```r
 sub("(\\d)T(\\d)z\\s+(\\d+)\\s+(\\d+)\\s+\\((\\d+)\\)", "\\1; \\3; \\2; \\4; \\5", "4T5z 6 8 (1)")
 ```
 
     [1] "4; 6; 5; 8; 1"
 
-``` r
+```r
 sub("(\\d)t(\\d+)\\s+(\\d)b(\\d+)\\s+\\((\\d+)\\)", "\\1; \\2; \\3; \\4; \\5", "4t6 5b8 (1)")
 ```
 
@@ -728,7 +726,7 @@ Then, we can do the pattern replacement but let's make it case insensitive, in c
 As the next step, let's then separate the individual pieces of data into their respective columns.
 And finally, since this is all we need to do with this data set, let's use `dplyr::select()` to rearrange the columns and get rid of the ones we don't need.
 
-``` r
+```r
 boulder_data <- boulder_data |>
     dplyr::mutate(
         score = gsub("DNS", "0T0z 0 0 (00)", score),
@@ -771,7 +769,7 @@ If you want, you can compare it to the table at the top of this post to make sur
 <div class="scroll-tab" data-height="337px">
 
 | year | start      | end        | location        | type      | gender | rank | athlete           | round         | tops | top_attempts | zones | zone_attempts | round_rank |
-|-----:|:-----------|:-----------|:----------------|:----------|:-------|-----:|:------------------|:--------------|:-----|:-------------|:------|:--------------|:-----------|
+| ---: | :--------- | :--------- | :-------------- | :-------- | :----- | ---: | :---------------- | :------------ | :--- | :----------- | :---- | :------------ | :--------- |
 | 2022 | 2022-04-08 | 2022-04-10 | Meiringen (SUI) | World cup | men    |    1 | Tomoa Narasaki    | qualification | 4    | 6            | 5     | 8             | 1          |
 | 2022 | 2022-04-08 | 2022-04-10 | Meiringen (SUI) | World cup | men    |    1 | Tomoa Narasaki    | semi-final    | 4    | 14           | 4     | 11            | 2          |
 | 2022 | 2022-04-08 | 2022-04-10 | Meiringen (SUI) | World cup | men    |    1 | Tomoa Narasaki    | final         | 2    | 3            | 3     | 6             | 1          |
@@ -813,7 +811,7 @@ Cool what you can do with about 80 lines of code...
 
 <div class="foldable">
 
-``` r
+```r
 # read-in data
 ifsc_data <- jsonlite::fromJSON(readLines("data/raw_data_2004_2022.json"), flatten = TRUE)
 

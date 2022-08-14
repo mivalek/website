@@ -35,7 +35,7 @@ Of course, you can, more or less easily, do the same thing in any other language
 :::{.warn-box}
 #### A little disclaimer
 
-This post also only covers a part of the data wrangling I had to do to make the visualisation.
+This post only covers a part of the data wrangling I had to do to make the visualisation.
 The reason for this is that, in order to walk you through the thinking and coding behind the entire process, the blog post would have to be unbearable long.
 It's already a pretty long read as is.
 
