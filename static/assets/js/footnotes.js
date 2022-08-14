@@ -7,7 +7,7 @@ if (footnotes.length) {
         const fnClone = document
             .querySelector(`${fnId} > p`)
             .cloneNode((deep = true));
-        fnClone.querySelector("a").remove();
+        fnClone.querySelector("a.footnote-backref").remove();
         fnClone.classList.add("tooltip");
         fn.after(fnClone);
         fn.classList.add("hoverable");
