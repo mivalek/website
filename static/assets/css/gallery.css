@@ -110,6 +110,7 @@ main {
     cursor: pointer;
     flex-shrink: 0;
     color: #fff3;
+    margin-bottom: 0;
     -moz-transition: color .1s ease-in;
     -webkit-transition: color .1s ease-in;
     -o-transition: color .1s ease-in;
@@ -140,6 +141,7 @@ main {
 #close-gallery {
     font-size: 3em;
     color: #fff3;
+    margin-bottom: 0;
     -moz-transition: color .1s ease-in;
     -webkit-transition: color .1s ease-in;
     -o-transition: color .1s ease-in;
