@@ -1,0 +1,21 @@
+// https =//freesound.org/people/InspectorJ/sounds/416179/
+menu.mp3
+// https =//freesound.org/people/Lucish_/sounds/554841/
+cash.mp3
+// bell https =//freesound.org/people/775noise/sounds/494565/
+// door https =//freesound.org/people/InspectorJ/sounds/431117/
+enter.mp3
+// https =//freesound.org/people/Higgs01/sounds/428156/
+yay.mp3
+// https =//freesound.org/people/tim.kahn/sounds/336997/
+boo.mp3
+// https =//freesound.org/people/Larakaa/sounds/503412/
+grunt.mp3
+// https =//freesound.org/people/juror2/sounds/196402/
+tut.mp3
+// https =//freesound.org/people/qubodup/sounds/60013/
+woosh.mp3
+// https =//freesound.org/people/MLaudio/sounds/511484/
+ding.mp3
+// win XP critical error
+error.mp3
