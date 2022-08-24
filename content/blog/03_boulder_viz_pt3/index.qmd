@@ -1,0 +1,25 @@
+---
+title: "Making an interactive data visualisation, Part 3"
+subtitle: "Creating the app"
+date: 2022-08-23T08:35:27+01:00
+tags:
+    - data science
+    - HTML
+    - CSS
+    - JavaScript
+    - tutorial
+featured: false
+# draft: true
+# for Quarto posts (must rename to .qmd)
+format: hugo
+preamble:
+    Welcome to the third and final part of a mini-series about creating the [interactive visualisation of bouldering data](/portfolio/boulder-viz/) shown on the main page of this website.
+
+    In the {{< link "first part" "blog/01_boulder_viz_pt1/index.md" >}}, I showed how to use Python to scrape some of the data the visualisation is based on from the web. If you haven't read it, I would encourage you to do that before reading on.
+
+    The {{< link "second part" "blog/02_boulder_viz_pt2/index.md" >}} dealt with processing the scraped data using R to get them in a shape that's suitable for building the visualisation.
+
+    In this part, I will show how I built the viz using HTML, CSS, and JavaScript.
+---
+
+something
