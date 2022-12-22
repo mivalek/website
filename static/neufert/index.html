@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neufert 4.0 data audit tool</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+    </style> 
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div id="floorplan-container">
+        <div id="msg-container"></div>
+        <div id="control-panel">
+            <div id="layers-container" class="blocked">
+            </div>
+            <div id="data-audit-container" class="audit-container stacked">
+                <button id="data-ok" class="audit">Looks OK</button>
+                <button id="unusual" class="audit">Looks unusual</button>
+                <button id="wrong" class="audit">Data is wrong</button>
+                <button id="missing" class="audit">Missing data</button>
+            </div>
+            <div id="flagging-container" class="audit-container stacked">
+                <button id="flag-all" class="audit">Flag all</button>
+                <button id="flagging-done" class="audit">Done</button>
+                <button id="cancel" class="audit">Cancel</button>
+            </div>
+            <div id="outline-audit-container" class="audit-container stacked">
+                <button id="outline-audit-done" class="audit">Done</button>
+                <button id="remove-outline" class="audit">Start from scratch</button>
+                <button id="prev-floor" class="audit">Use previous</button>
+            </div>
+            <div id="next-container" class="audit-container stacked">
+                <button id="next"></button>
+            </div>
+        </div>
+        <div id="loading">
+            <div id="loading-text"></div>
+            <div id="loader">
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+                <div class="loader-dot"></div>
+            </div>
+        </div>
+        <div id="finished"><div>No more data to review</div></div>
+    </div>
+    <div id="tooltip"></div>
+</body>
+<footer>
+<script type="module" src="index.js"></script>
+</footer>
+</html>
