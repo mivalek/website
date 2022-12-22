@@ -36,7 +36,7 @@
                     {{ with $value.year }}
                     {{ $year = .}}
                     {{ end }}
-                    {{ $placeholder := resources.GetRemote (print "https://am3pap002files.storage.live.com/" $value.url "?width=8&height=6") }}
+                    {{ $placeholder := .Resources.GetRemote (print "https://am3pap002files.storage.live.com/" $value.url "?width=8&height=6") }}
                     {{ $placeholder = $placeholder.Filter (images.GaussianBlur 1) }}
                     <div class="image-container{{ with .portrait }} portrait{{ end}}{{ with .large }} large{{ end}}">
                         <img class="thumbnail lazy" height="250px"
