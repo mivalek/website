@@ -73,8 +73,8 @@ function makeID() {
     return (S4()+S4()+S4());
 }
 
-const id_url = "https://script.google.com/macros/s/AKfycbxLQkFSpDHlHAgvgKa77RVLVBEpBAI_LuL0mEiiQkCrghQyfqtwObrpSdwg0tIgXWT7/exec"
-const data_url = "https://script.google.com/macros/s/AKfycbzBuiLlWyLTK5nKNi24955VwiMB2FLpAE8jflYG9i4tuQBguTgI9Gm3ctw7wbTRlOn4tg/exec"
+const id_url = "https://script.google.com/macros/s/AKfycbxLQkFSpDHlHAgvgKa77RVLVBEpBAI_LuL0mEiiQkCrghQyfqtwObrpSdwg0tIgXWT7/exec" + (isTest ? "?test=true" : "")
+const data_url = "https://script.google.com/macros/s/AKfycbzBuiLlWyLTK5nKNi24955VwiMB2FLpAE8jflYG9i4tuQBguTgI9Gm3ctw7wbTRlOn4tg/exec" + (isTest ? "?test=true" : "")
 const screenWidth = Math.min(1920, window.innerWidth - 20)
 const screenHeight = Math.min(Math.max(768, window.innerHeight * .8), window.innerHeight - 20)
 let point_radius = 6
@@ -671,8 +671,7 @@ async function loadBuldingIfNeeded() {
 }
 async function fetchFloorData() {
     current_floor = building_ids.floors.shift()
-    let query = data_url + "?id=" + current_floor.id
-    if (isTest) query += "&test=true"
+    let query = data_url + (isTest ? "&id=" : "?id=") + current_floor.id
     const response = await fetch(query)
     const floor_data = await response.json()
     return floor_data
