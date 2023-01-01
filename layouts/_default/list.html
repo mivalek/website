@@ -53,8 +53,8 @@
                         {{ end }}
                         <div class="read-time">{{ $minutes }} min read</div>
                     </div>
-                    <h2>{{.Title}}</h2>
-                    {{ with .Params.subtitle }}<h3>{{ . }}</h3>{{ end }}
+                    <h2>{{.Title | safeHTML  | markdownify }}</h2>
+                    {{ with .Params.subtitle | safeHTML  | markdownify  }}<h3>{{ . }}</h3>{{ end }}
                     <div class="blog-summary">{{ .Summary | truncate 200 }}</div>
                     <div class="tags">
                         {{range .Params.tags }}

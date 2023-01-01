@@ -5,8 +5,8 @@
 {{ define "main" }}
 <div id="background"></div>
 <div id="byline">
-    <h1 id="title">{{ .Title }}</h1>
-    <div id="subtitle">{{ .Params.subtitle }}</div>
+    <h1 id="title">{{ .Title  | safeHTML  | markdownify }}</h1>
+    <div id="subtitle">{{ .Params.subtitle | safeHTML  | markdownify  }}</div>
 </div>
 <div id="main-container">
     <div id="nav-container">

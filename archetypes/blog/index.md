@@ -7,6 +7,6 @@ tags:
 featured: false
 draft: true
 # for Quarto posts (must rename to .qmd)
-format: hugo
+format: hugo-md
 jupyter: python3
 ---

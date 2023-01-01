@@ -8,7 +8,7 @@
 {{ define "main" }}
 <div id="background"></div>
 <div id="byline">
-    <h1 id="title">{{ .Title }}{{ with .Params.subtitle }}: {{ .}}{{ end }}</h1>
+    <h1 id="title">{{ .Title  | safeHTML  | markdownify }}{{ with .Params.subtitle }}: {{ . | safeHTML  | markdownify }}{{ end }}</h1>
     <div id="subtitle">{{ .Date.Format "2 Jan 2006" }}</div>
 </div>
 <div id="main-container">

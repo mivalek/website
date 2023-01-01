@@ -127,6 +127,19 @@ pre:hover .copy-btn, .copy-msg.active, .copy-btn:focus {
 	margin: .5em 0;
 }
 
+img, .twitter-tweet {
+	margin: auto;
+}
+
+figure {
+	display: grid;
+}
+
+figcaption {
+	margin-bottom: 1.5rem;
+	font-size: .9rem;
+}
+
 table {
 	max-width: calc(100vw - 40px);
 	width: fit-content;
