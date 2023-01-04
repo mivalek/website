@@ -21,7 +21,7 @@ format: hugo-md
 
 ## Motivation
 
-I was reading [Adam Mastroianni](https://twitter.com/a_m_mastroianni)'s excellent blog post on [peer review](https://experimentalhistory.substack.com/p/the-rise-and-fall-of-peer-review) (it's really good, go check it out) because it's Christmas time and I don't have to be a code monkey for a while. To give an example of the kind of rubbish that somehow makes it through peer review, Adam calls to his aid a tweet many of you will have seen but for me it was a revelation:
+I was reading [Adam Mastroianni](https://twitter.com/a_m_mastroianni)'s excellent blog post on [peer review](https://experimentalhistory.substack.com/p/the-rise-and-fall-of-peer-review) (it's really good, go check it out) because it's Christmas time and I don't have to be a code monkey for a while. To give an example of the kind of rubbish that somehow makes it through peer review, Adam calls to his aid a tweet many of you will have seen. For me, it was a revelation:
 
 {{< tweet 1597355324008108034 >}}
 
