@@ -1,6 +1,7 @@
 import { writeMsg } from "./utils.js"
 import { saveData, nextFloor, finished } from "./data.js"
 import * as layers from "./layers.js"
+import { drawLine, drawPoints } from "./drawing.js"
 import {select} from "https://cdn.jsdelivr.net/npm/d3@7.7.0/+esm";
 
 function createLayerButton(refID) {
@@ -117,14 +118,14 @@ function addButtonListeners() {
         shape_layers[index].forEach((e, i) => i == 0 ?
             e.attr("closed", "false").selectAll("path").remove() :
             e.remove())
-        drawing.drawPoints(index)
+        drawPoints(index)
         layers.activateLayer(index, true)
     })
     document.getElementById("prev-floor").addEventListener("click", function() {
         const current_floor_outline = [...allLines[0].points] 
         allLines[0].points = JSON.parse(localStorage.getItem("previousFloor"))
         localStorage.setItem("previousFloor", JSON.stringify(current_floor_outline))
-        drawing.drawPoints(0)
+        drawPoints(0)
         shape_layers[0].forEach((e, i) => i == 0 ?
             e.attr("closed", "false").selectAll("path").remove() :
             e.remove())
@@ -135,7 +136,7 @@ function addButtonListeners() {
                 .attr("closed", true)
                 .attr("shape-index", i)
             )
-            drawing.drawLine(0, i)
+            drawLine(0, i)
         }
         layers.activateLayer(0, true)
         let buttonText = this.innerText
