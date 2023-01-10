@@ -2,6 +2,7 @@ import { writeMsg } from "./utils.js"
 import { saveData, nextFloor, finished } from "./data.js"
 import * as layers from "./layers.js"
 import { drawLine, drawPoints } from "./drawing.js"
+import { copyTextToClipboard } from "./copy.js";
 import {select} from "https://cdn.jsdelivr.net/npm/d3@7.7.0/+esm";
 
 function createLayerButton(refID) {
@@ -143,6 +144,9 @@ function addButtonListeners() {
         this.innerText = buttonText == "Back to current" ? "Use previous" : "Back to current"
     })
     document.getElementById("outline-audit-done").addEventListener("click", () => {
+        if (allLines[current_flat].points.some(d => d.inner) === false) {
+            if (!window.confirm("You haven't marked any walls. Are you sure you want to move on?")) return
+        }
         if (current_flat == 0) {
             activateOutditButtons("next")
             return
@@ -170,6 +174,21 @@ function addButtonListeners() {
                 () => console.log("all done"),
                 () => finished()
             )
+    })
+
+    document.getElementById("copy").addEventListener("click", function() {
+            const textToCopy = this.dataset.info;
+            const success = copyTextToClipboard(textToCopy);
+            // const copyMsg = this.parentElement.querySelector(".copy-msg");
+            // if (success === true) {
+            //     copyMsg.innerText = "Code copied to clipboard";
+            // } else {
+            //     copyMsg.innerText = "Something went wrong; try again";
+            // }
+            // copyMsg.classList.add("active");
+            // sleep(1200).then(() => {
+            //     copyMsg.classList.remove("active");
+            // });
     })
 }
 

@@ -1,5 +1,6 @@
 
 import { zoomIdentity } from "https://cdn.jsdelivr.net/npm/d3@7.7.0/+esm";
+import { setInfo } from "./utils.js"
 // function addLayer(id, drawing = false) {
 //     let type = id === "floor" ? "floor" : "apartment"
 //     const index = line_layers.length
@@ -40,6 +41,7 @@ function activateLayer(ind, outline = false) {
     document.querySelector(`.layer-btn[ref-index='${ind}']`).classList.add("active")
     if (outline) document.querySelectorAll(`g[layer-index='${ind}']`).forEach(el => el.classList.add("active"))
     focusOnFlat(ind)
+    setInfo(ind)
 }
 
 function focusOnFlat(ind) {

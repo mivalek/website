@@ -212,6 +212,66 @@ button.inactive {
     border-left: 30px solid #be6c00;
 }
 
+#info-container {
+	color: var(--light);
+    margin: 10px;
+    position: absolute;
+    top: 0;
+    right: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: end;
+    box-shadow: none !important;
+    height: 32px;    
+    width: 32px;
+    overflow: clip;
+}
+
+#info-container:hover {
+    height: initial;    
+    width: initial;
+}
+
+
+#info-icon {
+	font-family: "Times New ROman", serif;
+	font-weight: bold;
+	font-size: 1.2em;
+	line-height: 1.2em;
+	border: solid 2px;
+	width: 1.2em;
+	text-align: center;
+	border-radius: 50%;
+	background: var(--mid);
+	cursor: pointer;
+}
+
+button#copy {
+	border: none;
+	background: none;
+	align-self: end;
+	margin-top: 3px;
+}
+
+button#copy:hover {
+	color: var(--orange);
+}
+
+#info {
+    display: flex;
+    flex-direction: column;
+	background: var(--mid);
+	border: solid 1px;
+	padding: 5px;
+	margin-top: 5px;
+    font-size: .8em;
+}
+
+.info-field {
+	display: flex;
+	gap: 3px;
+}
+
 #tooltip {
 	font-size: .85em;
 	position: absolute;
