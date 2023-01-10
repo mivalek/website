@@ -131,7 +131,7 @@ function setInfo(flat_index) {
     document.querySelector("#flat-id .value").innerText = flat_index === 0 ? "-" : flats_on_current_floor[flat_index]
     document.querySelector("#floor-id .value").innerText = current_floor.id
     document.querySelector("#building-id .value").innerText = building_ids.id
-    document.getElementById("copy").setAttribute("data-info", `Building ID: ${current_floor.id}\nFloor ID: ${building_ids.id}\n${flat_index === 0 ? "" : "Appartment ID: " + flats_on_current_floor[flat_index] + "\n"}`)
+    document.getElementById("copy").setAttribute("data-info", `Building ID: ${current_floor.id}\nFloor ID: ${building_ids.id}\n${flat_index === 0 ? "" : "Apartment ID: " + flats_on_current_floor[flat_index] + "\n"}`)
 }
 
 export {encodeWKT, interpolate, makeID, parseData, snap, setInfo, writeMsg}
