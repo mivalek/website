@@ -249,8 +249,8 @@ button.inactive {
 button#copy {
 	border: none;
 	background: none;
-	align-self: end;
-	margin-top: 3px;
+	position: absolute;
+    right: 3px;
 }
 
 button#copy:hover {
@@ -260,7 +260,7 @@ button#copy:hover {
 #info {
     display: flex;
     flex-direction: column;
-	background: var(--mid);
+	background: var(--dark);
 	border: solid 1px;
 	padding: 5px;
 	margin-top: 5px;
@@ -270,6 +270,10 @@ button#copy:hover {
 .info-field {
 	display: flex;
 	gap: 3px;
+}
+
+#building-id {
+	margin-right: 20px;
 }
 
 #tooltip {
