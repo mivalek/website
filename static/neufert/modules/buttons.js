@@ -144,12 +144,12 @@ function addButtonListeners() {
         this.innerText = buttonText == "Back to current" ? "Use previous" : "Back to current"
     })
     document.getElementById("outline-audit-done").addEventListener("click", () => {
-        if (allLines[current_flat].points[0].some(d => d.inner) == false) {
-            if (!window.confirm("You haven't marked any walls. Are you sure you want to move on?")) return
-        }
+        
         if (current_flat == 0) {
             activateOutditButtons("next")
             return
+        } else if (allLines[current_flat].points[0].some(d => d.inner) == false) {
+            if (!window.confirm("You haven't marked any walls. Are you sure you want to move on?")) return
         }
         if (current_flat == flats_on_current_floor.length) {                
             document.getElementById("missing").classList.remove("inactive")
