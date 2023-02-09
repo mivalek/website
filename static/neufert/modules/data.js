@@ -125,7 +125,7 @@ function resetAll() {
     floorplanPoints = []
     isPressedCtrl = false
     isPressedShift = false
-    current_flat = 1
+    // current_flat = -1
 }
 
 function build(raw_data) {
@@ -135,6 +135,8 @@ function build(raw_data) {
         .fitSize([screenWidth, screenHeight], current_data);
 
     flats_on_current_floor = [...new Set(raw_data.map(x => x.apartment_id))].filter(x => x && x != "NA") 
+    flats_to_review = current_floor.apartments.filter(e => e.review).map(e => flats_on_current_floor.indexOf(e.id) + 1) 
+    current_flat = flats_to_review[0]
 
     for (const i in flats_on_current_floor) {
         const flat_data = current_data.features
@@ -184,6 +186,8 @@ function build(raw_data) {
             }); 
     }
     
+    // flats_on_current_floor = current_floor.apartments.filter(e => e.keep).map(e => e.id)
+
     let outline_data = current_data.features.filter(x => x.properties.featureType == "outline")
     
     if (outline_data.length) {

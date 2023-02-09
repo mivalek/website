@@ -17,8 +17,9 @@ let projection
 let building_ids
 let current_data = []
 let current_floor = []
-let current_flat = 1
-let flats_on_current_floor = []  
+let current_flat
+let flats_on_current_floor = []
+let flats_to_review = []
 
 let line_layers = []
 let shape_layers = []

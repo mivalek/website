@@ -95,7 +95,7 @@ data.fetchBuilding()
             loader.loaderOff()        
             document.getElementById("missing").classList.add("inactive")
             utils.writeMsg("Does apartment 1 look OK?")        
-            layers.activateLayer(1)
+            layers.activateLayer(current_flat)
             buttons.activateOutditButtons("data")
 
             buttons.addButtonListeners()

@@ -151,7 +151,7 @@ function addButtonListeners() {
         } else if (allLines[current_flat].points[0].some(d => d.inner) == false) {
             if (!window.confirm("You haven't marked any walls. Are you sure you want to move on?")) return
         }
-        if (current_flat == flats_on_current_floor.length) {                
+        if (current_flat == flats_to_review[flats_to_review.length - 1]) {                
             document.getElementById("missing").classList.remove("inactive")
             document.getElementById("wrong").classList.add("inactive")
             document.getElementById("unusual").classList.add("inactive")
@@ -161,7 +161,7 @@ function addButtonListeners() {
             document.getElementById("remove-outline").setAttribute("index", current_flat)
             layers.activateLayer(current_flat)
         } else {
-            current_flat ++            
+            current_flat = flats_to_review[flats_to_review.indexOf(current_flat) + 1]           
             writeMsg(`Does apartment ${current_flat} look OK?`)
             activateOutditButtons("data-audit")
             layers.activateLayer(current_flat)
