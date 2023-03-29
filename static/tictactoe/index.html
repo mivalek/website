@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic tac toe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="app-container">
+        <div id="top-row">
+            <div id="result">blah</div>
+            <button onclick="init()">Rematch</button>
+        </div>
+        <div id="mid-row">
+            <div id="pl-1" class="info">
+                <div class="label">Player 1</div>
+                <div class="symbol">
+                    <div class="cross-elem"></div>
+                    <div class="cross-elem"></div>
+                </div>
+            </div>
+            <div id="ttt-container"></div>        
+            <div id="pl-2" class="info">
+                <div class="label">Player 2</div>
+                <div class="symbol"><div id="circ"></div></div>
+            </div>
+        </div>
+        <div id="bttm-row">
+            <div class="setting">
+                <label for="board_size">Board size</label>
+                <div class="slider">
+                    <input type="range" id="board_size" name="board_size" list="size-values" value="3" min="3" max="19" step="1">                
+                    <datalist id="size-values">
+                        <option value="3" label="3"></option>
+                        <option value="5" label="5"></option>
+                        <option value="7" label="7"></option>
+                        <option value="9" label="9"></option>
+                        <option value="11" label="11"></option>
+                        <option value="13" label="13"></option>
+                        <option value="15" label="15"></option>
+                        <option value="17" label="17"></option>
+                        <option value="19" label="19"></option>
+                    </datalist>
+                </div>
+              </div>
+              <div class="setting">
+                <label for="win_at">Sequence length</label>
+                <div class="slider">
+                    <input type="range" id="win_at" name="win-at" list="length-values" value="3" min="3" max="19" step="1">
+                    <datalist id="length-values">
+                        <option value="3" label="3"></option>
+                        <option value="5" label="5"></option>
+                        <option value="7" label="7"></option>
+                        <option value="9" label="9"></option>
+                        <option value="11" label="11"></option>
+                        <option value="13" label="13"></option>
+                        <option value="15" label="15"></option>
+                        <option value="17" label="17"></option>
+                        <option value="19" label="19"></option>
+                    </datalist>
+                </div>
+              </div>
+        </div>
+    </div>
+
+</body>
+<script src="index.js"></script>
+</html>
