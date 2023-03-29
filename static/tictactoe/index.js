@@ -37,12 +37,10 @@ function checkBoard() {
     for (let i = 0; i < dims - (win_at - 1); i++) {
         for (let j = 0; j < dims - (win_at - 1); j++) {
             const kernel = bool_data.slice(i, i + win_at).map(x => x.slice(j, j + win_at))
-            console.log([i, j])
             // rows
             const winner_row = kernel.map(x => x.every(y => y)).indexOf(true)
             if (winner_row >= 0) {
                 // highlight
-                console.log(i + winner_row);
                 row_to_hl = document.querySelectorAll(`[row="${i + winner_row}"]`)
 
                 for (let c = j; c < j + win_at; c++) {
@@ -53,7 +51,6 @@ function checkBoard() {
             }
             // cols
             for (let c = 0; c < win_at; c++) {
-                // console.log(kernel.map(x => x[2]))
                 const is_winner_col = kernel.map(x => x[c]).every(x => x)
                 if (is_winner_col) {
                     // highlight
