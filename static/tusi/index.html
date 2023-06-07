@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="container">
+        <div class="ball-container">
+            <div id="b1" class="ball"></div>
+        </div>
+        <div class="ball-container">
+            <div id="b2" class="ball"></div>
+        </div>
+        <div class="ball-container">
+            <div id="b3" class="ball"></div>
+        </div>
+        <div class="ball-container">
+            <div id="b4" class="ball"></div>
+        </div>
+        <div class="ball-container">
+            <div id="b5" class="ball"></div>
+        </div>
+        <div class="ball-container">
+            <div id="b6" class="ball"></div>
+        </div>
+        <div class="ball-container">
+            <div id="b7" class="ball"></div>
+        </div>
+        <div class="ball-container">
+            <div id="b8" class="ball"></div>
+        </div>
+    </div>
+    <div id="toggle-container">
+        <div class="toggle">
+        <input type="checkbox" id="switch1" target="b1"/><label id="toggle1" for="switch1">Toggle</label>
+        </div>
+        <div class="toggle">
+        <input type="checkbox" id="switch2" target="b2"/><label id="toggle2" for="switch2">Toggle</label>
+        </div>
+        <div class="toggle">
+        <input type="checkbox" id="switch3" target="b3"/><label id="toggle3" for="switch3">Toggle</label>
+        </div>
+        <div class="toggle">
+        <input type="checkbox" id="switch4" target="b4"/><label id="toggle4" for="switch4">Toggle</label>
+        </div>
+        <div class="toggle">
+        <input type="checkbox" id="switch5" target="b5"/><label id="toggle5" for="switch5">Toggle</label>
+        </div>
+        <div class="toggle">
+        <input type="checkbox" id="switch6" target="b6"/><label id="toggle6" for="switch6">Toggle</label>
+        </div>
+        <div class="toggle">
+        <input type="checkbox" id="switch7" target="b7"/><label id="toggle7" for="switch7">Toggle</label>
+        </div>
+        <div class="toggle">
+        <input type="checkbox" id="switch8" target="b8"/><label id="toggle8" for="switch8">Toggle</label>
+        </div>
+    </div>
+</body>
+<script>
+    let add = true
+    document.querySelectorAll("input:checked").forEach(e => e.click())
+    document.querySelector("input").click()
+    
+    document.querySelectorAll("input").forEach(e => {
+        e.addEventListener("click", function(e) {
+            const targetBall = document.getElementById(e.target.getAttribute("target"))
+            e.target.checked ? targetBall.classList.remove("hidden") : targetBall.classList.add("hidden")
+        })
+    })
+    document.querySelectorAll(".ball").forEach((e, i) => {if (i > 0) {e.classList.add("hidden")}})
+    document.onkeypress = function (e) {
+        e = e || window.event;
+        if (e.keyCode == 32) {
+            addRemoveBall()
+        }
+    };
+
+    function addRemoveBall() {
+        const x = document.querySelectorAll(".hidden")
+        if (x.length == 8) {add = true}
+        if (x.length == 0) {add = false}
+        if (add) {
+            const ball = document.querySelector(".hidden")
+            ball.classList.remove("hidden")
+            document.querySelector(`input[target='${ball.id}']`).click()
+        } else {
+            const ball = document.querySelector(".ball:not(.hidden)")
+            ball.classList.add("hidden")
+            document.querySelector(`input[target='${ball.id}']`).click()
+        }
+    }
+
+    document.getElementById("container").addEventListener("click", addRemoveBall)
+</script>
+</html>

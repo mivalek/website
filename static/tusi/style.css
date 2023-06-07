@@ -1,0 +1,206 @@
+:root {
+    --delay: .3;
+    --perimeter: 38;
+    --height: 300;
+    --col1: #ff6961;
+    --col2: #ffb480;
+    --col3: #f8f38d;
+    --col4: #42d6a4;
+    --col5: #08cad1;
+    --col6: #59adf6;
+    --col7: #9d94ff;
+    --col8: #c780e8;
+    --bg-col: #31323b;
+}
+
+body {
+    background-color: var(--bg-col);
+}
+
+#container {
+    margin: 100px auto 50px auto;
+    width: calc(var(--height) * 1px);
+    height: calc(var(--height) * 1px);
+}
+.ball-container {
+    position: absolute;
+    width: calc(var(--height) * 1px);
+    height: calc(var(--height) * 1px);
+    margin: auto;
+    /* display: flex */
+}
+
+.ball-container:nth-child(2) {
+    rotate: 22.5deg;
+}
+
+.ball-container:nth-child(3) {
+    rotate: 45deg;
+}
+
+.ball-container:nth-child(4) {
+    rotate: 67.5deg;
+}
+
+.ball-container:nth-child(5) {
+    rotate: 90deg;
+}
+
+.ball-container:nth-child(6) {
+    rotate: 112.5deg;
+}
+
+.ball-container:nth-child(7) {
+    rotate: 135deg;
+}
+
+.ball-container:nth-child(8) {
+    rotate: 157.5deg;
+}
+
+.ball {
+    height: calc(var(--perimeter) * 1px);
+    width: calc(var(--perimeter) * 1px);
+    border-radius: 50%;
+    margin: auto;
+    background-color: var(--col1);
+    animation-name: move;
+    animation-duration: calc(var(--delay) * 8s);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: cubic-bezier(.35, 0, .65, 1);
+}
+
+#b2 {
+    animation-delay: calc(var(--delay) * 1s);
+    background-color: var(--col2);
+}
+
+#b3 {
+    animation-delay: calc(var(--delay) * 2s);
+    background-color: var(--col3);
+}
+
+#b4 {
+    animation-delay: calc(var(--delay) * 3s);
+    background-color: var(--col4);
+}
+
+#b5 {
+    animation-delay: calc(var(--delay) * 4s);
+    background-color: var(--col5);
+}
+
+#b6 {
+    animation-delay: calc(var(--delay) * 5s);    
+    background-color: var(--col6);
+}
+
+#b7 {
+    animation-delay: calc(var(--delay) * 6s);
+    background-color: var(--col7);
+}
+
+#b8 {
+    animation-delay: calc(var(--delay) * 7s);
+    background-color: var(--col8);
+}
+
+.ball.hidden {
+    visibility: hidden;
+}
+
+#toggle-container {
+	display: grid;
+    max-width: 400px;
+    margin: auto;
+	grid-template-rows: 1fr 1fr;
+	grid-auto-flow: column;
+	justify-content: space-evenly;
+}
+
+input[type=checkbox]{
+	height: 0;
+	width: 0;
+	visibility: hidden;
+}
+
+label {
+	cursor: pointer;
+	text-indent: -9999px;
+	width: 82px;
+	height: 41px;
+	background: transparent;
+    border: solid 2px #4f505a;
+	display: block;
+	border-radius: 50px;
+	position: relative;
+}
+
+label:after {
+	content: '';
+	position: absolute;
+	top: 1px;
+	left: 3px;
+	width: calc(var(--perimeter) * 1px);
+	height: calc(var(--perimeter) * 1px);
+	border-radius: calc(var(--perimeter) * 1px);
+	transition: 0.2s;
+}
+
+label#toggle1::after {    
+	background: var(--col1);
+}
+label#toggle2::after {    
+	background: var(--col2);
+}
+label#toggle3::after {    
+	background: var(--col3);
+}
+label#toggle4::after {    
+	background: var(--col4);
+}
+label#toggle5::after {    
+	background: var(--col5);
+}
+label#toggle6::after {    
+	background: var(--col6);
+}
+label#toggle7::after {    
+	background: var(--col7);
+}
+label#toggle8::after {    
+	background: var(--col8);
+}
+
+
+input:checked + label {
+	background: #4f505a;
+}
+
+input:checked + label:after {
+	left: calc(100% - 3px);
+	transform: translateX(-100%);
+}
+
+/* label:active:after {
+	width: 130px;
+} */
+
+/* // centering
+body {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+} */
+
+@keyframes move {
+    from {
+        transform: translate(0, 0px);
+    }
+
+    to {
+        transform: translate(0px, calc((var(--height) - var(--perimeter)) * 1px));
+    }
+}
