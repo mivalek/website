@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breathing pacer</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <h1>Breathing pacer</h1>
+    <section id="panel-container">
+        <div id="panel-left">
+            <p style="text-align: center;">Please fill in the following information before you begin.</p>
+            <fieldset>
+                <div class="checklist">
+                    <div>
+                        <input type="checkbox" id="quiet" name="quiet" />
+                        <label for="quiet">I am sitting in a quiet environment.</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="dnd" name="dnd" />
+                        <label for="dnd">My device has been put on 'do not disturb'</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="unint" name="unint" />
+                        <label for="unint">I will remain uninterrupted for the next 5 minutes.</label>
+                    </div>
+                </div>
+                <div>
+                    <label for="ppt-id">Participant Number:</label>
+                    <input type="text" id="ppt-id" name="ppt-id" required minlength="4" maxlength="8" size="10" />
+                </div>
+                <div>
+                    <label for="prate-select">Pacer rate:</label>
+                    <select name="prate" id="prate-select">
+                    <option value="">--Please choose an option--</option>
+                    </select>
+                </div>
+              </fieldset>
+              <div id="button-container">
+                <button id="start-button">Start</button>
+            </div>
+        </div>
+        <div id="panel-right">
+            <div id="pacer">
+                <div id="pacer-mask"></div>
+            </div>
+            <div id="message">Breathe in as the green bar moves up, breathe out as the green bar moves down</div>
+            <div id="timer"><span id="minutes"></span>:<span id="seconds"></span></div>
+        </div>
+    </section>
+    <div id="overlay">
+        <div id="finish-msg">
+            <p>Your session is now finished. You may now close this window.<br>Thank you!</p>
+            <div id="results"></div>
+            <button onclick="document.getElementById('overlay').classList.remove('active')">OK</button>
+        </div>
+    </div>
+</body>
+</html>
